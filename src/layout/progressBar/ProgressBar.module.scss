@@ -1,0 +1,31 @@
+/* ProgressBar.module.scss */
+.loaderContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 8px;
+  width: 100%;
+  z-index: 900;
+  background: transparent;
+  transition: opacity 0.3s ease;
+  &[data-visible='false'] {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.loaderBar {
+  height: 100%;
+  background: linear-gradient(to right, #58a, #5cc);
+  transition: width 0.2s ease-out;
+  animation: progressAnimation .5s linear infinite;
+}
+// Animation for the progress bar
+@keyframes progressAnimation {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}

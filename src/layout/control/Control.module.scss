@@ -1,0 +1,118 @@
+@use "@/styles/globals.scss" as *;
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  grid-template-rows: 1fr;
+  height: 100%;
+  overflow-y: auto;
+
+  .container {
+    background-color: white;
+
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
+    }
+
+    .header {
+      background-color: white;
+      padding: 20px 40px;
+      width: 100%;
+      box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+      .title {
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--primary);
+      }
+    }
+    .children {
+      flex: 1;
+      padding: 20px 40px 40px 40px;
+      width: 360px;
+      height: 100%;
+      overflow-y: auto;
+      @include mobile {
+        width: 300px;
+      }
+
+      // overflow-y: auto;
+    }
+  }
+  .navigationContainer {
+    // background-color: black;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+    .navigationItem {
+      font-size: 25px;
+      padding-left: 10px;
+      height: 40px;
+      cursor: pointer;
+      transition: $simple-animation;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      &:hover {
+        .icon {
+          transform: scale(1.1);
+        }
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: -5px;
+        top: 0;
+        width: 5px;
+        height: 100%;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        background-color: var(--primary);
+        box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+
+        transition: $simple-animation;
+      }
+
+      &.active {
+        position: relative;
+        &::before {
+          left: 0;
+        }
+        .icon {
+          transform: scale(1.1);
+        }
+      }
+      .icon {
+        color: var(--primary);
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        transition: $simple-animation;
+      }
+    }
+    @include mobile {
+      background-color: white;
+      .navigationItem {
+        .icon {
+          // color: colo/;
+        }
+      }
+    }
+  }
+}

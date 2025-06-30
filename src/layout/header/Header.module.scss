@@ -1,0 +1,96 @@
+@use "@/styles/globals.scss" as *;
+.header {
+  grid-area: header;
+  background-color: var(--quarternary);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1.5rem;
+  font-size: 10px;
+  position: relative;
+  z-index: 2;
+  min-height: $header-height;
+  max-height: $header-height;
+  height: $header-height;
+  
+
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+
+  .headerLeft {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+
+    .breadcrumb {
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      .active {
+        color: var(--primary);
+      }
+
+      @include mobile {
+        font-size: 15px;
+      }
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 20px;
+      align-items: center;
+      justify-content: center;
+      @include mobile {
+        cursor: pointer;
+        display: flex;
+      }
+    }
+  }
+  .headerRight {
+    padding-right: 10px;
+    .userContainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      .user {
+        gap: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: black;
+
+        h1 {
+          font-size: 13px;
+          @include mobile {
+            font-size: 10px;
+          }
+        }
+        p {
+          font-size: 10px;
+          color: #717171;
+          @include mobile {
+            font-size: 8px;
+          }
+        }
+
+        .avatar {
+          width: 50px;
+          height: 50px;
+
+          @include mobile {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
+
+      .logoutIcon {
+        cursor: pointer;
+        font-size: 20px;
+        color: black;
+      }
+    }
+  }
+}
