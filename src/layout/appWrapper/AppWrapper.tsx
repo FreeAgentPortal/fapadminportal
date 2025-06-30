@@ -1,9 +1,9 @@
 "use client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { use, useEffect } from "react";
 import io from "socket.io-client";
-import { useUser } from "@/state/auth";
+import { logout, useUser } from "@/state/auth";
 import { useSocketStore } from "@/state/socket";
 import useApiHook from "@/hooks/useApi";
 
@@ -52,19 +52,24 @@ const AppWrapper = (props: Props) => {
       });
     }
 
-    // if selectedProfile is null or role is not admin, dispatch the token, logout and redirect
-    // alert user that they are not authorized to access the admin portal
-    if (!selectedProfile || selectedProfile?.payload?.role !== "admin") {
-      alert("You are not authorized to access this portal.");
-      // Dispatch logout action and redirect
-    }
-
     return () => {
       if (socket) {
         socket.close();
       }
     };
-  }, [socket, selectedProfile]);
+  }, [socket]);
+
+  useEffect(() => {
+    if (!selectedProfile) return;
+    // if selectedProfile is null or role is not admin, dispatch the token, logout and redirect
+    // alert user that they are not authorized to access the admin portal
+    // use regex to test for admin/developer/scout in role
+    if (!/admin|developer|scout/.test(selectedProfile?.payload?.role)) {
+      alert("You are not authorized to access this portal.");
+      // Dispatch logout action and redirect
+      logout(false);
+    }
+  }, [selectedProfile]);
 
   return <>{props.children}</>;
 };
