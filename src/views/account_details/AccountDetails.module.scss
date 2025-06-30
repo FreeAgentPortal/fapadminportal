@@ -1,0 +1,14 @@
+@use "@/styles/globals.scss" as *;
+.container {
+  display: flex;
+  width: 100%;
+  @include tablet {
+    flex-direction: column;
+  }
+  .contentContainer {
+    // grid-area: content;
+    padding: 1rem;
+    margin: 5px 5px;
+    width: 100%;
+  }
+}

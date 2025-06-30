@@ -9,17 +9,36 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/nextjs-registry": "^1.0.2",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@tanstack/react-query": "^5.81.5",
+    "antd": "^5.26.3",
+    "antd-img-crop": "^4.25.0",
+    "axios": "^1.10.0",
+    "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.13",
+    "framer-motion": "^12.20.1",
+    "next": "15.3.4",
+    "nextjs-toploader": "^3.8.16",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.4"
+    "react-icons": "^5.5.0",
+    "react-masonry-css": "^1.0.16",
+    "recharts": "^3.0.2",
+    "sass": "^1.89.2",
+    "socket.io-client": "^4.8.1",
+    "uuid": "^11.1.0",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tanstack/react-query-devtools": "^5.81.5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
-    "@eslint/eslintrc": "^3"
+    "simple-zustand-devtools": "^1.1.0",
+    "typescript": "^5"
   }
 }

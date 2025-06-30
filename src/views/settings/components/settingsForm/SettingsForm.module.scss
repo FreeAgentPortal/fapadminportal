@@ -1,0 +1,21 @@
+@import "../../../../globals.scss";
+.group {
+  margin-bottom: 50px;
+  .header {
+    font-size: 17px;
+    margin-bottom: 10px;
+    color: black;
+  }
+
+  .side {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+  }
+
+  .switch {
+    background-color: var(--primary-light);
+    padding: 10px;
+    border-radius: 5px;
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "token": {
+    "colorPrimary": "#7acdf2",
+    "colorPrimaryHover": "#4ba7d6",
+    "colorPrimaryActive": "#b3e6fc", 
+    "colorTextSecondary": "#6c757d", 
+    "colorSuccess": "#00b894",
+    "colorError": "#d63031",
+    "colorWarning": "#f39c12",
+    "colorLink": "#7acdf2",
+    "fontFamily": "'Roboto', sans-serif",
+    "fontSize": 16,
+    "borderRadius": 8,
+    "controlHeight": 40,
+    "controlOutlineWidth": 2,
+    "colorBorder": "#4ba7d6",
+    "boxShadow": "0 2px 6px rgba(0, 0, 0, 0.2)"
+  },
+  "components": {
+    "Button": {
+      "colorPrimary": "#7acdf2",
+      "colorPrimaryHover": "#4ba7d6",
+      "colorPrimaryActive": "#b3e6fc",
+      "borderRadius": 8,
+      "fontWeight": 500
+    },
+    "Input": { 
+      "colorBorder": "#4ba7d6",
+      "fontFamily": "'Roboto', sans-serif"
+    },
+    "Card": {
+      "colorText": "#c0c0c0",
+      "boxShadow": "0 2px 6px rgba(0, 0, 0, 0.2)",
+      "borderRadius": 12
+    },
+    "Modal": {
+      "borderRadius": 12,
+      "colorText": "#c0c0c0"
+    },
+    "Tabs": {
+      "colorPrimary": "#7acdf2",
+      "colorText": "#c0c0c0",
+      "fontWeightStrong": 700
+    },
+    "Typography": {
+      "fontFamily": "'Roboto', sans-serif",
+      "colorText": "#c0c0c0",
+      "fontSize": 16
+    },
+    "Menu": {
+      "colorItemText": "#c0c0c0",
+      "colorItemBgHover": "#1c1c1c",
+      "colorItemBgSelected": "#4ba7d6",
+      "colorItemTextSelected": "#ffffff",
+      "borderRadius": 8
+    }
+  }
+}

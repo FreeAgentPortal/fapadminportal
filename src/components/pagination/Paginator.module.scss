@@ -1,0 +1,39 @@
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.pageButton {
+  background-color: var(--primary);
+  color: var(--quaternary);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  
+  &:hover {
+    background-color: var(--secondary);
+  }
+
+  &:disabled {
+    background-color: var(--quaternary-dark);
+    cursor: not-allowed;
+  }
+}
+
+.activePage {
+  background-color: var(--tertiary);
+  color: var(--dark);
+  font-weight: bold;
+  transform: scale(1.1);
+}
+
+.ellipsis {
+  padding: 0 0.5rem;
+  user-select: none;
+}

@@ -1,0 +1,101 @@
+@use "@/styles/globals.scss" as *;
+
+.wrapper {
+  //   padding: clamp(40px, 5vw, 500px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100svw;
+  height: 100dvh;
+  background-color: white;
+  .container {
+    // background-color: white;
+    background-color: white;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    gap: 40px;
+    z-index: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+    @include mobile {
+      box-shadow: none;
+      width: 100%;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    .header {
+      width: 100%;
+
+      background-color: white;
+      box-shadow: rgba(0, 0, 0, 0.094) 0px 1px 2px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .logoContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 40px;
+
+        .studio {
+          margin: 0;
+          text-align: center;
+          width: 100%;
+          font-weight: 700;
+          color: var(--primary-dark);
+          font-size: 22px;
+        }
+      }
+    }
+    .text {
+      font-size: 18px;
+      font-weight: 400;
+      border: 5px;
+      padding: 40px;
+
+      max-width: 500px;
+      text-align: left;
+      color: var(--primary-dark);
+      line-height: 30px;
+
+      @include mobile {
+        // padding: 0px 40px;
+      }
+      span {
+        color: var(--primary-dark);
+        font-weight: 900;
+        font-size: 25px;
+      }
+    }
+
+    .buttonLink {
+      width: 100%;
+      padding: 40px;
+      @include mobile {
+        padding: 40px;
+      }
+
+      .button {
+        width: 100%;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .waveContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    margin-bottom: -20px;
+    z-index: 0;
+  }
+}

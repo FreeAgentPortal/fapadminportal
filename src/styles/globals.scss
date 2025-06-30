@@ -1,0 +1,24 @@
+$mobile-width: 480px;
+$tablet-width: 768px;
+$desktop-width: 1250px;
+
+$header-height: 4.4rem;
+
+$animation: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+$simple-animation: all 0.2s ease-in-out;
+
+@mixin mobile {
+  @media (max-width:#{$mobile-width}) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media (max-width:#{$tablet-width}) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width:#{$desktop-width}) {
+    @content;
+  }
+}

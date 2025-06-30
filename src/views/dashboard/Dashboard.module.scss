@@ -1,0 +1,41 @@
+@use '@/styles/globals.scss' as *;
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-md);
+  align-items: start;
+  justify-content: stretch;
+}
+
+.cardWrapper {
+  transition: all 0.3s ease;
+}
+
+.small {
+  grid-column: span 1;
+}
+
+.medium {
+  grid-column: span 2;
+}
+
+.large {
+  grid-column: span 3;
+}
+.masonryGrid {
+  display: flex;
+  margin-left: -var(--spacing-md);
+  width: auto;
+}
+
+.masonryColumn {
+  padding-left: var(--spacing-md);
+  background-clip: padding-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardWrapper {
+  margin-bottom: var(--spacing-md);
+  transition: all 0.3s ease;
+}

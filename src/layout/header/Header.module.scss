@@ -13,7 +13,6 @@
   min-height: $header-height;
   max-height: $header-height;
   height: $header-height;
-  
 
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 
@@ -68,10 +67,10 @@
           }
         }
         p {
-          font-size: 10px;
-          color: #717171;
+          // font-size: 13px;
+          // color: #717171;
           @include mobile {
-            font-size: 8px;
+            // font-size: 8px;
           }
         }
 
@@ -84,6 +83,11 @@
             height: 30px;
           }
         }
+      }
+
+      .profileButton {
+        cursor: pointer;
+        color: var(--primary-dark);
       }
 
       .logoutIcon {

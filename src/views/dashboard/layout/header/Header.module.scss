@@ -1,0 +1,34 @@
+@use "@/styles/globals.scss" as *;
+.container {
+  max-width: 1500px;
+
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+  }
+  .welcomeContainer {
+    .text {
+      font-size: 30px;
+      font-weight: 600;
+      color: rgb(27, 27, 27);
+      span {
+        color: var(--primary);
+      }
+    }
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      color: rgb(109, 109, 109);
+      margin-top: 10px;
+    }
+  }
+}

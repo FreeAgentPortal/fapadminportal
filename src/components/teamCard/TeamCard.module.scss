@@ -1,0 +1,132 @@
+@use '@/styles/globals.scss' as *;
+@use 'sass:color';
+
+.card {
+  border: 2px solid;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  display: flex;
+  gap: var(--spacing-xs);
+  box-shadow: var(--shadow-default);
+  transition: transform 0.2s ease;
+  color: var(--secondary);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+
+  .logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    background: #fff;
+    border: 1px solid #ddd;
+  }
+
+  h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 0.25rem;
+  }
+}
+
+.meta {
+  flex: 1;
+  p {
+    font-size: var(--font-size-sm);
+    margin: 0.25rem 0;
+  }
+}
+
+.positions {
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+}
+
+.verified {
+  font-size: var(--font-size-xs);
+  font-style: italic;
+  color: var(--primary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+
+  button {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: color.adjust(#4ba7d6, $lightness: 10%);
+    }
+
+    &:disabled {
+      background: var(--disabled);
+      cursor: not-allowed;
+    }
+  }
+  .subscribeButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--success);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .subscribeText {
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-width 1.5s ease, opacity 1s ease;
+    }
+
+    &:hover .subscribeText {
+      max-width: 200px;
+      opacity: 1;
+    }
+  }
+
+  .subscribeIcon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .subscribedButton {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    border-radius: var(--radius-sm);
+    opacity: 0.8;
+  }
+}

@@ -1,35 +1,46 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "@/styles/globals.css";
-import "@/styles/nprogress.css";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
-import DynamicTitleUpdater from "@/layout/dynamicTitleUpdater/DynamicTitleUpdater.layout";
+import "@ant-design/v5-patch-for-react-19";
 import AppWrapper from "@/layout/appWrapper/AppWrapper";
-import Errors from "@/layout/errors/Errors.layout";
-import { Suspense } from "react";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 
-const geistSans = localFont({
-  src: "../fonts/GeistVF.woff",
+const geistSans = Geist({
   variable: "--font-geist-sans",
-  weight: "100 900",
+  subsets: ["latin"],
 });
-const geistMono = localFont({
-  src: "../fonts/GeistMonoVF.woff",
+
+const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  weight: "100 900",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Shepherds CMS",
-  description: "Church managment software designed for the modern church.",
-  keywords: ["church", "management", "software", "shepherds"],
-  icons: {
-    icon: "/favicon.ico", // favicon in the public folder
-    apple: "/apple-touch-icon.png", // other icons in the public folder
-    shortcut: "/favicon-32x32.png",
+  title: "Admin | Free Agent Portal",
+  description: "Admin portal",
+  openGraph: {
+    title: "Admin | Free Agent Portal",
+    description: "Log in or register to access your profile on the Free Agent Portal.",
+    url: "https://admin.freeagentportal.com",
+    siteName: "Free Agent Portal",
+    images: [
+      {
+        url: "/images/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Free Agent Portal Auth",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Athlete | Free Agent Portal",
+    description: "Log in or sign up for the Free Agent Portal.",
+    images: ["/images/og-default.jpg"],
   },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -38,13 +49,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {/* <Suspense fallback={null}> */}
-        <Errors />
-        <DynamicTitleUpdater baseTitle="Shepherds CMS" />
         <ReactQueryProvider>
-          <AppWrapper>{children}</AppWrapper>
+          <AppWrapper>
+            <AntdRegistry>{children}</AntdRegistry>
+          </AppWrapper>
         </ReactQueryProvider>
-        {/* </Suspense> */}
       </body>
     </html>
   );

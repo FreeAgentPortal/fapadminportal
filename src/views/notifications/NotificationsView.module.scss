@@ -1,0 +1,65 @@
+@use "@/styles/globals.scss" as *;
+.notification {
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  border-bottom: var(--primary-light) 1px solid;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+
+  &.unread {
+    background-color: var(--primary);
+  }
+  &:hover {
+    background-color: var(--primary-light);
+    cursor: pointer;
+  }
+  .icon {
+    color: var(--primary);
+    font-size: 20px;
+
+    margin: 0;
+    padding: 0;
+  }
+  .body {
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+
+      .title {
+        font-size: 20px;
+        color: black;
+        font-weight: 600;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .description {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--primary);
+    }
+    .date {
+      margin-top: 5px;
+
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--primary-light);
+    }
+  }
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+}

@@ -1,0 +1,22 @@
+@use "@/styles/globals.scss" as *;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .topContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  .bottomContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2%;
+  }
+}
