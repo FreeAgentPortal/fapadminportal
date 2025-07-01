@@ -53,12 +53,12 @@
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 10px;
-    color: rgb(60, 98, 85);
+    color: var(--primary);
   }
 
   &__ticketCount {
     font-size: 1.1rem;
-    color: rgb(97, 135, 110);
+    color: var(--secondary);
   }
 }
 
@@ -68,7 +68,7 @@
 }
 
 .backButton {
-  background-color: rgb(60, 98, 85);
+  background-color: var(--primary);
   color: white;
   padding: 10px 15px;
   border: none;
@@ -78,7 +78,7 @@
   margin-bottom: 20px;
 
   &:hover {
-    background-color: rgb(92, 138, 122);
+    background-color: var(--primary-dark);
   }
 }
 

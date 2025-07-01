@@ -1,17 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./SupportDesk.module.scss";
-import { useUser } from "@/state/auth";
 import GroupCard from "./GroupCard.component";
 import TicketTable from "./TicketTable.component";
-import { useParams } from "next/navigation";
 import useApiHook from "@/hooks/useApi";
 import { useQueryClient } from "@tanstack/react-query";
 
 const Groups = () => {
   const queryClient = useQueryClient();
   const profile = queryClient.getQueryData(["profile", "admin"]) as any;
-  const { data,  isLoading, isError } = useApiHook({
+  const { data, isLoading, isError } = useApiHook({
     url: "/support",
     method: "GET",
     key: "support-groups",

@@ -1,14 +1,15 @@
-'use client';
-import React from 'react';
-import styles from './SupportTicketOptions.module.scss';
-import formStyles from '@/styles/Form.module.scss';
-import useApiHook from '@/state/useApi';
-import { useParams } from 'next/navigation';
-import Loader from '@/components/loader/Loader.component';
-import Error from '@/components/error/Error.component';
-import { Button, Form, Input, message, Select } from 'antd';
-import UserItem from '@/components/userItem/UserItem.component';
-import Link from 'next/link';
+"use client";
+import React from "react";
+import styles from "./SupportTicketOptions.module.scss";
+import formStyles from "@/styles/Form.module.scss";
+import useApiHook from "@/hooks/useApi";
+import { useParams } from "next/navigation";
+import Loader from "@/components/loader/Loader.component";
+import Error from "@/components/error/Error.component";
+import { Button, Form, Input, message, Select } from "antd";
+import UserItem from "@/components/userItem/UserItem.component";
+import Link from "next/link";
+import { ISupportGroup } from "@/types/ISupport";
 
 const SupportTicketOptions = () => {
   // get ticket data from API
@@ -17,25 +18,29 @@ const SupportTicketOptions = () => {
 
   const { data, isLoading, isError, error } = useApiHook({
     url: `/support/ticket/${id}`,
-    key: 'ticket',
+    key: "ticket",
     enabled: !!id,
-    method: 'GET',
+    method: "GET",
   }) as any;
 
+  const { data: groups } = useApiHook({
+    url: `/support/support_group`,
+    key: "support_groups",
+    method: "GET",
+  }) as any;
   const { data: agentData } = useApiHook({
-    url: `/support/agents/${id}`,
-    key: 'agents',
+    url: `/support/agent/${id}`,
+    key: "agents",
     enabled: !!id,
-    method: 'GET',
+    method: "GET",
   }) as any;
 
-  // finds all agents who can be assigned to the ticket, by looking at the support groups agent
   const { mutate: updateTicket } = useApiHook({
     url: `/support/ticket/${id}`,
-    key: 'ticket',
-    method: 'PUT',
-    queriesToInvalidate: ['ticket'],
-    successMessage: 'Ticket updated successfully',
+    key: "ticket",
+    method: "PUT",
+    queriesToInvalidate: ["ticket"],
+    successMessage: "Ticket updated successfully",
   }) as any;
 
   if (isLoading) {
@@ -49,15 +54,17 @@ const SupportTicketOptions = () => {
       layout="vertical"
       form={form}
       initialValues={{
-        ...data?.payload?.data,
+        ...data?.payload,
       }}
     >
       {/* user details box, simple card that links to the user page */}
-      <div className={styles.userContainer}>
-        <Link href={`/members/${data?.payload?.data?.requester?._id}`} passHref>
-          <UserItem user={data?.payload?.data?.requester} />
-        </Link>
-      </div>
+      {data?.payload?.requester && (
+        <div className={styles.userContainer}>
+          <Link href={`/users/${data?.payload?.requester?._id}`} passHref>
+            <UserItem user={data?.payload?.requester} />
+          </Link>
+        </div>
+      )}
       <Form.Item label="Ticket ID" name="_id">
         <Input className={styles.ticketId} readOnly disabled />
       </Form.Item>
@@ -66,8 +73,8 @@ const SupportTicketOptions = () => {
         <Select
           className={formStyles.select}
           options={
-            agentData?.agents?.map((agent: any) => ({
-              label: agent.fullName,
+            agentData?.payload?.map((agent: any) => ({
+              label: agent.user.fullName,
               value: agent._id,
             })) || []
           }
@@ -89,8 +96,8 @@ const SupportTicketOptions = () => {
           mode="tags"
           placeholder="Product Categorization"
           allowClear
-          tokenSeparators={[',']}
-          options={data?.payload?.data.tags?.map((tag: any) => ({
+          tokenSeparators={[","]}
+          options={data?.payload?.tags?.map((tag: any) => ({
             label: tag,
             value: tag,
           }))}
@@ -100,11 +107,11 @@ const SupportTicketOptions = () => {
         <Select
           className={formStyles.select}
           options={[
-            { label: 'Open', value: 'Open' },
-            { label: 'Closed', value: 'Closed' },
-            { label: 'Pending', value: 'Pending' },
-            { label: 'Solved', value: 'Solved' },
-            { label: 'New', value: 'New' },
+            { label: "Open", value: "Open" },
+            { label: "Closed", value: "Closed" },
+            { label: "Pending", value: "Pending" },
+            { label: "Solved", value: "Solved" },
+            { label: "New", value: "New" },
           ]}
         />
       </Form.Item>
@@ -112,10 +119,10 @@ const SupportTicketOptions = () => {
         <Select
           className={formStyles.select}
           options={[
-            { label: 'Low', value: 'Low' },
-            { label: 'Medium', value: 'Medium' },
-            { label: 'High', value: 'High' },
-            { label: 'Urgent', value: 'Urgent' },
+            { label: "Low", value: "Low" },
+            { label: "Medium", value: "Medium" },
+            { label: "High", value: "High" },
+            { label: "Urgent", value: "Urgent" },
           ]}
         />
       </Form.Item>
@@ -123,12 +130,10 @@ const SupportTicketOptions = () => {
         <Select
           className={formStyles.select}
           mode="multiple"
-          options={[
-            { label: 'General', value: 'General' },
-            { label: 'Technical', value: 'Technical' },
-            { label: 'Billing', value: 'Billing' },
-            { label: 'Other', value: 'Other' },
-          ]}
+          options={groups?.payload?.map((group: ISupportGroup) => ({
+            label: group.name,
+            value: group.name,
+          }))}
         />
       </Form.Item>
 
@@ -143,7 +148,7 @@ const SupportTicketOptions = () => {
               },
               {
                 onSuccess: () => {
-                  message.success('Ticket updated successfully');
+                  message.success("Ticket updated successfully");
                 },
               }
             );
