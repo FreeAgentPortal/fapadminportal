@@ -1,10 +1,10 @@
-'use client';
-import { Button } from 'antd';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+"use client";
+import { Button } from "antd";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 
-import styles from './Auth.module.scss';
-import { useEffect, useState } from 'react';
+import styles from "./Auth.module.scss";
+import { useEffect, useState } from "react";
 
 const Auth = () => {
   const pathname = usePathname();
@@ -13,7 +13,7 @@ const Auth = () => {
 
   useEffect(() => {
     const origin = window.location.origin;
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
 
     setRedirectUrl(`${process.env.AUTH_URL}?redirect=${origin + pathname}`);
     setIsAuthenticated(!!token);
@@ -29,7 +29,7 @@ const Auth = () => {
               width={160}
               height={100}
               style={{
-                objectFit: 'contain',
+                objectFit: "contain",
               }}
               alt="logo"
             />
@@ -39,11 +39,13 @@ const Auth = () => {
         <p className={styles.text}>
           <span>Welcome</span>
           <br />
-          <span style={{ fontSize: '14px' }}>Please click the button below to authenticate and access the dashboard</span>
+          <span style={{ fontSize: "14px" }}>
+            Please click the button below to authenticate and access the dashboard
+          </span>
         </p>
         {redirectUrl && (
           <a href={redirectUrl} className={styles.buttonLink}>
-            <Button className={styles.button} type="primary" size="large" loading={isAuthenticated} disabled={isAuthenticated}>
+            <Button className={styles.button} type="primary" size="large">
               Login
             </Button>
           </a>
@@ -73,10 +75,14 @@ Auth.getInitialProps = async ({ req }: any) => {
   let fullUrl;
   if (req) {
     // Server side rendering
-    fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
   } else {
     // Client side rendering
-    fullUrl = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+    fullUrl =
+      window.location.protocol +
+      "//" +
+      window.location.hostname +
+      (window.location.port ? ":" + window.location.port : "");
   }
   return { fullUrl: fullUrl };
 };

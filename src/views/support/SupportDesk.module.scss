@@ -1,0 +1,95 @@
+@use "@/styles/globals.scss" as *;
+.container {
+  display: flex;
+  gap: 20px;
+  // max height for mobile
+  max-height: 500px;
+  overflow-y: auto;
+  .leftContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    padding: 20px;
+    flex: 0.35;
+    width: 100%;
+  }
+  .rightContainer {
+    background-color: whitesmoke;
+    border-radius: 10px;
+    padding: 20px;
+    flex: 1;
+    width: 100%;
+  }
+}
+.groupCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 20px;
+}
+
+.groupCardContainer {
+  flex: 1;
+}
+
+.groupCard {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  &__header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: rgb(60, 98, 85);
+  }
+
+  &__ticketCount {
+    font-size: 1.1rem;
+    color: rgb(97, 135, 110);
+  }
+}
+
+.detailsView {
+  padding: 20px;
+  width: 100%;
+}
+
+.backButton {
+  background-color: rgb(60, 98, 85);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 20px;
+
+  &:hover {
+    background-color: rgb(92, 138, 122);
+  }
+}
+
+.ticketTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .groupCards {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
