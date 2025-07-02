@@ -2,8 +2,8 @@
   "token": {
     "colorPrimary": "#7acdf2",
     "colorPrimaryHover": "#4ba7d6",
-    "colorPrimaryActive": "#b3e6fc", 
-    "colorTextSecondary": "#6c757d", 
+    "colorPrimaryActive": "#b3e6fc",
+    "colorTextSecondary": "#6c757d",
     "colorSuccess": "#00b894",
     "colorError": "#d63031",
     "colorWarning": "#f39c12",
@@ -24,7 +24,7 @@
       "borderRadius": 8,
       "fontWeight": 500
     },
-    "Input": { 
+    "Input": {
       "colorBorder": "#4ba7d6",
       "fontFamily": "'Roboto', sans-serif"
     },

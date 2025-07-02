@@ -1,15 +1,14 @@
 import { create } from 'zustand';
-import { mountStoreDevtool } from 'simple-zustand-devtools';
-import { FeaturePlan } from '@/layout/billingSetup/components/featurePlanCard/FeaturePlanCard.component';
+import { mountStoreDevtool } from 'simple-zustand-devtools'; 
 
 // Toggle this flag when multiple plan selection should be re-enabled
 export const ALLOW_MULTIPLE_PLAN_SELECT = false;
 
 interface PlansState {
-  selectedPlans: FeaturePlan[];
+  selectedPlans: any[];
   billingCycle: string;
   setBillingCycle: (data: string) => void;
-  togglePlan: (plan: FeaturePlan) => void;
+  togglePlan: (plan: any) => void;
 }
 
 export const usePlansStore = create<PlansState>((set) => ({
@@ -19,7 +18,7 @@ export const usePlansStore = create<PlansState>((set) => ({
   setBillingCycle: (data: string) => {
     set({ billingCycle: data });
   },
-  togglePlan: (plan: FeaturePlan) =>
+  togglePlan: (plan: any) =>
     set((state) => {
       const exists = state.selectedPlans.find((p) => p._id === plan._id);
       if (ALLOW_MULTIPLE_PLAN_SELECT) {

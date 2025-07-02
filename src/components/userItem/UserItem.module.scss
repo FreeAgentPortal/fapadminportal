@@ -1,0 +1,68 @@
+@use "@/styles/globals.scss" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid var(--bs-gray-300);
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+
+  @include mobile {
+    padding: 15px;
+  }
+
+  .userInfo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    @include mobile {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .avatar {
+    flex-shrink: 0;
+    border: 2px solid var(--primary-dark);
+    border-radius: 50%;
+  }
+
+  .details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .name {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .email,
+    .phone,
+    .lastVisited {
+      font-size: 14px;
+      color: var(--bs-gray-700);
+      margin: 0;
+      word-break: break-word;
+    }
+
+    @include mobile {
+      .email,
+      .phone,
+      .lastVisited {
+        font-size: 12px;
+      }
+    }
+  }
+}

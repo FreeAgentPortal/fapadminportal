@@ -1,7 +1,7 @@
 import styles from "./Control.module.scss";
-import { useState } from "react";
-import { ControlNavItem } from "@/types/navigation";
+import { useState } from "react"; 
 import { Tooltip } from "antd";
+import { ControlNavItem } from "@/types/navigation";
 
 type Props = {
   navigation: Array<ControlNavItem>;

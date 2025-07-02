@@ -1,8 +1,7 @@
 import Error from "@/components/error/Error.component";
 import Loader from "@/components/loader/Loader.component";
-import SaveButton from "@/components/saveButton/SaveButton.component";
 import Container from "@/layout/container/Container.layout";
-import { useUser, useUserDetails } from "@/state/auth";
+import { useUser } from "@/state/auth";
 import { useWarnIfUnsavedChanges } from "@/utils/useWarnIfUnsavedChanges";
 import { Form } from "antd";
 import React, { useEffect, useState } from "react";
@@ -12,7 +11,7 @@ import styles from "./Settings.module.scss";
 
 const SettingsView = () => {
   const { data: loggedInData, error, isLoading } = useUser();
-  const { data: userDetails, isError: userError } = useUserDetails(loggedInData?.user._id);
+  // const { data: userDetails, isError: userError } = useUserDetails(loggedInData?.user._id);
   // const { mutate: updateUser, isLoading: userUpdateIsLoading } =
   //   useUpdateUser();
   const [form] = Form.useForm();
@@ -28,15 +27,17 @@ const SettingsView = () => {
 
   useEffect(() => {
     form.setFieldsValue({
-      firstName: userDetails?.user?.firstName,
-      lastName: userDetails?.user?.lastName,
-      email: userDetails?.user?.email,
-      phoneNumber: userDetails?.user?.phoneNumber,
-      sex: userDetails?.user?.sex,
+      // firstName: userDetails?.user?.firstName,
+      // lastName: userDetails?.user?.lastName,
+      // email: userDetails?.user?.email,
+      // phoneNumber: userDetails?.user?.phoneNumber,
+      // sex: userDetails?.user?.sex,
     });
-  }, [userDetails]);
+  }, [
+    // userDetails
+  ]);
 
-  if (userError) return <Error error={error} />;
+  // if (userError) return <Error error={error} />;
 
   return (
     <div className={styles.container}>
@@ -49,9 +50,9 @@ const SettingsView = () => {
         }}
       >
         <Container title="Settings">{isLoading ? <Loader /> : <SettingsForm />}</Container>
-        <SaveButton
-        // isLoading={userUpdateIsLoading}
-        />
+        {/* <SaveButton
+        isLoading={userUpdateIsLoading}
+        /> */}
       </Form>
     </div>
   );
