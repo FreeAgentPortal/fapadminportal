@@ -19,7 +19,8 @@ const SupportDetails = () => {
   // pull the id from the url
   const { id } = useParams();
   const { data: loggedInData } = useUser();
-  // const containerRef = React.useRef<HTMLDivElement>(null);
+  console.log(loggedInData);
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   // socket events
   const { socket } = useSocketStore((state) => state);
@@ -31,48 +32,37 @@ const SupportDetails = () => {
     method: "GET",
   }) as any;
 
-  // const { data: messagesData, fetchNextPage, hasNextPage, isFetchingNextPage } = useMessages(id as any);
+  const { data: messagesData, fetchNextPage, hasNextPage, isFetchingNextPage } = useMessages(id as any);
   const { mutate: sendMessage } = useApiHook({
-    url: `/support/ticket/${id}/message`,
     key: "message",
     method: "POST",
-    // queriesToInvalidate: ["messages"],
+    queriesToInvalidate: ["messages"],
   }) as any;
 
   const handleScroll = () => {
-    // if (
-    // !containerRef.current
-    // || !hasNextPage
-    // || isFetchingNextPage
-    // )
-    //   return;
-    // const { scrollTop } = containerRef.current;
-    // if (scrollTop === 0) {
-    // Fetch older messages when scrolled to the top
-    // fetchNextPage();
-    // }
+    if (!containerRef.current || !hasNextPage || isFetchingNextPage) return;
+    const { scrollTop } = containerRef.current;
+    if (scrollTop === 0) {
+      // Fetch older messages when scrolled to the top
+      fetchNextPage();
+    }
   };
 
-  // React.useEffect(
-  //   () => {
-  //     const container = containerRef.current;
-  //     if (container) {
-  //       container.addEventListener("scroll", handleScroll);
-  //     }
-  //     return () => {
-  //       if (container) {
-  //         container.removeEventListener("scroll", handleScroll);
-  //       }
-  //     };
-  //   },
-  //   [
-  // hasNextPage,
-  // isFetchingNextPage
-  //   ]
-  // );
+  React.useEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      if (container) {
+        container.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [hasNextPage, isFetchingNextPage]);
 
   const handleMessage = () => {
     sendMessage({
+      url: `/support/ticket/${id}/message`,
       formData: form.getFieldsValue(),
     });
     // clear the form after sending the message
@@ -88,37 +78,38 @@ const SupportDetails = () => {
     chatContainer?.scrollTo(0, chatContainer.scrollHeight);
   };
 
-  // React.useEffect(() => {
-  //   if (socket) {
-  //     // join the room of the support ticket
-  //     socket.emit("join", {
-  //       roomId: `support-${id}`,
-  //       user: loggedInData,
-  //     });
-  //     socket.on("newMessage", () => {
-  //       queryClient.invalidateQueries({ queryKey: ["messages", `${id}`] });
-  //       // scroll to bottom of chat window
-  //       const chatContainer = document.querySelector(`.${styles.chatContainer}`);
-  //       setTimeout(() => chatContainer?.scrollTo(0, chatContainer.scrollHeight), 1000);
-  //     });
-  //   }
-  // }, [socket]);
+  React.useEffect(() => {
+    if (socket) {
+      // join the room of the support ticket
+      socket.emit("join", {
+        roomId: `support-${id}`,
+        user: loggedInData,
+      });
+      socket.on("newMessage", () => {
+        queryClient.invalidateQueries({ queryKey: ["messages", `${id}`] });
+        // scroll to bottom of chat window
+        const chatContainer = document.querySelector(`.${styles.chatContainer}`);
+        setTimeout(() => chatContainer?.scrollTo(0, chatContainer.scrollHeight), 1000);
+      });
+    }
+  }, [socket]);
 
   // when page is finished loading and messages are fetched, push the user to the bottom of the chat window
-  // React.useEffect(() => {
-  //   if (messagesData?.pages.length) {
-  //     //use the container ref to scroll to the bottom of the chat window
-  //     const chatContainer = containerRef.current;
-  //     // smooth scroll after 1 second
-  //     setTimeout(() => chatContainer?.scrollTo(0, chatContainer.scrollHeight), 1000);
-  //   }
-  // }, [messagesData]);
+  React.useEffect(() => {
+    if (messagesData?.pages.length) {
+      //use the container ref to scroll to the bottom of the chat window
+      const chatContainer = containerRef.current;
+      // smooth scroll after 1 second
+      setTimeout(() => chatContainer?.scrollTo(0, chatContainer.scrollHeight), 1000);
+    }
+  }, [messagesData]);
 
-  // if (isLoading) return <Loader />;
-  // if (isError) return <Error error={error.message} />;
+  if (isLoading) return <Loader />;
+  if (isError) return <Error error={error.message} />;
 
   // Flatten all messages into a single array
-  // const messages = messagesData?.pages.flatMap((page) => page.data) || [];
+  const messages = messagesData?.pages.flatMap((page) => page.data) || [];
+  console.log(messages);
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
@@ -155,50 +146,42 @@ const SupportDetails = () => {
           </span>
         </Divider>
       </div>
-      <div
-        className={styles.chatWindow}
-        ref={
-          // containerRef
-          null
-        }
-        id="chatWindow"
-      >
+      <div className={styles.chatWindow} ref={containerRef} id="chatWindow">
         {/* {isFetchingNextPage && <p>Loading older messages...</p>} */}
         <div className={styles.chatContainer}>
-          {[].map((message: any) => (
-            <></>
-            // <div
-            //   key={message?._id}
-            //   className={`${styles.chat} ${
-            //     // if the message is from the user, align it to the right
-            //     message?.user?.toString() === loggedInData?._id.toString() ? styles.rightChat : null
-            //   }`}
-            // >
-            //   <div
-            //     className={`${styles.chatBubble} ${
-            //       // if the message is from the user, align it to the right
-            //       message?.user?.toString() === loggedInData?._id.toString()
-            //         ? styles.chatBubbleRight
-            //         : styles.leftBubble
-            //     }`}
-            //   >
-            //     <div className={styles.message}>
-            //       <div className={`${styles.sender}`}>{message?.sender?.fullName}</div>
-            //       <div className={styles.chatText}>{parse(`${parse(message.message)}`)}</div>
-            //     </div>
-            //   </div>
-            //   {/* timestamp */}
-            //   <div
-            //     className={`${styles.chatTime} ${
-            //       // if the message is from the user, align it to the right
-            //       message?.user?.toString() === loggedInData?._id.toString()
-            //         ? styles.chatTimeRight
-            //         : styles.chatTimeLeft
-            //     }`}
-            //   >
-            //     {timeDifference(new Date().getTime(), new Date(message.createdAt).getTime())}
-            //   </div>
-            // </div>
+          {messages.map((message: any) => (
+            <div
+              key={message?._id}
+              className={`${styles.chat} ${
+                // if the message is from the user, align it to the right
+                message?.user?.toString() === loggedInData?._id.toString() ? styles.rightChat : null
+              }`}
+            >
+              <div
+                className={`${styles.chatBubble} ${
+                  // if the message is from the user, align it to the right
+                  message?.user?.toString() === loggedInData?._id.toString()
+                    ? styles.chatBubbleRight
+                    : styles.leftBubble
+                }`}
+              >
+                <div className={styles.message}>
+                  <div className={`${styles.sender}`}>{message?.sender?.fullName}</div>
+                  <div className={styles.chatText}>{parse(`${parse(message.message)}`)}</div>
+                </div>
+              </div>
+              {/* timestamp */}
+              <div
+                className={`${styles.chatTime} ${
+                  // if the message is from the user, align it to the right
+                  message?.user?.toString() === loggedInData?._id.toString()
+                    ? styles.chatTimeRight
+                    : styles.chatTimeLeft
+                }`}
+              >
+                {timeDifference(new Date().getTime(), new Date(message.createdAt).getTime())}
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -207,7 +190,7 @@ const SupportDetails = () => {
         <div className={styles.editor}>
           <Form layout="vertical" form={form}>
             <Form.Item name="message">
-              {/* <TinyEditor handleChange={(value: string) => form.setFieldsValue({ message: value })} initialContent="" /> */}
+              <TinyEditor handleChange={(value: string) => form.setFieldsValue({ message: value })} initialContent="" />
             </Form.Item>
             <Button onClick={handleMessage}>Send</Button>
           </Form>

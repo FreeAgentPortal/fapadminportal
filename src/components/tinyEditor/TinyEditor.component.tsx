@@ -2,7 +2,13 @@ import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import parse from "html-react-parser";
 
-const TinyEditor = ({ handleChange, initialContent }) => {
+const TinyEditor = ({
+  handleChange,
+  initialContent,
+}: {
+  handleChange: (content: string) => void;
+  initialContent?: string;
+}) => {
   const editorRef = useRef("editor");
 
   return (
