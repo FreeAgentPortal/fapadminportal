@@ -11,8 +11,8 @@ export interface ISupportGroup {
 export interface ISupport {
   requester: User;
   requesterDetails: {
-    email: String;
-    fullName: String;
+    email: string;
+    fullName: string;
   };
   assignee: User;
   groups: ISupportGroup[];

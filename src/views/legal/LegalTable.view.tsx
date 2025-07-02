@@ -1,28 +1,28 @@
-'use client';
-import SearchWrapper from '@/layout/searchWrapper/SearchWrapper.layout';
-import styles from './LegalTable.module.scss';
-import React from 'react';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { Button, Table } from 'antd';
-import { FaEdit, FaStickyNote, FaTrash } from 'react-icons/fa';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import useApiHook from '@/state/useApi';
-import LegalType from '@/types/LegalType';
+"use client";
+import SearchWrapper from "@/layout/searchWrapper/SearchWrapper.layout";
+import styles from "./LegalTable.module.scss";
+import React from "react";
+import { AiOutlinePlus } from "react-icons/ai";
+import { Button, Table } from "antd";
+import { FaEdit, FaStickyNote, FaTrash } from "react-icons/fa";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import useApiHook from "@/hooks/useApi";
+import LegalType from "@/types/LegalType";
 
 const LegalTable = () => {
   const router = useRouter();
 
   const { data: legalData, isLoading: loading } = useApiHook({
     url: `/legal`,
-    key: 'legal',
-    method: 'GET',
+    key: "legal",
+    method: "GET",
   }) as any;
 
   const { mutate: deleteLegal } = useApiHook({
-    queriesToInvalidate: ['legal'],
-    method: 'DELETE',
-    key: 'delete-legal',
+    queriesToInvalidate: ["legal"],
+    method: "DELETE",
+    key: "delete-legal",
   }) as any;
 
   return (
@@ -30,28 +30,28 @@ const LegalTable = () => {
       <SearchWrapper
         buttons={[
           {
-            toolTip: 'Create new Document',
+            toolTip: "Create new Document",
             icon: (
               <div className={styles.iconContainer}>
                 <AiOutlinePlus /> <FaStickyNote className={styles.icon} />
               </div>
-            ), 
+            ),
             onClick: () => {
-              router.push('/account_details/legal/new');
+              router.push("/account_details/legal/new");
             },
-            type: 'primary',
+            type: "primary",
           },
         ]}
         filters={[
           {
-            label: 'All',
-            key: '',
+            label: "All",
+            key: "",
           },
         ]}
         sort={[
           {
-            label: 'None',
-            key: '',
+            label: "None",
+            key: "",
           },
         ]}
         placeholder="Search Files"
@@ -67,24 +67,24 @@ const LegalTable = () => {
           rowKey={(record: LegalType) => record._id}
           columns={[
             {
-              title: 'Title',
-              dataIndex: 'title',
-              key: 'title',
+              title: "Title",
+              dataIndex: "title",
+              key: "title",
             },
             {
-              title: 'Effective Date',
-              dataIndex: 'effective_date',
-              key: 'effective_date',
+              title: "Effective Date",
+              dataIndex: "effective_date",
+              key: "effective_date",
             },
             {
-              title: 'Version',
-              dataIndex: 'version',
-              key: 'version',
+              title: "Version",
+              dataIndex: "version",
+              key: "version",
             },
             {
-              title: 'Actions',
-              dataIndex: 'actions',
-              key: 'actions',
+              title: "Actions",
+              dataIndex: "actions",
+              key: "actions",
               render: (text: string, record: LegalType) => {
                 return (
                   <div className={styles.actions}>
