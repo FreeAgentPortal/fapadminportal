@@ -25,14 +25,5 @@ export default [
     size: 2,
     isCard: true,
     hideIf: DashboardRulesEngine.noNews,
-  },
-  {
-    title: 'Profile',
-    component: ({ data }: CardComponentProps) => <ProfileCard profile={data} />,
-    gridKey: 'profile-card',
-    order: 1,
-    size: 3,
-    isCard: false,
-    hideIf: DashboardRulesEngine.profileIncomplete,
-  },
+  }, 
 ] as Card[];

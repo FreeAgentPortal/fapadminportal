@@ -1,0 +1,104 @@
+/* Plan Modal Transfer Component Styling */
+.plan-transfer .ant-transfer-list {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.plan-transfer .ant-transfer-list-header {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.plan-transfer .ant-transfer-list-header-title {
+  color: #ffffff;
+}
+
+.plan-transfer .ant-transfer-list-body {
+  background-color: transparent;
+}
+
+.plan-transfer .ant-transfer-list-content-item {
+  background-color: transparent;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.plan-transfer .ant-transfer-list-content-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.plan-transfer .ant-transfer-list-content-item-checked {
+  background-color: rgba(24, 144, 255, 0.2);
+}
+
+.plan-transfer .ant-transfer-operation {
+  margin: 0 1rem;
+}
+
+.plan-transfer .ant-transfer-operation .ant-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.plan-transfer .ant-transfer-operation .ant-btn:hover {
+  background-color: rgba(24, 144, 255, 0.3);
+  border-color: #1890ff;
+  color: #ffffff;
+}
+
+.plan-transfer .ant-transfer-operation .ant-btn:disabled {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Form styling for the modal */
+.ant-modal .ant-form-item-label > label {
+  color: #ffffff !important;
+}
+
+.ant-modal .ant-input {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.ant-modal .ant-input:focus {
+  border-color: #1890ff !important;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
+}
+
+.ant-modal .ant-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.ant-modal .ant-select-selector {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.ant-modal .ant-select-selection-placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.ant-modal .ant-input-number {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.ant-modal .ant-input-number-input {
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+.ant-modal .ant-switch {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.ant-modal .ant-switch-checked {
+  background-color: #1890ff;
+}

@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { useUser } from '@/state/auth';
 import { useLayoutStore } from '@/state/layout';
+import { useQueryClient } from '@tanstack/react-query';
 
 //make a type with children as a prop
 type Props = {
@@ -14,9 +15,10 @@ type Props = {
   large?: boolean;
 };
 const SideBar = (props: Props) => {
+  const queryClient = useQueryClient();
+  const profile = queryClient.getQueryData(['profile', 'admin']) as { payload: any } | undefined;
   const sideBarOpen = useLayoutStore((state) => state.sideBarOpen);
   const toggleSideBar = useLayoutStore((state) => state.toggleSideBar);
-  const { data: loggedInData } = useUser();
 
   return (
     <div className={`${styles.container} ${props.large ? '' : styles.small}`}>
@@ -61,10 +63,10 @@ const SideBar = (props: Props) => {
 
       {Object.values(
         navigation({
-          loggedInData,
+          user: profile?.payload,
         })
       )
-        .filter((i: any) => i.hidden)
+        .filter((i: any) => !i.hidden)
         .map((item: any) => {
           return (
             <div key={item.title} className={`${styles.group}`}>
