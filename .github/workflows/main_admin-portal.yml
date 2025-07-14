@@ -36,7 +36,8 @@ jobs:
           ENV: "production"
           ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
           TINYMCE_API_KEY: ${{ secrets.TINYMCE_API_KEY }}
-
+      - name: List build output
+        run: ls -l .next
       - name: Run tests
         run: |
           npm run test --if-present
