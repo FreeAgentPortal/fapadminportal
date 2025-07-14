@@ -1,0 +1,243 @@
+
+// Feature Modal Styling
+.featureModal {
+  // :global(.ant-modal-mask) {
+  //   background-color: rgba(0, 0, 0, 0.7);
+  // }
+
+  // :global(.ant-modal-content) {
+  //   background-color: rgba(20, 20, 20, 0.95);
+  //   border: 1px solid rgba(255, 255, 255, 0.2);
+  //   border-radius: 12px;
+  // }
+
+  // :global(.ant-modal-header) {
+  //   background-color: transparent;
+  //   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  //   border-radius: 12px 12px 0 0;
+  // }
+
+  // :global(.ant-modal-body) {
+  //   padding: 1.5rem;
+  // }
+
+  // :global(.ant-modal-close-x) {
+  //   color: rgba(255, 255, 255, 0.7);
+
+  //   &:hover {
+  //     color: #ffffff;
+  //   }
+  // }
+}
+
+.modalTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.featureForm {
+  margin-top: 1rem;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.formItem {
+  margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.formInput {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color: #1890ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.formSelect {
+  // :global(.ant-select-selector) {
+  //   background-color: rgba(255, 255, 255, 0.1) !important;
+  //   border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  //   border-radius: 8px !important;
+  //   color: #ffffff !important;
+  //   padding: 0.25rem 0.5rem !important;
+  // }
+
+  // :global(.ant-select-selection-placeholder) {
+  //   color: rgba(255, 255, 255, 0.5) !important;
+  // }
+
+  // :global(.ant-select-selection-item) {
+  //   color: #ffffff !important;
+  // }
+
+  // :global(.ant-select-arrow) {
+  //   color: rgba(255, 255, 255, 0.7) !important;
+  // }
+
+  &:hover {
+    // :global(.ant-select-selector) {
+    //   border-color: rgba(255, 255, 255, 0.3) !important;
+    // }
+  }
+
+  &:focus-within {
+    // :global(.ant-select-selector) {
+    //   border-color: #1890ff !important;
+    //   box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
+    // }
+  }
+}
+
+.formTextArea {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+  resize: vertical;
+  min-height: 100px;
+
+  &:focus {
+    border-color: #1890ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.switchContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+.formSwitch {
+  background-color: rgba(255, 255, 255, 0.2);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  &.ant-switch-checked {
+    background-color: #1890ff;
+
+    &:hover {
+      background-color: #40a9ff;
+    }
+  }
+}
+
+.switchLabel {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cancelButton {
+  color: rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+
+  &:hover {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.submitButton {
+  background: linear-gradient(135deg, #1890ff, #40a9ff);
+  border: none;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, #40a9ff, #69c0ff);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(24, 144, 255, 0.4);
+  }
+
+  &:disabled,
+  &.ant-btn-loading {
+    background: rgba(24, 144, 255, 0.6);
+    transform: none;
+    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2);
+  }
+}
+
+// Dropdown styling when select is open
+// :global(.ant-select-dropdown) {
+//   background-color: rgba(20, 20, 20, 0.95) !important;
+//   border: 1px solid rgba(255, 255, 255, 0.2) !important;
+//   border-radius: 8px !important;
+// }
+
+// :global(.ant-select-item) {
+//   color: rgba(255, 255, 255, 0.9) !important;
+
+//   &:hover {
+//     background-color: rgba(255, 255, 255, 0.1) !important;
+//   }
+// }
+
+// :global(.ant-select-item-option-selected) {
+//   background-color: rgba(24, 144, 255, 0.2) !important;
+//   color: #ffffff !important;
+// }

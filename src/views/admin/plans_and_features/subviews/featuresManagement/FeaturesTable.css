@@ -1,0 +1,64 @@
+/* Ant Design Table Overrides for Features Management */
+.features-table .ant-table {
+  background: transparent !important;
+  color: #ffffff;
+}
+
+.features-table .ant-table-thead > tr > th {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+
+.features-table .ant-table-tbody > tr > td {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.features-table .ant-table-tbody > tr:hover > td {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.features-table .ant-pagination {
+  color: #ffffff !important;
+}
+
+.features-table .ant-pagination .ant-pagination-item {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.features-table .ant-pagination .ant-pagination-item a {
+  color: #ffffff !important;
+}
+
+.features-table .ant-pagination .ant-pagination-item-active {
+  background: #1890ff !important;
+  border-color: #1890ff !important;
+}
+
+.features-table .ant-pagination .ant-pagination-item-active a {
+  color: #ffffff !important;
+}
+
+.features-table .ant-pagination .ant-pagination-prev,
+.features-table .ant-pagination .ant-pagination-next {
+  color: #ffffff !important;
+}
+
+.features-table .ant-pagination .ant-pagination-prev:hover,
+.features-table .ant-pagination .ant-pagination-next:hover {
+  color: #40a9ff !important;
+}
+
+.features-table .ant-select-selector {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.features-table .ant-select-arrow {
+  color: #ffffff !important;
+}

@@ -7,8 +7,10 @@ import { BsBox, BsBroadcastPin } from "react-icons/bs";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoCodeSlashOutline } from "react-icons/io5";
 import { profile } from "console";
+import { shouldHideForRoles, ROLE_GROUPS } from "@/utils/roleUtils";
 
 export const navigation = (options?: any) => {
+  console.log(options);
   return {
     home: {
       title: "Home",
@@ -16,15 +18,15 @@ export const navigation = (options?: any) => {
         home: {
           title: "Home",
           link: "/",
-          icon: <RiHome2Fill />,
+          icon: <RiHome2Fill />, 
         },
         notifications: {
           title: "Notifications",
           link: "/notifications",
-          icon: <FaRegBell />,
+          icon: <FaRegBell />, 
         },
       },
-      hidden: options?.user ? false : true,
+      hidden: false,
     },
     // management for athletes, teams, etc
     management: {
@@ -41,7 +43,7 @@ export const navigation = (options?: any) => {
           icon: <MdSportsHandball />,
         },
       },
-      hidden: options?.user ? false : true,
+      hidden: false,
     },
     account_details: {
       title: "Account Details",
@@ -51,36 +53,40 @@ export const navigation = (options?: any) => {
           link: "/account_details/profile",
           icon: <BsFillPeopleFill />,
         },
+        support: {
+          title: "Support",
+          link: "/account_details/support",
+          icon: <MdSupportAgent />,
+        },
         account_details: {
           title: "Edit Account Settings",
           link: "/account_details",
           icon: <CgProfile />,
         },
       },
-      hidden: options?.user ? false : true,
+      hidden: false,
     },
     admin: {
       title: "Admin Tools",
       links: {
-        support: {
-          title: "Support",
-          link: "/account_details/support",
-          icon: <MdSupportAgent />,
+        plans: {
+          title: "Plans & Billing",
+          link: "/admin/plans",
+          icon: <BsBox />, 
         },
         support_admin: {
-          title: `Support Admin  `,
+          title: `Support Admin`,
           link: "/account_details/support_admin",
-          icon: <MdSupportAgent />,
-          // check if the loggedInUser has a role "admin" in their role array
-          hidden: /admin|developer/.test(options?.user?.role) ? true : false,
+          icon: <MdSupportAgent />, 
         },
         legal: {
           title: "Legal (Terms & Policy)",
           link: "/account_details/legal",
-          icon: <FaStickyNote />,
+          icon: <FaStickyNote />, 
         },
       },
-      hidden: options?.user ? false : true,
+      // Only show to users with admin or developer roles
+      hidden: shouldHideForRoles(options?.user?.role, ROLE_GROUPS.ADMIN_AND_DEV),
     },
   };
 };

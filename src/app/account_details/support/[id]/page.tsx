@@ -7,7 +7,7 @@ import { BsGear } from 'react-icons/bs';
 export default function Component() {
   return (
     <PageLayout
-      pages={[navigation().admin.links.support]}
+      pages={[navigation().account_details.links.support]}
       largeSideBar
       controlNav={[
         {
