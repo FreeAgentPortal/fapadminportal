@@ -46,7 +46,7 @@ const SideBar = (props: Props) => {
           src={'/images/logo.png'}
           width={75}
           height={50}
-          className={styles.logo + ' ' + styles.truthcastingLogo}
+          className={styles.logo }
           style={{
             objectFit: 'contain',
           }}
@@ -55,7 +55,7 @@ const SideBar = (props: Props) => {
         <p
           className={`${styles.productName}`}
         >
-          Athlete
+          {process.env.SERVICE_NAME || 'FAP - Admin'}
         </p>
       </div>
 
