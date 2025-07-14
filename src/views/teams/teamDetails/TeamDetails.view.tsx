@@ -8,6 +8,7 @@ import { ITeamType } from "@/types/ITeamType";
 import ProfileDetails from "./subviews/profileDetails/ProfileDetails.view";
 import SearchPreferences from "./subviews/searchPreferences/SearchPreferences.view";
 import Reports from "./subviews/reports/Reports.view";
+import Image from "next/image";
 
 const TeamDetails = () => {
   const { id } = useParams();
@@ -48,7 +49,7 @@ const TeamDetails = () => {
     {
       key: "profile",
       label: "Profile Details",
-      children: <ProfileDetails teamId={team._id} />,
+      children: <ProfileDetails teamData={team} />,
     },
     {
       key: "search",
@@ -78,10 +79,13 @@ const TeamDetails = () => {
         <div className={styles.teamBasicInfo}>
           <div className={styles.teamLogo}>
             {team.logos && team.logos[0] ? (
-              <img
+              <Image
                 src={team.logos[0].href}
                 alt={team.logos[0].alt || team.name}
                 style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "8px" }}
+                width={100}
+                height={100}
+                
               />
             ) : (
               getInitials(team.name)
