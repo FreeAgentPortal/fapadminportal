@@ -1,0 +1,186 @@
+@use "@/styles/globals.scss" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  gap: 2rem;
+  min-height: 100vh;
+
+  @include mobile {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+}
+
+.teamHeader {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+
+  @include mobile {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+}
+
+.teamBasicInfo {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  @include mobile {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.teamLogo {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary);
+
+  @include mobile {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+.teamInfo {
+  flex: 1;
+
+  .teamName {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0 0 0.5rem 0;
+
+    @include mobile {
+      font-size: 1.75rem;
+    }
+  }
+
+  .teamSubtitle {
+    font-size: 1.1rem;
+    // color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+  }
+}
+
+.teamStatus {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+
+  @include mobile {
+    align-items: center;
+  }
+}
+
+.statusBadge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  &.active {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  &.inactive {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+}
+
+.teamMetrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.metricCard {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  .metricLabel {
+    font-size: 0.9rem;
+    // color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .metricValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+}
+
+.tabsContainer {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex: 1;
+
+  @include mobile {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1rem;
+
+  .errorTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ef4444;
+  }
+
+  .errorMessage {
+    // color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+  }
+}

@@ -1,0 +1,32 @@
+@use "@/styles/globals.scss" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  @include mobile {
+    padding: 1rem;
+  }
+}
+
+.sectionTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.placeholder {
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+}
