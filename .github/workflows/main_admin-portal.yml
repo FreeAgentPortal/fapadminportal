@@ -30,7 +30,7 @@ jobs:
         run: |
           npm run build --if-present
         env:
-          API_URL: "https://api.thefreeagentportal.com"
+          API_URL: "https://api.thefreeagentportal.com/api/v1"
           AUTH_URL: "https://auth.thefreeagentportal.com/auth"
           SERVICE_NAME: "FAP Athlete Portal"
           ENV: "production"
