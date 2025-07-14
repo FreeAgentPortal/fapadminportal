@@ -1,7 +1,8 @@
 import { RiHome2Fill } from "react-icons/ri";
-import { MdSupportAgent } from "react-icons/md";
+import { MdSportsHandball, MdSupportAgent } from "react-icons/md";
 import { FaRegBell, FaStickyNote } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
+import { GiAmericanFootballHelmet } from "react-icons/gi";
 import { BsBox, BsBroadcastPin } from "react-icons/bs";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoCodeSlashOutline } from "react-icons/io5";
@@ -21,6 +22,23 @@ export const navigation = (options?: any) => {
           title: "Notifications",
           link: "/notifications",
           icon: <FaRegBell />,
+        },
+      },
+      hidden: options?.user ? false : true,
+    },
+    // management for athletes, teams, etc
+    management: {
+      title: "Management",
+      links: {
+        teams: {
+          title: "Teams",
+          link: "/teams",
+          icon: <GiAmericanFootballHelmet />,
+        },
+        athletes: {
+          title: "Athletes",
+          link: "/athletes",
+          icon: <MdSportsHandball />,
         },
       },
       hidden: options?.user ? false : true,

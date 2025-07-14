@@ -14,7 +14,7 @@ const LegalTable = () => {
   const router = useRouter();
 
   const { data: legalData, isLoading: loading } = useApiHook({
-    url: `/legal`,
+    url: `/auth/legal`,
     key: "legal",
     method: "GET",
   }) as any;
@@ -93,7 +93,7 @@ const LegalTable = () => {
                         <FaEdit />
                       </Button>
                     </Link>
-                    <Button onClick={() => deleteLegal({ url: `/admin/legal/${record._id}` })}>
+                    <Button onClick={() => deleteLegal({ url: `/auth/legal/${record._id}` })}>
                       <FaTrash />
                     </Button>
                   </div>

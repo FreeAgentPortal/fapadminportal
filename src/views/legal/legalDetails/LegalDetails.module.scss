@@ -1,13 +1,90 @@
-.container{
+@use "@/styles/globals.scss" as *;
+
+.container {
   display: flex;
   flex-direction: column;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  gap: 2rem;
 
-  .header{
-    color: var(--primary)
+  @include mobile {
+    padding: 1rem;
+    gap: 1.5rem;
   }
-  .buttonContainer{
+
+  .header {
+    color: var(--primary);
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+
+    @include mobile {
+      font-size: 1.5rem;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .formSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .fullWidth {
+    grid-column: 1 / -1;
+  }
+
+  .editorSection {
+    margin-top: 1rem;
+  }
+
+  .buttonContainer {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    @include mobile {
+      flex-direction: column;
+      width: 100%;
+      gap: 0.75rem;
+    }
+
+    .submitButton {
+      min-width: 200px;
+      height: 45px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+
+      @include mobile {
+        width: 100%;
+        min-width: unset;
+      }
+    }
+
+    .cancelButton {
+      min-width: 120px;
+      height: 45px;
+      font-size: 1rem;
+      border-radius: 8px;
+
+      @include mobile {
+        width: 100%;
+        min-width: unset;
+      }
+    }
   }
 }
