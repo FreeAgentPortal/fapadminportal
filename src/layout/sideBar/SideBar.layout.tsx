@@ -1,13 +1,14 @@
-import React from 'react';
-import styles from './SideBar.module.scss';
-import { navigation } from '@/data/navigation';
-import { Button } from 'antd';
-import Link from 'next/link';
-import Image from 'next/image';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { useUser } from '@/state/auth';
-import { useLayoutStore } from '@/state/layout';
-import { useQueryClient } from '@tanstack/react-query';
+import React from "react";
+import styles from "./SideBar.module.scss";
+import { navigation } from "@/data/navigation";
+import { Button } from "antd";
+import Link from "next/link";
+import Image from "next/image";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { useUser } from "@/state/auth";
+import { useLayoutStore } from "@/state/layout";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "@/components/loader/Loader.component";
 
 //make a type with children as a prop
 type Props = {
@@ -15,13 +16,21 @@ type Props = {
   large?: boolean;
 };
 const SideBar = (props: Props) => {
-  const queryClient = useQueryClient();
-  const profile = queryClient.getQueryData(['profile', 'admin']) as { payload: any } | undefined;
+  // Use reactive query instead of static queryClient.getQueryData
+  const { data: profileData } = useQuery({
+    queryKey: ["profile", "admin"],
+    enabled: false, // Don't auto-fetch, assume it's being fetched elsewhere
+    staleTime: Infinity, // Use cached data if available
+  });
+
   const sideBarOpen = useLayoutStore((state) => state.sideBarOpen);
   const toggleSideBar = useLayoutStore((state) => state.toggleSideBar);
 
+  // Extract profile from the query data
+  const profile = profileData as { payload: any } | undefined;
+
   return (
-    <div className={`${styles.container} ${props.large ? '' : styles.small}`}>
+    <div className={`${styles.container} ${props.large ? "" : styles.small}`}>
       <div className={styles.logoContainer}>
         {sideBarOpen && (
           <div
@@ -45,20 +54,16 @@ const SideBar = (props: Props) => {
         /> */}
 
         <Image
-          src={'/images/logo.png'}
+          src={"/images/logo.png"}
           width={75}
           height={50}
-          className={styles.logo }
+          className={styles.logo}
           style={{
-            objectFit: 'contain',
+            objectFit: "contain",
           }}
           alt="logo"
         />
-        <p
-          className={`${styles.productName}`}
-        >
-          {process.env.SERVICE_NAME || 'FAP - Admin'}
-        </p>
+        <p className={`${styles.productName}`}>{process.env.SERVICE_NAME || "FAP - Admin"}</p>
       </div>
 
       {Object.values(
@@ -80,7 +85,9 @@ const SideBar = (props: Props) => {
                         <Link
                           key={indx + subItem.title}
                           href={subItem.link}
-                          className={`${styles.link} ${props.page.title === subItem.title && styles.active} ${subItem.pulse && styles.pulse}`}
+                          className={`${styles.link} ${props.page.title === subItem.title && styles.active} ${
+                            subItem.pulse && styles.pulse
+                          }`}
                           onClick={() => toggleSideBar()}
                         >
                           <span className={styles.icon}>{subItem.icon}</span>
