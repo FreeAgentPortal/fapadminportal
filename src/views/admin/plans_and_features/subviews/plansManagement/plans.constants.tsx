@@ -32,7 +32,7 @@ export const PLANS_API_ENDPOINTS = {
   CREATE: "/auth/plan",
   UPDATE: (id: string) => `/auth/plan/${id}`,
   DELETE: (id: string) => `/auth/plan/${id}`,
-  FEATURES: "/auth/features",
+  FEATURES: "/auth/feature",
 } as const;
 
 // Plan card helpers

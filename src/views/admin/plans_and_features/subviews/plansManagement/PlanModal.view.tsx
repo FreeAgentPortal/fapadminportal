@@ -14,6 +14,7 @@ import {
   PLANS_API_ENDPOINTS,
   TRANSFER_CONFIG,
 } from "./plans.constants";
+import { useInterfaceStore } from "@/state/interface";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -34,6 +35,7 @@ interface TransferItem {
 const PlanModal: React.FC<PlanModalProps> = ({ visible, onCancel, onSuccess, editingPlan }) => {
   const [form] = Form.useForm();
   const [targetKeys, setTargetKeys] = React.useState<string[]>([]);
+  const { addAlert } = useInterfaceStore((state) => state);
 
   // Fetch features for the transfer component
   const { data: featuresData, isLoading: featuresLoading } = useApiHook({
@@ -51,6 +53,11 @@ const PlanModal: React.FC<PlanModalProps> = ({ visible, onCancel, onSuccess, edi
     description: feature.shortDescription,
   }));
 
+  const { mutate: mutatePlan } = useApiHook({
+    method: editingPlan ? "PUT" : "POST",
+    key: "plan.mutate",
+    queriesToInvalidate: ["plans"],
+  }) as any;
   // Handle form submission
   const handleSubmit = async (values: any) => {
     try {
@@ -63,15 +70,23 @@ const PlanModal: React.FC<PlanModalProps> = ({ visible, onCancel, onSuccess, edi
       };
 
       const endpoint = editingPlan ? PLANS_API_ENDPOINTS.UPDATE(editingPlan._id) : PLANS_API_ENDPOINTS.CREATE;
-      const method = editingPlan ? "PUT" : "POST";
 
       // You'll need to implement the mutation logic here
-      // For now, we'll just show a success message
-      message.success(editingPlan ? "Plan updated successfully!" : "Plan created successfully!");
+      mutatePlan(
+        { url: endpoint, formData: planData },
+        {
+          onSuccess: () => {
+            addAlert({
+              type: "success",
+              message: editingPlan ? "Plan updated successfully!" : "Plan created successfully!",
+            });
+          },
+        }
+      );
       onSuccess();
       handleCancel();
     } catch (error) {
-      message.error("Failed to save plan. Please try again.");
+      console.log(error);
     }
   };
 
