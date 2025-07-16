@@ -22,7 +22,7 @@ const FeatureModal: React.FC<FeatureModalProps> = ({ visible, onCancel, onSucces
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const { mutate: mutateFeature } = useApiHook({
     method: editingFeature ? "PUT" : "POST",
-    key: "feature.create",
+    key: "feature.mutate",
     queriesToInvalidate: ["features"],
   }) as any;
  
@@ -34,7 +34,6 @@ const FeatureModal: React.FC<FeatureModalProps> = ({ visible, onCancel, onSucces
       const featureData = {
         ...values,
       };
-      console.log(editingFeature)
 
       const endpoint = editingFeature
         ? FEATURES_API_ENDPOINTS.UPDATE(editingFeature._id)
