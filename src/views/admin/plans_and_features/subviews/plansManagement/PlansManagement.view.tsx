@@ -17,7 +17,7 @@ const PlansManagement: React.FC = () => {
     url: PLANS_API_ENDPOINTS.LIST,
     key: ["plans"],
     method: "GET",
-    filter: `availableTo;{"$eq": "athelete"}`,
+    // filter: `availableTo;{"$eq": "athelete"}`,
   }) as { data: { payload: PlanType[] }; isLoading: boolean; error: any; refetch: () => void };
 
   const plans = data?.payload || [];
