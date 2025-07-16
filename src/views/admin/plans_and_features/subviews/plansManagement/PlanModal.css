@@ -1,57 +1,58 @@
 /* Plan Modal Transfer Component Styling */
 .plan-transfer .ant-transfer-list {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100% !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2)  !important;
 }
 
 .plan-transfer .ant-transfer-list-header {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
 .plan-transfer .ant-transfer-list-header-title {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .plan-transfer .ant-transfer-list-body {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 .plan-transfer .ant-transfer-list-content-item {
-  background-color: transparent;
-  color: #ffffff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: transparent !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 .plan-transfer .ant-transfer-list-content-item:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
 .plan-transfer .ant-transfer-list-content-item-checked {
-  background-color: rgba(24, 144, 255, 0.2);
+  background-color: rgba(24, 144, 255, 0.2) !important;
 }
 
 .plan-transfer .ant-transfer-operation {
-  margin: 0 1rem;
+  margin: 0 1rem !important;
 }
 
 .plan-transfer .ant-transfer-operation .ant-btn {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
 }
 
 .plan-transfer .ant-transfer-operation .ant-btn:hover {
-  background-color: rgba(24, 144, 255, 0.3);
-  border-color: #1890ff;
-  color: #ffffff;
+  background-color: rgba(24, 144, 255, 0.3) !important;
+  border-color: #1890ff !important;
+  color: #ffffff !important;
 }
 
 .plan-transfer .ant-transfer-operation .ant-btn:disabled {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
 }
 
 /* Form styling for the modal */

@@ -323,7 +323,7 @@ const PlanModal: React.FC<PlanModalProps> = ({ visible, onCancel, onSuccess, edi
           </div>
 
           <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem", marginTop: "2rem" }}>
-            <Button onClick={handleCancel} style={{ color: "#ffffff" }}>
+            <Button onClick={handleCancel} style={{ color: "#ff0000ff" }}>
               Cancel
             </Button>
             <Button type="primary" htmlType="submit">
