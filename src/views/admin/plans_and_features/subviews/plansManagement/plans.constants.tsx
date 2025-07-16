@@ -5,10 +5,10 @@ import { PlanType } from "@/types/IPlanType";
 
 // Plan tier options for modal
 export const PLAN_TIER_OPTIONS = [
-  { value: "Basic", label: "Basic" },
-  { value: "Professional", label: "Professional" },
-  { value: "Enterprise", label: "Enterprise" },
-  { value: "Premium", label: "Premium" },
+  { value: "silver", label: "Silver" },
+  { value: "gold", label: "Gold" },
+  { value: "platinum", label: "Platinum" },
+  { value: "diamond", label: "Diamond" },
 ] as const;
 
 // Billing cycle options for modal
@@ -20,10 +20,10 @@ export const BILLING_CYCLE_OPTIONS = [
 
 // Available to options for modal
 export const AVAILABLE_TO_OPTIONS = [
-  { value: "athletes", label: "Athletes" },
-  { value: "teams", label: "Teams" },
-  { value: "scouts", label: "Scouts" },
-  { value: "coaches", label: "Coaches" },
+  { value: "athlete", label: "Athletes" },
+  { value: "team", label: "Teams" },
+  { value: "scout", label: "Scouts" },
+  { value: "agent", label: "Agents" },
 ] as const;
 
 // API endpoints
