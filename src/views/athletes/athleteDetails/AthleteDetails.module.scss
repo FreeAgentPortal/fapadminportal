@@ -1,0 +1,229 @@
+@use "@/styles/globals.scss" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 1.5rem;
+  gap: 2rem;
+  min-height: 100vh;
+  background: transparent;
+
+  @include mobile {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+}
+
+// Loading and Error States
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.errorTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ef4444;
+  margin-bottom: 0.5rem;
+}
+
+.errorMessage {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+// Athlete Header Section
+.athleteHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  @include mobile {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+}
+
+.athleteBasicInfo {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  @include mobile {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+}
+
+.athleteAvatar {
+  flex-shrink: 0;
+}
+
+.athleteInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.athleteName {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+
+  @include mobile {
+    font-size: 1.5rem;
+  }
+}
+
+.athleteSubtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+
+  .position {
+    font-weight: 600;
+    color: #1890ff;
+  }
+
+  .college {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.athleteMeta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+
+  @include mobile {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.ratingDisplay {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .ratingText {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+  }
+}
+
+.athleteStatus {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+
+  @include mobile {
+    align-items: center;
+  }
+}
+
+.userStatusTag {
+  font-weight: 600;
+}
+
+.espnButton {
+  background: linear-gradient(135deg, #1890ff, #40a9ff);
+  border: none;
+  box-shadow: 0 2px 6px rgba(24, 144, 255, 0.3);
+
+  &:hover {
+    background: linear-gradient(135deg, #40a9ff, #69c0ff);
+    transform: translateY(-1px);
+  }
+}
+
+// Athlete Metrics
+.athleteMetrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+.metricCard {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  @include mobile {
+    padding: 0.75rem;
+  }
+
+  .metricLabel {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+  }
+
+  .metricValue {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+
+    @include mobile {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Tabs Container
+.tabsContainer {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex: 1;
+
+  @include mobile {
+    padding: 1rem;
+  }
+
+  // Override Ant Design tab styles
+  :global(.ant-tabs-tab) {
+    color: rgba(255, 255, 255, 0.8) !important;
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    &.ant-tabs-tab-active {
+      color: #ffffff !important;
+    }
+  }
+
+  :global(.ant-tabs-ink-bar) {
+    background: #ffffff !important;
+  }
+
+  :global(.ant-tabs-content-holder) {
+    background: transparent;
+  }
+}

@@ -37,7 +37,9 @@ const Athlete = () => {
     >
       <div className={styles.container}>
         {data?.payload.map((athlete: IAthlete) => (
-          <AthleteCard key={athlete._id} athlete={athlete} />
+          <Link key={athlete._id} href={`/athletes/${athlete._id}`} className={styles.athleteLink}>
+            <AthleteCard athlete={athlete} />
+          </Link>
         ))}
       </div>
     </SearchWrapper>
