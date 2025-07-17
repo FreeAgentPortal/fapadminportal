@@ -53,14 +53,17 @@ const PlanModal: React.FC<PlanModalProps> = ({ visible, onCancel, onSuccess, edi
     description: feature.shortDescription,
   }));
 
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const { mutate: mutatePlan } = useApiHook({
     method: editingPlan ? "PUT" : "POST",
     key: "plan.mutate",
     queriesToInvalidate: ["plans"],
   }) as any;
+
   // Handle form submission
   const handleSubmit = async (values: any) => {
     try {
+      setIsSubmitting(true);
       const selectedFeatures = features.filter((feature) => targetKeys.includes(feature._id));
 
       const planData = {
@@ -71,7 +74,6 @@ const PlanModal: React.FC<PlanModalProps> = ({ visible, onCancel, onSuccess, edi
 
       const endpoint = editingPlan ? PLANS_API_ENDPOINTS.UPDATE(editingPlan._id) : PLANS_API_ENDPOINTS.CREATE;
 
-      // You'll need to implement the mutation logic here
       mutatePlan(
         { url: endpoint, formData: planData },
         {
@@ -80,16 +82,21 @@ const PlanModal: React.FC<PlanModalProps> = ({ visible, onCancel, onSuccess, edi
               type: "success",
               message: editingPlan ? "Plan updated successfully!" : "Plan created successfully!",
             });
+            onSuccess();
+            handleCancel();
           },
         }
       );
-      onSuccess();
-      handleCancel();
     } catch (error) {
       console.log(error);
+      addAlert({
+        type: "error",
+        message: "Failed to save plan. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
-
   const handleCancel = () => {
     form.resetFields();
     setTargetKeys([]);
@@ -323,10 +330,10 @@ const PlanModal: React.FC<PlanModalProps> = ({ visible, onCancel, onSuccess, edi
           </div>
 
           <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem", marginTop: "2rem" }}>
-            <Button onClick={handleCancel} style={{ color: "#ff0000ff" }}>
+            <Button onClick={handleCancel} style={{ color: "#ff0000ff" }} disabled={isSubmitting}>
               Cancel
             </Button>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={isSubmitting}>
               {editingPlan ? "Update Plan" : "Create Plan"}
             </Button>
           </div>
