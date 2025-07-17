@@ -23,9 +23,7 @@ import formatPhoneNumber from "@/utils/formatPhoneNumber";
 import { timeDifference } from "@/utils/timeDifference";
 import { useParams } from "next/navigation";
 
-interface Props {}
-
-const UserDetails = ({}: Props) => {
+const UserDetails = () => {
   const { id } = useParams();
   const [form] = Form.useForm();
   const [passwordForm] = Form.useForm();
