@@ -93,8 +93,6 @@ const PlanModal: React.FC<PlanModalProps> = ({ visible, onCancel, onSuccess, edi
         type: "error",
         message: "Failed to save plan. Please try again.",
       });
-    } finally {
-      setIsSubmitting(false);
     }
   };
   const handleCancel = () => {
