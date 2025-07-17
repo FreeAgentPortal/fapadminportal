@@ -32,16 +32,21 @@ export const navigation = (options?: any) => {
     management: {
       title: "Management",
       links: {
-        teams: {
-          title: "Teams",
-          link: "/teams",
-          icon: <GiAmericanFootballHelmet />,
-        },
         athletes: {
           title: "Athletes",
           link: "/athletes",
           icon: <MdSportsHandball />,
         },
+        teams: {
+          title: "Teams",
+          link: "/teams",
+          icon: <GiAmericanFootballHelmet />,
+        },
+        users: {
+          title: "Users",
+          link: "/users",
+          icon: <BsFillPeopleFill />,
+        }
       },
       hidden: false,
     },

@@ -1,0 +1,376 @@
+@use "@/styles/globals.scss" as *;
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+
+  @include mobile {
+    padding: 16px;
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
+
+  .loadingText {
+    color: var(--color-silver);
+    font-size: 16px;
+  }
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
+  color: var(--primary);
+  font-size: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, var(--color-metallic-blue) 0%, rgba(0, 0, 0, 1) 100%);
+  border: 1px solid var(--color-metallic-blue-dark);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+
+  @include mobile {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+
+  @include mobile {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.avatar {
+  border: 3px solid var(--color-metallic-blue);
+  box-shadow: 0 8px 32px var(--color-silver);
+}
+
+.userBasics {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @include mobile {
+    align-items: center;
+  }
+}
+
+.userName {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  line-height: 1.2;
+
+  @include mobile {
+    font-size: 24px;
+  }
+}
+
+.badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  @include mobile {
+    justify-content: center;
+  }
+}
+
+.profileRefTag {
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+
+.userMeta {
+  display: flex;
+  gap: 20px;
+  color: white;
+  font-size: 14px;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  @include mobile {
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+
+  @include mobile {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  @include desktop {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(75, 167, 214, 0.1) 100%);
+  border: 1px solid var(--color-metallic-blue-dark);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+
+  :global(.ant-card-head) {
+    border-bottom: 1px solid var(--color-metallic-blue-dark) !important;
+    background: transparent !important;
+  }
+
+  :global(.ant-card-head-title) {
+    color: var(--color-silver) !important;
+    font-weight: 600 !important;
+  }
+
+  :global(.ant-card-body) {
+    background: transparent !important;
+  }
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-silver) ;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  :global(.ant-form-item-label > label) {
+    color: var(--color-silver) !important;
+    font-weight: 500;
+  }
+
+  :global(.ant-input) { 
+    &:focus {
+      border-color: var(--color-metallic-blue) !important;
+      box-shadow: 0 0 0 2px rgba(122, 205, 242, 0.2) !important;
+    }
+  }
+
+  :global(.ant-input-affix-wrapper) {
+    border: 1px solid var(--color-metallic-blue-dark) !important;
+
+    &:focus-within {
+      border-color: var(--color-metallic-blue) !important;
+      box-shadow: 0 0 0 2px rgba(122, 205, 242, 0.2) !important;
+    }
+
+    .ant-input {
+      background-color: transparent !important;
+      border: none !important;
+    }
+  }
+
+  :global(.ant-switch) {
+    background-color: rgba(0, 0, 0, 0.4);
+
+    &.ant-switch-checked {
+      background-color: var(--color-metallic-blue);
+    }
+  }
+}
+
+.saveActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-metallic-blue-dark);
+}
+
+.authSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.authInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+}
+
+.authItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.authIcon {
+  font-size: 24px;
+  color: var(--color-metallic-blue);
+}
+
+.authDetails {
+  h4 {
+    color: var(--primary);
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  p {
+    color: var(--color-silver-dark);
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+.warning {
+  display: flex;
+  align-items: center;
+}
+
+.passwordActions {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 12px;
+
+    :global(.ant-space-item) {
+      width: 100%;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.permissions {
+  h4 {
+    color: var(--primary);
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.permissionsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.permissionTag {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(122, 205, 242, 0.2);
+  border: 1px solid var(--color-metallic-blue);
+  color: var(--color-metallic-blue-light);
+}
+
+.passwordModal {
+  :global(.ant-modal-content) {
+    // background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(75, 167, 214, 0.2) 100%);
+    border: 1px solid var(--color-metallic-blue);
+    backdrop-filter: blur(10px);
+  }
+
+  :global(.ant-modal-header) {
+    background: transparent;
+    border-bottom: 1px solid var(--color-metallic-blue);
+  }
+
+  :global(.ant-modal-title) {
+    // color: var(--color-silver);
+  }
+
+  :global(.ant-modal-body) {
+    background: transparent;
+  }
+
+  :global(.ant-form-item-label > label) {
+    color: var(--color-silver) !important;
+  }
+
+  :global(.ant-input) {
+    // background-color: rgba(0, 0, 0, 0.3) !important;
+    // border: 1px solid var(--color-metallic-blue-dark) !important;
+    // color: var(--color-silver) !important;
+  }
+
+  :global(.ant-input-affix-wrapper) {
+    // background-color: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid var(--color-metallic-blue-dark) !important;
+  }
+}
+
+.modalTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--primary);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
