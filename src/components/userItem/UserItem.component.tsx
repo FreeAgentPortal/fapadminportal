@@ -52,6 +52,7 @@ const UserItem = ({ user, sm, onClick }: Props) => {
       <div className={styles.header}>
         <div className={styles.userBasics}>
           <Avatar
+            src={user?.profileImageUrl ?? '/images/no-photo.png'}
             icon={<UserOutlined />}
             size={sm ? 40 : 48}
             className={styles.avatar}
