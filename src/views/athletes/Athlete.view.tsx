@@ -1,14 +1,15 @@
-'use client';
+"use client";
 import React from "react";
 import styles from "./Athlete.module.scss";
 import useApiHook from "@/hooks/useApi";
 import SearchWrapper from "@/layout/searchWrapper/SearchWrapper.layout";
-import { Avatar, Button, Table } from "antd"; 
+import { Avatar, Button, Table } from "antd";
 import { IAthlete } from "@/types/IAthleteType";
 import Link from "next/link";
 import { FaEdit } from "react-icons/fa";
+import AthleteCard from "@/components/athleteCard/AthleteCard.component";
 
-const Athlete = () => { 
+const Athlete = () => {
   const { data, isLoading, isError, error } = useApiHook({
     url: "/athlete",
     key: "athletes",
@@ -34,73 +35,11 @@ const Athlete = () => {
       total={data?.metadata?.totalCount}
       isFetching={isLoading}
     >
-      <Table
-        className={styles.table}
-        dataSource={data?.payload}
-        loading={isLoading}
-        size="small"
-        rowKey={(record: IAthlete) => record._id}
-        columns={[
-          {
-            title: "",
-            dataIndex: "avatar",
-            key: "avatar",
-            render: (text: string, record: IAthlete) => {
-              return (
-                <div className={styles.avatar}>
-                 <Avatar src={record.profileImageUrl} />
-                </div>
-              );
-            },
-          },
-          {
-            title: "Name",
-            dataIndex: "fullName",
-            key: "name",
-          },
-          {
-            title: "Position(s)",
-            dataIndex: "positions",
-            render: (text: string[]) => {
-              return (
-                <span>
-                  {text && text.length > 0 ? text.join(", ") : "N/A"}
-                </span>
-              );
-            },
-          },
-          {
-            title: "Claimed",
-            key: "claimed",
-            render: (text: string, record: IAthlete) => {
-              return (
-                // check for a user in the record, if it exists, profile has been claimed
-                <span>
-                  {record.userId ? "Claimed" : "Unclaimed"}
-                </span>
-              );
-            },
-          },
-      
-          {
-            title: "Actions",
-            dataIndex: "actions",
-            key: "actions",
-            render: (text: string, record: IAthlete) => {
-              return (
-                <div className={styles.actions}>
-                  <Link href={`/teams/${record._id}`}>
-                    <Button>
-                      <FaEdit />
-                    </Button>
-                  </Link>
-                </div>
-              );
-            },
-          },
-        ]}
-        pagination={false}
-      />
+      <div className={styles.container}>
+        {data?.payload.map((athlete: IAthlete) => (
+          <AthleteCard key={athlete._id} athlete={athlete} />
+        ))}
+      </div>
     </SearchWrapper>
   );
 };
