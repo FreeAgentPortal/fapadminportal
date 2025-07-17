@@ -34,7 +34,7 @@ const Background = () => {
   const handleSubmit = async (values: IAthlete) => {
     const payload = {
       ...values,
-      graduationYear: values.graduationYear?.year() ?? null,
+      graduationYear: values.graduationYear ?? null,
     };
 
     await updateProfile({
