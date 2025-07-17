@@ -27,12 +27,10 @@ export interface IAthlete {
   measurements?: Map<string, string | number>; // e.g., "height": "6'1\""
   metrics?: Map<string, number>; // e.g., "dash40": 4.42
   college?: string;
-  positions?: [
-    {
-      name: string;
-      abbreviation: string;
-    }
-  ];
+  positions?: Array<{
+    name: string;
+    abbreviation: string;
+  }>;
   graduationYear?: number;
   bio?: string;
   highSchool?: string;
