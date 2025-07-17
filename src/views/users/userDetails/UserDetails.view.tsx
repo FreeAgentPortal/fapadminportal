@@ -23,8 +23,6 @@ import formatPhoneNumber from "@/utils/formatPhoneNumber";
 import { timeDifference } from "@/utils/timeDifference";
 import { useParams } from "next/navigation";
 
-const { confirm } = Modal;
-
 interface Props {}
 
 const UserDetails = ({}: Props) => {
@@ -99,43 +97,39 @@ const UserDetails = ({}: Props) => {
   };
 
   const handleResetPassword = () => {
-    confirm({
-      title: "Reset User Password",
-      icon: <ExclamationCircleOutlined />,
-      content: `Are you sure you want to reset the password for ${user?.fullName}? A new secure password will be generated and emailed to them.`,
-      okText: "Reset Password",
-      okType: "danger",
-      cancelText: "Cancel",
-      onOk() {
-        resetPassword(
-          {
-            url: `/user/${user?._id}/reset-password`,
-            formData: { sendEmail: true },
-          },
-          {
-            onSuccess: () => {
-              addAlert({
-                type: "success",
-                message: "Password reset successfully! User will receive an email with their new password.",
-              });
-            },
-            onError: () => {
-              addAlert({
-                type: "error",
-                message: "Failed to reset password",
-              });
-            },
-          }
-        );
+    setResetPasswordModalVisible(true);
+  };
+
+  const confirmResetPassword = () => {
+    resetPassword(
+      {
+        url: `/user/${user?._id}/reset-password`,
+        formData: { sendNotification: true, generateSecure: true },
       },
-    });
+      {
+        onSuccess: () => {
+          addAlert({
+            type: "success",
+            message: "Password reset successfully! User will receive an email with their new password.",
+          });
+          setResetPasswordModalVisible(false);
+        },
+        onError: () => {
+          addAlert({
+            type: "error",
+            message: "Failed to reset password",
+          });
+          setResetPasswordModalVisible(false);
+        },
+      }
+    );
   };
 
   const handleSetCustomPassword = async (values: any) => {
     try {
       setCustomPassword(
         {
-          url: `/user/${user?._id}/set-password`,
+          url: `/user/${user?._id}/reset-password`,
           formData: {
             password: values.password,
             sendNotification: values.sendNotification || false,
@@ -287,11 +281,7 @@ const UserDetails = ({}: Props) => {
                 <Input disabled={!isEditing} />
               </Form.Item>
 
-              <Form.Item
-                label="Last Name"
-                name="lastName"
-                rules={[{ required: true, message: "Please enter last name" }]}
-              >
+              <Form.Item label="Last Name" name="lastName">
                 <Input disabled={!isEditing} />
               </Form.Item>
 
@@ -460,6 +450,35 @@ const UserDetails = ({}: Props) => {
             </Button>
           </div>
         </Form>
+      </Modal>
+
+      {/* Reset Password Confirmation Modal */}
+      <Modal
+        title={
+          <div className={styles.modalTitle}>
+            <ExclamationCircleOutlined style={{ color: "#ff4d4f" }} /> Reset User Password
+          </div>
+        }
+        open={resetPasswordModalVisible}
+        onCancel={() => setResetPasswordModalVisible(false)}
+        footer={null}
+        className={styles.passwordModal}
+      >
+        <div style={{ marginBottom: "24px" }}>
+          <p style={{ color: "var(--color-silver)", fontSize: "16px", marginBottom: "16px" }}>
+            Are you sure you want to reset the password for <strong>{user?.fullName}</strong>?
+          </p>
+          <p style={{ color: "var(--color-silver-dark)", fontSize: "14px" }}>
+            A new secure password will be generated and emailed to them automatically.
+          </p>
+        </div>
+
+        <div className={styles.modalActions}>
+          <Button onClick={() => setResetPasswordModalVisible(false)}>Cancel</Button>
+          <Button type="primary" danger onClick={confirmResetPassword} loading={isResetting} icon={<ReloadOutlined />}>
+            Reset Password
+          </Button>
+        </div>
       </Modal>
     </div>
   );
