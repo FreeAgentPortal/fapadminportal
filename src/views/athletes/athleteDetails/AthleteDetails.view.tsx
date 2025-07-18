@@ -264,7 +264,7 @@ const AthleteDetails = () => {
         }}
       >
         <div style={{ marginBottom: 16 }}>
-          <p>Enter the ESPN athlete ID to automatically populate athlete information from ESPN's database.</p>
+          <p>Enter the ESPN athlete ID to automatically populate athlete information from ESPN&apos;s database.</p>
           <div
             style={{
               padding: "12px",
@@ -277,11 +277,11 @@ const AthleteDetails = () => {
           >
             <strong>How to find ESPN ID:</strong>
             <br />
-            1. Go to the athlete's ESPN profile page
+            1. Go to the athlete&apos;s ESPN profile page
             <br />
             2. Look at the URL: espn.com/college-football/player/_/id/<strong>1234567</strong>/name
             <br />
-            3. The ESPN ID is the number after "/id/" (e.g., 1234567)
+            3. The ESPN ID is the number after &quot;/id/&quot; (e.g., 1234567)
           </div>
         </div>
         <Input
