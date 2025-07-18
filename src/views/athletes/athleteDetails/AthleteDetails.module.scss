@@ -205,25 +205,4 @@
   @include mobile {
     padding: 1rem;
   }
-
-  // Override Ant Design tab styles
-  :global(.ant-tabs-tab) {
-    color: rgba(255, 255, 255, 0.8) !important;
-
-    &:hover {
-      color: rgba(255, 255, 255, 0.9) !important;
-    }
-
-    &.ant-tabs-tab-active {
-      color: #ffffff !important;
-    }
-  }
-
-  :global(.ant-tabs-ink-bar) {
-    background: #ffffff !important;
-  }
-
-  :global(.ant-tabs-content-holder) {
-    background: transparent;
-  }
 }

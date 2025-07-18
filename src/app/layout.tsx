@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "@/styles/antd-overrides.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@ant-design/v5-patch-for-react-19";
 import AppWrapper from "@/layout/appWrapper/AppWrapper";

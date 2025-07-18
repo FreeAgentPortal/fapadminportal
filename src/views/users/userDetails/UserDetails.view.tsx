@@ -218,7 +218,7 @@ const UserDetails = () => {
         <div className={styles.userInfo}>
           <Avatar icon={<UserOutlined />} size={64} className={styles.avatar} style={{ backgroundColor: "#1890ff" }} />
           <div className={styles.userBasics}>
-            <h1 className={styles.userName}>{user.fullName || `${user.firstName} ${user.lastName}`}</h1>
+            <h1 className={styles.userName}>{user.fullName}</h1>
             <div className={styles.badges}>
               {activeProfileRefs.map(([refType, refId]) => (
                 <Tag key={refType} color={getProfileRefColor(refType)} className={styles.profileRefTag}>

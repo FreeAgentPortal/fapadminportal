@@ -1,0 +1,413 @@
+/* Global Ant Design Overrides for Dark Theme */
+/* 
+ * This file consolidates all Ant Design style customizations to prevent style bleeding.
+ * 
+ * Previously, these overrides were scattered across multiple SCSS files:
+ * - UserDetails.module.scss (forms, modals, cards, switches)
+ * - AthleteDetails.module.scss (tabs)
+ * - Metrics.module.scss (forms, selects, dividers)
+ * - Measurements.module.scss (forms, selects, dividers)
+ * - UserAssociation.module.scss (forms, selects, modals)
+ * - BasicInfo/Editing.module.scss (forms, pickers, rates, uploads)
+ * - PlanModal.css (transfer components, forms)
+ * 
+ * All these scattered :global() overrides have been consolidated here to:
+ * 1. Prevent style bleeding between components
+ * 2. Maintain consistency across the application
+ * 3. Make Ant Design customizations easier to maintain
+ * 4. Reduce code duplication
+ */
+
+/* ===========================================
+   FORM COMPONENTS
+=========================================== */
+
+/* Form Labels */
+.ant-form-item-label > label {
+  color: var(--primary) !important;
+  font-weight: 500;
+}
+
+/* Input Fields */
+.ant-input,
+.ant-input-number,
+.ant-picker,
+.ant-select-selector {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  /* color: #ffffff !important; */
+}
+
+.ant-input:hover,
+.ant-input-number:hover,
+.ant-picker:hover,
+.ant-select-selector:hover {
+  border-color: #1890ff !important;
+}
+
+.ant-input:focus,
+.ant-input-number:focus,
+.ant-picker:focus,
+.ant-select:focus .ant-select-selector,
+.ant-input-number-focused,
+.ant-picker-focused,
+.ant-select-focused .ant-select-selector {
+  border-color: #1890ff !important;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
+}
+
+/* Input Placeholders */
+.ant-input::placeholder,
+.ant-input-number input::placeholder,
+.ant-picker-input input::placeholder,
+.ant-select-selection-placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Input Number Specific */
+.ant-input-number-input {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+/* Input Affix Wrapper */
+.ant-input-affix-wrapper {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.ant-input-affix-wrapper:hover {
+  border-color: #1890ff !important;
+}
+
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused {
+  border-color: #1890ff !important;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
+}
+
+.ant-input-affix-wrapper .ant-input {
+  background: transparent !important;
+  border: none !important;
+  /* color: #ffffff !important; */
+}
+
+/* ===========================================
+   SELECT COMPONENTS
+=========================================== */
+
+/* Select Dropdown */
+.ant-select-dropdown {
+  background: rgba(0, 0, 0, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Select Items */
+.ant-select-item {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.ant-select-item:hover {
+  background: rgba(24, 144, 255, 0.2) !important;
+}
+
+.ant-select-item-option-selected {
+  background: rgba(24, 144, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+/* Select Text and Arrow */
+.ant-select-selection-item {
+  color: #ffffff !important;
+}
+
+.ant-select-arrow {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ===========================================
+   MODAL COMPONENTS
+=========================================== */
+
+/* Modal Container */
+.ant-modal-content {
+  background: rgba(24, 24, 24, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Modal Header */
+.ant-modal-header {
+  background: rgba(20, 20, 20, 0.05) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Modal Title */
+.ant-modal-title {
+  color: #ffffff !important;
+}
+
+/* Modal Body */
+.ant-modal-body {
+  background: transparent !important;
+}
+
+/* Modal Close Button */
+.ant-modal-close {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.ant-modal-close:hover {
+  color: #ffffff !important;
+}
+
+/* Modal Footer */
+.ant-modal-footer {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* ===========================================
+   CARD COMPONENTS
+=========================================== */
+
+/* Card Header */
+.ant-card-head {
+  background: rgba(255, 255, 255, 0.05) !important;
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important; */
+}
+
+/* Card Title */
+.ant-card-head-title {
+  color: #ffffff !important;
+}
+
+/* Card Body */
+.ant-card-body {
+  background: transparent !important;
+}
+
+/* ===========================================
+   TABS COMPONENTS
+=========================================== */
+
+/* Tab Items */
+.ant-tabs-tab {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.ant-tabs-tab:hover {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.ant-tabs-tab-active {
+  color: #1890ff !important;
+}
+
+/* Tab Ink Bar */
+.ant-tabs-ink-bar {
+  background: #1890ff !important;
+}
+
+/* Tab Content */
+.ant-tabs-content-holder {
+  background: transparent !important;
+}
+
+/* ===========================================
+   SWITCH COMPONENTS
+=========================================== */
+
+/* Switch */
+.ant-switch {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.ant-switch-checked {
+  background: #1890ff !important;
+}
+
+/* ===========================================
+   BUTTON COMPONENTS
+=========================================== */
+
+/* Upload Button */
+.ant-upload .ant-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.ant-upload .ant-btn:hover {
+  background: rgba(24, 144, 255, 0.2) !important;
+  border-color: #1890ff !important;
+}
+
+/* ===========================================
+   RATE COMPONENTS
+=========================================== */
+
+/* Rate Stars */
+.ant-rate {
+  color: #1890ff !important;
+}
+
+.ant-rate-star-zero {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* ===========================================
+   DIVIDER COMPONENTS
+=========================================== */
+
+/* Dividers */
+.ant-divider {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.ant-divider-horizontal.ant-divider-with-text {
+  color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.ant-divider-horizontal.ant-divider-with-text::before,
+.ant-divider-horizontal.ant-divider-with-text::after {
+  border-top-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* ===========================================
+   TRANSFER COMPONENTS
+=========================================== */
+
+/* Transfer Lists */
+.ant-transfer-list {
+  width: 100% !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Transfer List Header */
+.ant-transfer-list-header {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.ant-transfer-list-header-title {
+  color: #ffffff !important;
+}
+
+/* Transfer List Body */
+.ant-transfer-list-body {
+  background-color: transparent !important;
+}
+
+/* Transfer List Items */
+.ant-transfer-list-content-item {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.ant-transfer-list-content-item:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.ant-transfer-list-content-item-checked {
+  background-color: rgba(24, 144, 255, 0.2) !important;
+}
+
+/* Transfer Operation Buttons */
+.ant-transfer-operation {
+  margin: 0 1rem !important;
+}
+
+.ant-transfer-operation .ant-btn {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.ant-transfer-operation .ant-btn:hover {
+  background-color: rgba(24, 144, 255, 0.3) !important;
+  border-color: #1890ff !important;
+  color: #ffffff !important;
+}
+
+.ant-transfer-operation .ant-btn:disabled {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* ===========================================
+   LAYOUT COMPONENTS
+=========================================== */
+
+/* Space Items - Currently no specific overrides needed */
+
+/* Form Inline Items */
+.ant-form-inline .ant-form-item {
+  margin-right: 16px;
+  margin-bottom: 16px;
+}
+
+/* ===========================================
+   SCOPED OVERRIDES FOR SPECIFIC COMPONENTS
+=========================================== */
+
+/* Plan Transfer Component Specific */
+.plan-transfer .ant-transfer-list {
+  width: 100% !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.plan-transfer .ant-transfer-list-header {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.plan-transfer .ant-transfer-list-header-title {
+  color: #ffffff !important;
+}
+
+.plan-transfer .ant-transfer-list-body {
+  background-color: transparent !important;
+}
+
+.plan-transfer .ant-transfer-list-content-item {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.plan-transfer .ant-transfer-list-content-item:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.plan-transfer .ant-transfer-list-content-item-checked {
+  background-color: rgba(24, 144, 255, 0.2) !important;
+}
+
+.plan-transfer .ant-transfer-operation {
+  margin: 0 1rem !important;
+}
+
+.plan-transfer .ant-transfer-operation .ant-btn {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.plan-transfer .ant-transfer-operation .ant-btn:hover {
+  background-color: rgba(24, 144, 255, 0.3) !important;
+  border-color: #1890ff !important;
+  color: #ffffff !important;
+}
+
+.plan-transfer .ant-transfer-operation .ant-btn:disabled {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+}

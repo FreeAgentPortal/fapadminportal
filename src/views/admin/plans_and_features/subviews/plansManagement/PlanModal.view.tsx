@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { Modal, Form, Input, InputNumber, Select, Switch, Transfer, Button, message, Spin } from "antd";
 import type { TransferProps } from "antd";
 import { DollarOutlined, FileTextOutlined } from "@ant-design/icons";
-import "./PlanModal.css";
 import useApiHook from "@/hooks/useApi";
 import { PlanType } from "@/types/IPlanType";
 import { FeatureType } from "@/types/IFeatureType";
