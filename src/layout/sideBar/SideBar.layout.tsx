@@ -18,11 +18,12 @@ type Props = {
 };
 const SideBar = (props: Props) => {
   // Use reactive query instead of static queryClient.getQueryData
-  const { data: profileData } = useQuery({
-    queryKey: ["profile", "admin"],
+  const { data: profileData } = useApiHook({
+    method: "GET",
+    key: ["profile", "admin"],
     enabled: false, // Don't auto-fetch, assume it's being fetched elsewhere
     staleTime: Infinity, // Use cached data if available
-  });
+  }) as any;
 
   const { data: claimsData } = useApiHook({
     url: "/auth/claim",

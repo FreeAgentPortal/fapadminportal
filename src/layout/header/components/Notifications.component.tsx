@@ -20,8 +20,7 @@ const Notifications = () => {
     <div className={styles.container}>
       <Tooltip title="Notifications">
         <Badge count={
-          // data?.notifications.filter((n: any) => !n.opened).length
-          0
+          data?.payload.filter((n: any) => !n.opened).length
           }>
           <Button type="text" onClick={() => setIsOpen(!isOpen)} className={styles.button}>
             <IoIosNotifications />
@@ -33,18 +32,17 @@ const Notifications = () => {
         <div className={styles.header}>
           <p>Notifications</p>
           <Badge count={
-            // data?.notifications.filter((n: any) => !n.opened).length
-            0
+            data?.payload.filter((n: any) => !n.opened).length
             } size="small" />
         </div>
 
-        {/* {data?.notifications.length > 0 ? (
-          data?.notifications.slice(0, data?.notifications.length > 3 ? 3 : data?.notifications.length).map((notification: NotificationType) => {
+        {data?.payload.length > 0 ? (
+          data?.payload.slice(0, data?.payload.length > 3 ? 3 : data?.payload.length).map((notification: NotificationType) => {
             return <NotificationItem notification={notification} key={notification._id} small={true} />;
           })
         ) : (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="You have no notifications" />
-        )} */}
+        )}
         <Link href={'/home/notifications'} className={styles.viewAllButton}>
           <span>View all notifications</span>
         </Link>
