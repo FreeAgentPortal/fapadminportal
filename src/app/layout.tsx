@@ -21,6 +21,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Admin | Free Agent Portal",
   description: "Admin portal",
+  metadataBase: new URL("https://admin.freeagentportal.com"),
   openGraph: {
     title: "Admin | Free Agent Portal",
     description: "Log in or register to access your profile on the Free Agent Portal.",

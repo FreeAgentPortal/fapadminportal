@@ -8,9 +8,9 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { IoCodeSlashOutline } from "react-icons/io5";
 import { profile } from "console";
 import { shouldHideForRoles, ROLE_GROUPS } from "@/utils/roleUtils";
+import { Badge } from "antd";
 
-export const navigation = (options?: any) => {
-  console.log(options);
+export const navigation = (options?: any) => { 
   return {
     home: {
       title: "Home",
@@ -18,12 +18,12 @@ export const navigation = (options?: any) => {
         home: {
           title: "Home",
           link: "/",
-          icon: <RiHome2Fill />, 
+          icon: <RiHome2Fill />,
         },
         notifications: {
           title: "Notifications",
           link: "/notifications",
-          icon: <FaRegBell />, 
+          icon: <FaRegBell />,
         },
       },
       hidden: false,
@@ -46,7 +46,7 @@ export const navigation = (options?: any) => {
           title: "Users",
           link: "/users",
           icon: <BsFillPeopleFill />,
-        }
+        },
       },
       hidden: false,
     },
@@ -74,20 +74,25 @@ export const navigation = (options?: any) => {
     admin: {
       title: "Admin Tools",
       links: {
-        plans: {
-          title: "Plans & Billing",
-          link: "/admin/plans",
-          icon: <BsBox />, 
-        },
-        support_admin: {
-          title: `Support Admin`,
-          link: "/account_details/support_admin",
-          icon: <MdSupportAgent />, 
+        claims: {
+          title: "Profile Claims",
+          link: "/admin/claims",
+          icon: <Badge count={options?.claimsCount}><IoCodeSlashOutline /></Badge>,
         },
         legal: {
           title: "Legal (Terms & Policy)",
           link: "/account_details/legal",
-          icon: <FaStickyNote />, 
+          icon: <FaStickyNote />,
+        },
+        plans: {
+          title: "Plans & Billing",
+          link: "/admin/plans",
+          icon: <BsBox />,
+        },
+        support_admin: {
+          title: `Support Admin`,
+          link: "/account_details/support_admin",
+          icon: <MdSupportAgent />,
         },
       },
       // Only show to users with admin or developer roles

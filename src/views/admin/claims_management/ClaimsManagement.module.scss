@@ -1,0 +1,239 @@
+@use "@/styles/globals.scss" as *;
+
+.container {
+  padding: 2rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @include mobile {
+    padding: 1rem;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+}
+
+.headerContent { 
+  h1.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, #2c2c2c 0%, rgba(122, 205, 242, 0.9) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    @include mobile {
+      font-size: 2rem;
+    }
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: rgba(54, 54, 54, 0.7);
+    margin: 0;
+  }
+}
+
+.headerActions {
+  display: flex;
+  gap: 1rem;
+
+  @include mobile {
+    justify-content: flex-end;
+  }
+}
+
+.filtersCard {
+  margin-bottom: 1.5rem;
+  background: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(10px);
+
+  :global(.ant-card-body) {
+    padding: 1.5rem !important;
+  }
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: end;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.filterLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.25rem;
+}
+
+.filterActions {
+  display: flex;
+  align-items: end;
+
+  @include mobile {
+    margin-top: 1rem;
+  }
+}
+
+.tableCard {
+  background: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(10px);
+
+  :global(.ant-card-body) {
+    padding: 0 !important;
+  }
+}
+
+.tableHeader {
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+}
+
+.tableInfo {
+  .totalCount {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+
+    strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+  }
+}
+
+.claimsTable {
+  :global(.ant-table) {
+    background: transparent !important;
+  }
+
+  :global(.ant-table-thead > tr > th) {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 600 !important;
+  }
+
+  :global(.ant-table-tbody > tr > td) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    background: transparent !important;
+  }
+
+  :global(.ant-table-tbody > tr:hover > td) {
+    background: rgba(255, 255, 255, 0.03) !important;
+  }
+
+  :global(.ant-pagination) {
+    margin: 1.5rem !important;
+
+    .ant-pagination-item {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border-color: rgba(255, 255, 255, 0.2) !important;
+
+      a {
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
+    }
+
+    .ant-pagination-item-active {
+      background: rgba(122, 205, 242, 0.2) !important;
+      border-color: rgba(122, 205, 242, 0.5) !important;
+
+      a {
+        color: #ffffff !important;
+      }
+    }
+  }
+}
+
+.claimId {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: rgba(122, 205, 242, 0.9);
+  font-weight: 600;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.userDetails {
+  .userName {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.2;
+  }
+
+  .userEmail {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.2;
+  }
+}
+
+.profileInfo {
+  .profileName {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #ffffff;
+    display: block;
+    line-height: 1.2;
+  }
+
+  .profileSlug {
+    font-size: 0.75rem;
+    color: rgba(122, 205, 242, 0.8);
+    font-family: monospace;
+    line-height: 1.2;
+  }
+}
+
+.documentsIcon {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
