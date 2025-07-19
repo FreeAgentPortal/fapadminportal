@@ -63,14 +63,14 @@ const AthleteCard = ({ athlete, sm, onClick }: AthleteCardProps) => {
           <div className={styles.nameSection}>
             <h3 className={styles.name}>{athlete?.fullName}</h3>
             <div className={styles.badges}>
-              {athlete?.positions && athlete.positions.length > 0 && (
-                <Tag color={getPositionColor(athlete.positions[0].name)} className={styles.positionTag}>
-                  <RiseOutlined /> {athlete.positions[0].abbreviation || athlete.positions[0].name.toUpperCase()}
+              {athlete?.positions && athlete?.positions?.length > 0 && (
+                <Tag color={getPositionColor(athlete?.positions[0]?.name)} className={styles.positionTag}>
+                  <RiseOutlined /> {athlete.positions[0]?.abbreviation || athlete?.positions[0]?.name?.toUpperCase()}
                 </Tag>
               )}
               {athlete?.graduationYear && (
-                <Tag color={getGraduationStatus(athlete.graduationYear).color} className={styles.gradTag}>
-                  <CalendarOutlined /> {getGraduationStatus(athlete.graduationYear).text}
+                <Tag color={getGraduationStatus(athlete?.graduationYear).color} className={styles.gradTag}>
+                  <CalendarOutlined /> {getGraduationStatus(athlete?.graduationYear).text}
                 </Tag>
               )}
             </div>
