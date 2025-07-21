@@ -12,7 +12,9 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  max-width: 400px;
+  min-width: 400px;
+  height: 100%;
+
   &::before {
     content: "";
     position: absolute;
