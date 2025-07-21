@@ -52,12 +52,7 @@ export const navigation = (options?: any) => {
     },
     account_details: {
       title: "Account Details",
-      links: {
-        profile: {
-          title: "Profile",
-          link: "/account_details/profile",
-          icon: <BsFillPeopleFill />,
-        },
+      links: { 
         support: {
           title: "Support",
           link: "/account_details/support",

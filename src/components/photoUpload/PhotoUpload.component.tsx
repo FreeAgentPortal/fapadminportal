@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Avatar, Form, Upload, message, FormInstance } from "antd";
+import { Avatar, Form, Upload, FormInstance } from "antd";
 import type { RcFile, UploadProps, UploadChangeParam, UploadFile } from "antd/lib/upload";
 import Cropper from "antd-img-crop";
 import Loader from "../loader/Loader.component";
 import errorHandler from "@/utils/errorHandler";
 import Image from "next/image";
+import { useInterfaceStore } from "@/state/interface";
 
 type Props = {
   default?: string;
@@ -20,22 +21,32 @@ type Props = {
   form: FormInstance;
   aspectRatio?: number;
   bodyData?: any;
+  dark?: boolean; // Optional prop to indicate if dark mode is enabled
 };
 
 const PhotoUpload = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(props.default);
   const inputRef = useRef<any>(null);
+  const { addAlert } = useInterfaceStore((state) => state);
 
   const beforeUpload = async (file: RcFile) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file");
+      addAlert({
+        type: "error",
+        message: "You can only upload JPG/PNG files",
+        duration: 5000,
+      });
       return false;
     }
     const isLt10M = file.size / 1024 / 1024 < 10;
     if (!isLt10M) {
-      message.error("Images must smaller than 10MB");
+      addAlert({
+        type: "error",
+        message: "Images must be smaller than 10MB",
+        duration: 5000,
+      });
       return false;
     }
     return true;
@@ -54,11 +65,20 @@ const PhotoUpload = (props: Props) => {
     if (info.file.status === "done") {
       setLoading(false);
 
+      // response might be a payload object with an array of image/type files, select the first one
+      if (Array.isArray(info.file.response.payload)) {
+        info.file.response.imageUrl = info.file.response.payload[0]?.url;
+      }
+
       // Get this url from response to display image preview
       setImageUrl(info.file.response.imageUrl);
       props.form.setFieldValue(props.name || "image", info.file.response.imageUrl);
 
-      message.success("Image Uploaded");
+      addAlert({
+        type: "success",
+        message: "Image uploaded successfully",
+        duration: 3000,
+      });
     }
     if (info.file.status === "error") {
       console.log(info.file.response);
@@ -85,7 +105,7 @@ const PhotoUpload = (props: Props) => {
             showUploadList={false}
             type={"drag"}
             onChange={handleChange}
-            action={props.action ? props.action : "https://api.shepherdcms.org/api/v1/upload/cloudinary"}
+            action={props.action ? props.action : `${process.env.API_URL}/upload/cloudinary`}
             headers={{
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             }}
@@ -116,7 +136,21 @@ const PhotoUpload = (props: Props) => {
                 />
               )
             ) : (
-              <div style={props.imgStyle}>{props.placeholder ? props.placeholder : "Upload an Image"}</div>
+              <div
+                style={{
+                  ...props.imgStyle,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "200px",
+                  height: "200px",
+                  borderRadius: "50%",
+                  background: "rgba(255, 255, 255, 0.75)",
+                  color: "#000",
+                }}
+              >
+                {props.placeholder ? props.placeholder : "Upload an Image"}
+              </div>
             )}
           </Upload>
         </Cropper>

@@ -10,5 +10,12 @@
     padding: 1rem;
     margin: 5px 5px;
     width: 100%;
+
+    .imageContainer{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; 
+    }
   }
 }

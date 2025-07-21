@@ -35,7 +35,7 @@
 .ant-select-selector {
   background: rgba(255, 255, 255, 0.1) !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  /* color: #ffffff !important; */
+  color: #ffffff !important;
 }
 
 .ant-input:hover,
@@ -172,8 +172,8 @@
 
 /* Card Header */
 .ant-card-head {
-  background: rgba(255, 255, 255, 0.05) !important;
-  /* border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important; */
+  background: rgba(31, 31, 31, 0.05) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
 /* Card Title */
@@ -184,6 +184,11 @@
 /* Card Body */
 .ant-card-body {
   background: transparent !important;
+}
+
+.ant-card {
+  background: rgba(31, 31, 31, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
 /* ===========================================
