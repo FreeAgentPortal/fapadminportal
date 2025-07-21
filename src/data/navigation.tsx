@@ -6,11 +6,12 @@ import { GiAmericanFootballHelmet } from "react-icons/gi";
 import { BsBox, BsBroadcastPin } from "react-icons/bs";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoCodeSlashOutline } from "react-icons/io5";
+import { RiAdminFill } from "react-icons/ri";
 import { profile } from "console";
 import { shouldHideForRoles, ROLE_GROUPS } from "@/utils/roleUtils";
 import { Badge } from "antd";
 
-export const navigation = (options?: any) => { 
+export const navigation = (options?: any) => {
   return {
     home: {
       title: "Home",
@@ -52,7 +53,7 @@ export const navigation = (options?: any) => {
     },
     account_details: {
       title: "Account Details",
-      links: { 
+      links: {
         support: {
           title: "Support",
           link: "/account_details/support",
@@ -72,7 +73,16 @@ export const navigation = (options?: any) => {
         claims: {
           title: "Profile Claims",
           link: "/admin/claims",
-          icon: <Badge count={options?.claimsCount}><IoCodeSlashOutline /></Badge>,
+          icon: (
+            <Badge count={options?.claimsCount}>
+              <IoCodeSlashOutline />
+            </Badge>
+          ),
+        },
+        admin_profiles: {
+          title: "Admin Profiles",
+          link: "/admin/profiles",
+          icon: <RiAdminFill />,
         },
         legal: {
           title: "Legal (Terms & Policy)",

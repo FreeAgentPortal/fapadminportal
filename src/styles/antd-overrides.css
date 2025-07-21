@@ -92,6 +92,12 @@
   /* color: #ffffff !important; */
 }
 
+/* override the input extras styling */
+.ant-form-item-extra {  
+  color: #9c9c9c !important;
+}
+
+
 /* ===========================================
    SELECT COMPONENTS
 =========================================== */
