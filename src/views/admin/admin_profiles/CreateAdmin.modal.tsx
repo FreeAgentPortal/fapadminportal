@@ -31,10 +31,10 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
   useEffect(() => {
     if (editingUser) {
       setSelectedPermissions(editingUser.permissions || []);
-      setSelectedRole(editingUser.role?.[0] || "");
+      setSelectedRole(editingUser.roles?.[0] || "");
       form.setFieldsValue({
         userId: typeof editingUser.user === "string" ? editingUser.user : editingUser.user?._id,
-        role: editingUser.role?.[0],
+        role: editingUser.roles?.[0],
         permissions: editingUser.permissions || [],
       });
     } else {
@@ -107,11 +107,7 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
   }) as any;
 
   // query the user table to get the list of available users to assign as admin
-  const {
-    data: usersData,
-    refetch: refetchUsers,
-    isFetching: isLoadingUsers,
-  } = useApiHook({
+  const { data: usersData, isFetching: isLoadingUsers } = useApiHook({
     url: "/user",
     key: ["users-list", userSearchText],
     method: "GET",
@@ -136,15 +132,16 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
   };
 
   const handleSubmit = (values: any) => {
+    console.log(values);
     const formData = {
       user: values.userId,
-      role: [values.role], // Convert to array as per interface
+      roles: values.roles, // Convert to array as per interface
       permissions: selectedPermissions,
     };
 
     // Update existing admin
     mutateAdmin(
-      { url: editingUser ? `/admin/${editingUser?._id}` : `/admin`, data: formData },
+      { url: editingUser ? `/admin/${editingUser?._id}` : `/admin`, formData },
       {
         onSuccess: () => {
           addAlert({
@@ -185,46 +182,50 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
     >
       <div className={formStyles.form}>
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
-          <Form.Item
-            label={
-              <Space>
-                <span>Select User</span>
-                {usersData?.payload && (
-                  <Typography.Text type="warning" style={{ fontSize: "12px" }}>
-                    ({usersData.payload.length} {userSearchText ? "found" : "available"})
-                  </Typography.Text>
-                )}
-              </Space>
-            }
-            name="userId"
-            rules={[{ required: true, message: "Please select a user" }]}
-          >
-            <Select
-              placeholder="Search and select a user"
-              allowClear
-              showSearch
-              searchValue={userSearchText}
-              onSearch={handleUserSearch}
-              loading={isLoadingUsers || isSearching}
-              filterOption={false} // Disable client-side filtering since we're doing server-side search
-              notFoundContent={isLoadingUsers ? "Loading..." : "No users found"}
-              className={styles.userSelect}
+          {editingUser ? (
+            <></>
+          ) : (
+            <Form.Item
+              label={
+                <Space>
+                  <span>Select User</span>
+                  {usersData?.payload && (
+                    <Typography.Text type="warning" style={{ fontSize: "12px" }}>
+                      ({usersData.payload.length} {userSearchText ? "found" : "available"})
+                    </Typography.Text>
+                  )}
+                </Space>
+              }
+              name="userId"
+              rules={[{ required: true, message: "Please select a user" }]}
             >
-              {usersData?.payload?.map((user: any) => (
-                <Select.Option key={user._id} value={user._id}>
-                  <div className={styles.userOption}>
-                    <div className={styles.userName}>{user.fullName}</div>
-                    <div className={styles.userEmail}>{user.email}</div>
-                  </div>
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item name="role" label="Admin Role" rules={[{ required: true, message: "Please select a role" }]}>
-            <Select placeholder="Select admin role" onChange={handleRoleChange}>
+              <Select
+                placeholder="Search and select a user"
+                allowClear
+                showSearch
+                searchValue={userSearchText}
+                onSearch={handleUserSearch}
+                loading={isLoadingUsers || isSearching}
+                filterOption={false} // Disable client-side filtering since we're doing server-side search
+                notFoundContent={isLoadingUsers ? "Loading..." : "No users found"}
+                className={styles.userSelect}
+              >
+                {usersData?.payload?.map((user: any) => (
+                  <Select.Option key={user._id} value={user._id}>
+                    <div className={styles.userOption}>
+                      <div className={styles.userName}>{user.fullName}</div>
+                      <div className={styles.userEmail}>{user.email}</div>
+                    </div>
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          )}
+          <Form.Item name="roles" label="Admin Role" rules={[{ required: true, message: "Please select a role" }]}>
+            <Select placeholder="Select admin role" onChange={handleRoleChange} mode="multiple">
               <Select.Option value="admin">Admin</Select.Option>
               <Select.Option value="developer">Developer</Select.Option>
-              <Select.Option value="moderator">Moderator</Select.Option>
+              <Select.Option value="scout">Scout</Select.Option>
               <Select.Option value="support">Support</Select.Option>
             </Select>
           </Form.Item>

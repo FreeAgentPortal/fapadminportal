@@ -32,7 +32,7 @@ const columns = (
     },
     {
       title: "Roles",
-      dataIndex: "role",
+      dataIndex: "roles",
       key: "role",
       render: (role: string[]) => (
         <Space wrap>

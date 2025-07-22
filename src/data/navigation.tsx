@@ -101,7 +101,7 @@ export const navigation = (options?: any) => {
         },
       },
       // Only show to users with admin or developer roles
-      hidden: shouldHideForRoles(options?.user?.role, ROLE_GROUPS.ADMIN_AND_DEV),
+      hidden: shouldHideForRoles(options?.user?.roles, ROLE_GROUPS.ADMIN_AND_DEV),
     },
   };
 };

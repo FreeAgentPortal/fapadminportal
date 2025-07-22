@@ -26,8 +26,7 @@ const AdminProfiles = () => {
 
   // Delete admin user
   const { mutate: deleteAdmin } = useApiHook({
-    method: "DELETE",
-    url: "",
+    method: "DELETE", 
     key: "delete-admin",
     queriesToInvalidate: ["admin-users"],
   }) as any;
@@ -45,20 +44,13 @@ const AdminProfiles = () => {
   };
   const handleDeleteAdmin = (userId: string) => {
     deleteAdmin(
-      { url: `/user/${userId}` },
+      { url: `/admin/${userId}` },
       {
         onSuccess: () => {
           addAlert({
             type: "success",
             message: "Admin user deleted successfully",
             duration: 3000,
-          });
-        },
-        onError: (error: any) => {
-          addAlert({
-            type: "error",
-            message: error?.response?.data?.message || "Failed to delete admin user",
-            duration: 5000,
           });
         },
       }

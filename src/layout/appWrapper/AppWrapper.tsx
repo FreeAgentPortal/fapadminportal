@@ -63,7 +63,7 @@ const AppWrapper = (props: Props) => {
     if (!selectedProfile) return;
     // if selectedProfile is null or role is not admin, dispatch the token, logout and redirect
     // alert user that they are not authorized to access the admin portal
-    if (!selectedProfile?.payload?.role?.some((value: any) => ["admin", "developer"].includes(value))) {
+    if (!selectedProfile?.payload?.roles?.some((value: any) => ["admin", "developer"].includes(value))) {
       alert("You are not authorized to access this portal.");
       // Dispatch logout action and redirect
       logout(false);
