@@ -13,11 +13,11 @@ import NotificationType from '@/types/NotificationType';
 import useApiHook from '@/hooks/useApi';
 
 const NotificationsView = () => {
-  // const { data } = useApiHook({
-  //   url: `/notification`,
-  //   key: 'notifications',
-  //   method: 'GET',
-  // });
+  const { data } = useApiHook({
+    url: `/notification`,
+    key: 'notifications',
+    method: 'GET',
+  });
 
   const { mutate: updateNotification } = useApiHook({
     queriesToInvalidate: ['notifications'],
@@ -44,13 +44,13 @@ const NotificationsView = () => {
       }
     >
       <div className={styles.notifications}>
-        {/* {data?.notifications?.length > 0 ? (
-          data?.notifications.map((notification: NotificationType) => {
+        {data?.payload?.length > 0 ? (
+          data?.payload.map((notification: NotificationType) => {
             return <NotificationItem notification={notification} key={notification.entityId} />;
           })
         ) : (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="You have no notifications" />
-        )} */}
+        )}
       </div>
     </Container>
   );
