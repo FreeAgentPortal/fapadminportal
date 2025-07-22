@@ -422,3 +422,165 @@
   border-color: rgba(255, 255, 255, 0.1) !important;
   color: rgba(255, 255, 255, 0.3) !important;
 }
+
+/* ===========================================
+   ADMIN PROFILES SPECIFIC OVERRIDES
+=========================================== */
+
+/* Admin Modal */
+.admin-profiles .ant-modal-content {
+  background: rgba(24, 24, 24, 0.95) !important;
+  border: 1px solid rgba(var(--color-metallic-blue-rgb), 0.2) !important;
+  border-radius: 12px;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+.admin-profiles .ant-modal-header {
+  background: rgba(var(--color-metallic-blue-rgb), 0.05) !important;
+  border-bottom: 1px solid rgba(var(--color-metallic-blue-rgb), 0.2) !important;
+  border-radius: 12px 12px 0 0;
+}
+
+.admin-profiles .ant-modal-title {
+  color: var(--color-text) !important;
+  font-weight: 600;
+}
+
+.admin-profiles .ant-modal-body {
+  background: transparent !important;
+  padding: 24px;
+  max-height: calc(90vh - 120px);
+  overflow-y: auto;
+}
+
+.admin-profiles .ant-modal-close {
+  color: rgba(var(--color-text-rgb), 0.7) !important;
+}
+
+.admin-profiles .ant-modal-close:hover {
+  color: var(--color-text) !important;
+}
+
+/* Admin Table */
+.admin-profiles .ant-table {
+  background: transparent !important;
+}
+
+.admin-profiles .ant-table-thead > tr > th {
+  background: rgba(var(--color-metallic-blue-rgb), 0.05) !important;
+  color: var(--color-text) !important;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(var(--color-metallic-blue-rgb), 0.2) !important;
+}
+
+.admin-profiles .ant-table-tbody > tr > td {
+  background: transparent !important;
+  color: var(--color-text) !important;
+  border-bottom: 1px solid rgba(var(--color-metallic-blue-rgb), 0.1) !important;
+}
+
+.admin-profiles .ant-table-tbody > tr:hover > td {
+  background: rgba(var(--color-metallic-blue-rgb), 0.05) !important;
+}
+
+/* Admin Cards */
+.admin-profiles .ant-card {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--color-metallic-blue-rgb), 0.03) 0%,
+    rgba(var(--color-metallic-blue-rgb), 0.01) 100%
+  ) !important;
+  border: 1px solid rgba(var(--color-metallic-blue-rgb), 0.1) !important;
+  border-radius: 12px !important;
+}
+
+.admin-profiles .ant-card-body {
+  background: transparent !important;
+  padding: 20px;
+}
+
+.admin-profiles .ant-card-head {
+  background: rgba(var(--color-metallic-blue-rgb), 0.05);
+  border-bottom: 1px solid rgba(var(--color-metallic-blue-rgb), 0.1);
+}
+
+/* Admin Buttons */
+.admin-profiles .ant-btn-primary {
+  background: var(--color-metallic-blue) !important;
+  border-color: var(--color-metallic-blue) !important;
+  box-shadow: 0 2px 8px rgba(var(--color-metallic-blue-rgb), 0.3) !important;
+}
+
+.admin-profiles .ant-btn-primary:hover {
+  background: rgba(var(--color-metallic-blue-rgb), 0.8) !important;
+  border-color: rgba(var(--color-metallic-blue-rgb), 0.8) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--color-metallic-blue-rgb), 0.4) !important;
+}
+
+/* Admin Tags */
+.admin-profiles .ant-tag {
+  border-radius: 6px;
+  font-weight: 500;
+  padding: 2px 8px;
+}
+
+/* Admin Avatars */
+.admin-profiles .ant-avatar {
+  border: 2px solid rgba(var(--color-metallic-blue-rgb), 0.2);
+  transition: all 0.3s ease;
+}
+
+.admin-profiles .ant-avatar:hover {
+  border-color: var(--color-metallic-blue);
+  transform: scale(1.05);
+}
+
+/* Admin Permissions Card */
+.admin-profiles .permissions-card .ant-card-head {
+  background: rgba(var(--color-metallic-blue-rgb), 0.05);
+  border-bottom: 1px solid rgba(var(--color-metallic-blue-rgb), 0.1);
+}
+
+.admin-profiles .permissions-card .ant-card-body {
+  padding: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Admin Checkboxes */
+.admin-profiles .ant-checkbox-wrapper {
+  width: 100%;
+}
+
+.admin-profiles .ant-checkbox {
+  margin-right: 8px;
+}
+
+/* Admin User Select */
+.admin-profiles .ant-select-selection-search-input {
+  height: auto !important;
+}
+
+/* Mobile Responsive Admin Profiles */
+@media (max-width: 768px) {
+  .admin-profiles .ant-modal {
+    margin: 16px;
+    max-width: calc(100vw - 32px);
+  }
+
+  .admin-profiles .ant-modal-body {
+    padding: 16px;
+  }
+
+  .admin-profiles .ant-card-body {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-profiles .ant-table-tbody {
+    font-size: 12px;
+  }
+}

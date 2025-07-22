@@ -178,7 +178,7 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
       }}
       footer={null}
       width={600}
-      className={styles.adminModal}
+      className={`${styles.adminModal} admin-profiles`}
     >
       <div className={formStyles.form}>
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
@@ -243,7 +243,7 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
                   <Typography.Text type="success">({selectedPermissions.length} selected)</Typography.Text>
                 </Space>
               }
-              className={styles.permissionsCard}
+              className={`${styles.permissionsCard} permissions-card`}
             >
               <Collapse
                 ghost

@@ -27,10 +27,6 @@
   );
   border: 1px solid rgba(var(--color-metallic-blue-rgb), 0.1);
   border-radius: 12px;
-
-  :global(.ant-card-body) {
-    padding: 20px;
-  }
 }
 
 .filterItem {
@@ -49,105 +45,16 @@
   margin-bottom: 2px;
 }
 
-.adminModal {
-  :global(.ant-modal-content) {
-    background: rgba(24, 24, 24, 0.95) !important;
-    border: 1px solid rgba(var(--color-metallic-blue-rgb), 0.2) !important;
-    border-radius: 12px;
-  }
-
-  :global(.ant-modal-header) {
-    background: rgba(var(--color-metallic-blue-rgb), 0.05) !important;
-    border-bottom: 1px solid rgba(var(--color-metallic-blue-rgb), 0.2) !important;
-    border-radius: 12px 12px 0 0;
-  }
-
-  :global(.ant-modal-title) {
-    color: var(--color-text) !important;
-    font-weight: 600;
-  }
-
-  :global(.ant-modal-body) {
-    background: transparent !important;
-    padding: 24px;
-  }
-
-  :global(.ant-modal-close) {
-    color: rgba(var(--color-text-rgb), 0.7) !important;
-
-    &:hover {
-      color: var(--color-text) !important;
-    }
-  }
+.userSubtext {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  opacity: 0.8;
 }
 
-// Table styling enhancements
-:global(.ant-table) {
-  background: transparent !important;
-
-  .ant-table-thead > tr > th {
-    background: rgba(var(--color-metallic-blue-rgb), 0.05) !important;
-    color: var(--color-text) !important;
-    font-weight: 600;
-    border-bottom: 1px solid rgba(var(--color-metallic-blue-rgb), 0.2) !important;
-  }
-
-  .ant-table-tbody > tr > td {
-    background: transparent !important;
-    color: var(--color-text) !important;
-    border-bottom: 1px solid rgba(var(--color-metallic-blue-rgb), 0.1) !important;
-  }
-
-  .ant-table-tbody > tr:hover > td {
-    background: rgba(var(--color-metallic-blue-rgb), 0.05) !important;
-  }
-}
-
-// Card styling
-:global(.ant-card) {
-  background: linear-gradient(
-    135deg,
-    rgba(var(--color-metallic-blue-rgb), 0.03) 0%,
-    rgba(var(--color-metallic-blue-rgb), 0.01) 100%
-  ) !important;
-  border: 1px solid rgba(var(--color-metallic-blue-rgb), 0.1) !important;
-  border-radius: 12px !important;
-
-  .ant-card-body {
-    background: transparent !important;
-  }
-}
-
-// Button enhancements
-:global(.ant-btn-primary) {
-  background: var(--color-metallic-blue) !important;
-  border-color: var(--color-metallic-blue) !important;
-  box-shadow: 0 2px 8px rgba(var(--color-metallic-blue-rgb), 0.3) !important;
-
-  &:hover {
-    background: rgba(var(--color-metallic-blue-rgb), 0.8) !important;
-    border-color: rgba(var(--color-metallic-blue-rgb), 0.8) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(var(--color-metallic-blue-rgb), 0.4) !important;
-  }
-}
-
-// Tag styling
-:global(.ant-tag) {
-  border-radius: 6px;
-  font-weight: 500;
-  padding: 2px 8px;
-}
-
-// Avatar enhancements
-:global(.ant-avatar) {
-  border: 2px solid rgba(var(--color-metallic-blue-rgb), 0.2);
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: var(--color-metallic-blue);
-    transform: scale(1.05);
-  }
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
 // Responsive design
@@ -156,25 +63,8 @@
     padding: 16px;
   }
 
-  .filterCard {
-    :global(.ant-card-body) {
-      padding: 16px;
-    }
-  }
-
   .filterItem {
     min-width: unset;
-  }
-
-  .adminModal {
-    :global(.ant-modal) {
-      margin: 16px;
-      max-width: calc(100vw - 32px);
-    }
-
-    :global(.ant-modal-body) {
-      padding: 16px;
-    }
   }
 }
 
@@ -186,41 +76,12 @@
   .header {
     gap: 12px;
   }
-
-  :global(.ant-table-tbody) {
-    font-size: 12px;
-  }
-}
-
-// Permissions Modal Styles
-.adminModal {
-  :global(.ant-modal-content) {
-    max-height: 90vh;
-    overflow: hidden;
-  }
-
-  :global(.ant-modal-body) {
-    max-height: calc(90vh - 120px);
-    overflow-y: auto;
-    padding: 24px;
-  }
 }
 
 .permissionsCard {
   background: rgba(var(--color-metallic-blue-rgb), 0.02);
   border: 1px solid rgba(var(--color-metallic-blue-rgb), 0.1);
   border-radius: 8px;
-
-  :global(.ant-card-head) {
-    background: rgba(var(--color-metallic-blue-rgb), 0.05);
-    border-bottom: 1px solid rgba(var(--color-metallic-blue-rgb), 0.1);
-  }
-
-  :global(.ant-card-body) {
-    padding: 16px;
-    max-height: 400px;
-    overflow-y: auto;
-  }
 }
 
 .permissionGroup {
@@ -240,14 +101,6 @@
   &:hover {
     background: rgba(var(--color-metallic-blue-rgb), 0.05);
     border-color: rgba(var(--color-metallic-blue-rgb), 0.1);
-  }
-
-  :global(.ant-checkbox-wrapper) {
-    width: 100%;
-
-    .ant-checkbox {
-      margin-right: 8px;
-    }
   }
 }
 
@@ -285,13 +138,6 @@
   display: flex;
   align-items: center;
   gap: 4px;
-}
-
-// User Select Styles
-.userSelect {
-  :global(.ant-select-selection-search-input) {
-    height: auto !important;
-  }
 }
 
 .userOption {

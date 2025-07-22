@@ -58,63 +58,65 @@ const AdminProfiles = () => {
   };
 
   return (
-    <SearchWrapper
-      buttons={[
-        {
-          toolTip: "Create Admin",
-          onClick: handleCreateAdmin,
-          type: "primary",
-          icon: <FaPlus />,
-        },
-      ]}
-      filters={[
-        {
-          label: "All",
-          key: "",
-        },
-        {
-          label: "Admins",
-          key: `role;{"$eq": "admin"}`,
-        },
-        {
-          label: "Moderators",
-          key: `role;{"$eq": "moderator"}`,
-        },
-        {
-          label: "Developers",
-          key: `role;{"$eq": "developer"}`,
-        },
-        {
-          label: "Support",
-          key: `role;{"$eq": "support"}`,
-        },
-      ]}
-      sort={[
-        {
-          label: "None",
-          key: "",
-        },
-      ]}
-      placeholder="Search Admin Profiles"
-      queryKey="admin-users"
-      total={data?.metadata?.totalCount}
-      isFetching={isLoading}
-    >
-      <CreateAdmin
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setIsModalVisible}
-        form={form}
-        editingUser={editingUser}
-      />
-      <Table
-        className={styles.table}
-        dataSource={data?.payload || []}
-        columns={columns(handleEditAdmin, handleDeleteAdmin)}
-        rowKey="_id"
-        loading={isLoading}
-        pagination={false}
-      />
-    </SearchWrapper>
+    <div className="admin-profiles">
+      <SearchWrapper
+        buttons={[
+          {
+            toolTip: "Create Admin",
+            onClick: handleCreateAdmin,
+            type: "primary",
+            icon: <FaPlus />,
+          },
+        ]}
+        filters={[
+          {
+            label: "All",
+            key: "",
+          },
+          {
+            label: "Admins",
+            key: `role;{"$eq": "admin"}`,
+          },
+          {
+            label: "Moderators",
+            key: `role;{"$eq": "moderator"}`,
+          },
+          {
+            label: "Developers",
+            key: `role;{"$eq": "developer"}`,
+          },
+          {
+            label: "Support",
+            key: `role;{"$eq": "support"}`,
+          },
+        ]}
+        sort={[
+          {
+            label: "None",
+            key: "",
+          },
+        ]}
+        placeholder="Search Admin Profiles"
+        queryKey="admin-users"
+        total={data?.metadata?.totalCount}
+        isFetching={isLoading}
+      >
+        <CreateAdmin
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          form={form}
+          editingUser={editingUser}
+        />
+        <Table
+          className={styles.table}
+          dataSource={data?.payload || []}
+          columns={columns(handleEditAdmin, handleDeleteAdmin)}
+          rowKey="_id"
+          loading={isLoading}
+          pagination={false}
+        />
+      </SearchWrapper>
+    </div>
   );
 };
 
