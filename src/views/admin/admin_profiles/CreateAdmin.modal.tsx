@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Select, Space, Collapse, Checkbox, Divider, Typography, Card } from "antd";
+import { Form, Button, Select, Space, Typography } from "antd";
 import styles from "./AdminProfiles.module.scss";
 import formStyles from "@/styles/Form.module.scss";
 import { Modal } from "antd";
 import useApiHook from "@/hooks/useApi";
 import { useInterfaceStore } from "@/state/interface";
 import { IAdminType } from "@/types/IAdminType";
-import {
-  ADMIN_PERMISSIONS,
-  DEFAULT_ROLE_PERMISSIONS,
-  getAllPermissions,
-  PermissionGroup,
-} from "@/data/adminPermissions";
+import { useAdminPermissions } from "@/hooks/useAdminPermissions";
+import AdminPermissions from "./components/adminPermissions/AdminPermissions.component";
+import UserItem from "@/components/userItem/UserItem.component";
 
 type CreateAdminProps = {
   isModalVisible: boolean;
@@ -22,83 +19,38 @@ type CreateAdminProps = {
 
 const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: CreateAdminProps) => {
   const { addAlert } = useInterfaceStore((state) => state);
-  const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [userSearchText, setUserSearchText] = useState<string>("");
   const [isSearching, setIsSearching] = useState<boolean>(false);
 
+  // Use the permissions hook
+  const { selectedPermissions, updatePermissions, applyRoleDefaults, resetPermissions } = useAdminPermissions(
+    editingUser?.permissions || []
+  );
+
   // Initialize form values when editing
   useEffect(() => {
     if (editingUser) {
-      setSelectedPermissions(editingUser.permissions || []);
+      updatePermissions(editingUser.permissions || [], form);
       setSelectedRole(editingUser.roles?.[0] || "");
       form.setFieldsValue({
         userId: typeof editingUser.user === "string" ? editingUser.user : editingUser.user?._id,
-        role: editingUser.roles?.[0],
+        roles: editingUser.roles,
         permissions: editingUser.permissions || [],
       });
     } else {
-      setSelectedPermissions([]);
+      resetPermissions(form);
       setSelectedRole("");
       setUserSearchText("");
     }
   }, [editingUser, form]);
 
   // Update permissions when role changes
-  const handleRoleChange = (role: string) => {
-    setSelectedRole(role);
-    const defaultPermissions = DEFAULT_ROLE_PERMISSIONS[role as keyof typeof DEFAULT_ROLE_PERMISSIONS] || [];
-    setSelectedPermissions(defaultPermissions);
-    form.setFieldValue("permissions", defaultPermissions);
+  const handleRoleChange = (roles: string[]) => {
+    setSelectedRole(roles[0] || ""); // For display purposes, track primary role
+    applyRoleDefaults(roles, form);
   };
 
-  // Handle individual permission changes
-  const handlePermissionChange = (permissionValue: string, checked: boolean) => {
-    let updatedPermissions = [...selectedPermissions];
-
-    if (checked) {
-      updatedPermissions.push(permissionValue);
-    } else {
-      updatedPermissions = updatedPermissions.filter((p) => p !== permissionValue);
-    }
-
-    setSelectedPermissions(updatedPermissions);
-    form.setFieldValue("permissions", updatedPermissions);
-  };
-
-  // Handle group permission changes
-  const handleGroupPermissionChange = (group: PermissionGroup, checked: boolean) => {
-    const groupPermissions = group.permissions.map((p) => p.value);
-    let updatedPermissions = [...selectedPermissions];
-
-    if (checked) {
-      // Add all group permissions that aren't already selected
-      groupPermissions.forEach((permission) => {
-        if (!updatedPermissions.includes(permission)) {
-          updatedPermissions.push(permission);
-        }
-      });
-    } else {
-      // Remove all group permissions
-      updatedPermissions = updatedPermissions.filter((p) => !groupPermissions.includes(p));
-    }
-
-    setSelectedPermissions(updatedPermissions);
-    form.setFieldValue("permissions", updatedPermissions);
-  };
-
-  // Check if all permissions in a group are selected
-  const isGroupFullySelected = (group: PermissionGroup): boolean => {
-    return group.permissions.every((permission) => selectedPermissions.includes(permission.value));
-  };
-
-  // Check if some permissions in a group are selected
-  const isGroupPartiallySelected = (group: PermissionGroup): boolean => {
-    return (
-      group.permissions.some((permission) => selectedPermissions.includes(permission.value)) &&
-      !isGroupFullySelected(group)
-    );
-  };
   // Create admin user
   const { mutate: mutateAdmin } = useApiHook({
     method: editingUser ? "PUT" : "POST",
@@ -151,7 +103,7 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
           });
           setIsModalVisible(false);
           form.resetFields();
-          setSelectedPermissions([]);
+          resetPermissions(form);
           setSelectedRole("");
           setUserSearchText("");
         },
@@ -172,7 +124,7 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
       onCancel={() => {
         setIsModalVisible(false);
         form.resetFields();
-        setSelectedPermissions([]);
+        resetPermissions(form);
         setSelectedRole("");
         setUserSearchText("");
       }}
@@ -183,7 +135,7 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
       <div className={formStyles.form}>
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           {editingUser ? (
-            <></>
+            <UserItem user={editingUser.user} sm />
           ) : (
             <Form.Item
               label={
@@ -230,87 +182,17 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
             </Select>
           </Form.Item>
 
-          {/* <Form.Item
+          <Form.Item
             name="permissions"
             label="Permissions"
-            extra="Select specific permissions for this admin user. Default permissions are applied based on role."
+            extra="Customize specific permissions for this admin user. Use 'Reset to Defaults' to apply role-based permissions."
           >
-            <Card
-              size="small"
-              title={
-                <Space>
-                  <Typography.Text strong>Granulated Permissions</Typography.Text>
-                  <Typography.Text type="success">({selectedPermissions.length} selected)</Typography.Text>
-                </Space>
-              }
-              className={`${styles.permissionsCard} permissions-card`}
-            >
-              <Collapse
-                ghost
-                size="small"
-                items={ADMIN_PERMISSIONS.map((group) => ({
-                  key: group.value,
-                  label: (
-                    <Space>
-                      <Checkbox
-                        checked={isGroupFullySelected(group)}
-                        indeterminate={isGroupPartiallySelected(group)}
-                        onChange={(e) => handleGroupPermissionChange(group, e.target.checked)}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                      <Typography.Text strong>{group.label}</Typography.Text>
-                      <Typography.Text type="success">
-                        ({group.permissions.filter((p) => selectedPermissions.includes(p.value)).length}/
-                        {group.permissions.length})
-                      </Typography.Text>
-                    </Space>
-                  ),
-                  children: (
-                    <div className={styles.permissionGroup}>
-                      {group.permissions.map((permission) => (
-                        <div key={permission.value} className={styles.permissionItem}>
-                          <Checkbox
-                            checked={selectedPermissions.includes(permission.value)}
-                            onChange={(e) => handlePermissionChange(permission.value, e.target.checked)}
-                          >
-                            <div>
-                              <Typography.Text>{permission.label}</Typography.Text>
-                              <br />
-                              <Typography.Text type="success" style={{ fontSize: "12px" }}>
-                                {permission.description}
-                              </Typography.Text>
-                            </div>
-                          </Checkbox>
-                        </div>
-                      ))}
-                    </div>
-                  ),
-                }))}
-              />
-
-              {selectedPermissions.length > 0 && (
-                <>
-                  <Divider />
-                  <div className={styles.selectedPermissions}>
-                    <Typography.Text strong>Selected Permissions:</Typography.Text>
-                    <div className={styles.permissionTags}>
-                      {selectedPermissions.map((permission) => (
-                        <Button
-                          key={permission}
-                          size="small"
-                          type="text"
-                          onClick={() => handlePermissionChange(permission, false)}
-                          className={styles.permissionTag}
-                        >
-                          {permission} ×
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-            </Card>
-          </Form.Item> */}
+            <AdminPermissions
+              selectedPermissions={selectedPermissions}
+              onPermissionsChange={(permissions) => updatePermissions(permissions, form)}
+              selectedRoles={form.getFieldValue("roles") || []}
+            />
+          </Form.Item>
 
           <Form.Item>
             <Space>
@@ -321,7 +203,7 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
                 onClick={() => {
                   setIsModalVisible(false);
                   form.resetFields();
-                  setSelectedPermissions([]);
+                  resetPermissions(form);
                   setSelectedRole("");
                   setUserSearchText("");
                 }}

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Table, Select, Form, Typography } from "antd";
+import React, { useState } from "react";
+import { Table, Form } from "antd";
 import styles from "./AdminProfiles.module.scss";
 import useApiHook from "@/hooks/useApi";
 import { useInterfaceStore } from "@/state/interface";
@@ -10,8 +10,6 @@ import CreateAdmin from "./CreateAdmin.modal";
 import { FaPlus } from "react-icons/fa";
 
 const AdminProfiles = () => {
-  const [searchText, setSearchText] = useState("");
-  const [selectedRole, setSelectedRole] = useState<string>("all");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingUser, setEditingUser] = useState<IAdminType | null>(null);
   const [form] = Form.useForm();
@@ -26,7 +24,7 @@ const AdminProfiles = () => {
 
   // Delete admin user
   const { mutate: deleteAdmin } = useApiHook({
-    method: "DELETE", 
+    method: "DELETE",
     key: "delete-admin",
     queriesToInvalidate: ["admin-users"],
   }) as any;
