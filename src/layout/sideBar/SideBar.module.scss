@@ -1,4 +1,4 @@
-@use "@/styles/globals.scss" as *;
+@use '@/styles/globals.scss' as *;
 
 @mixin smallSideBar {
   &:hover {
@@ -14,14 +14,14 @@
         &.saltLogo {
           display: block;
         }
-        &.truthcastingLogo {
+        &.largeLogo {
           display: none;
         }
       }
-      .productName{
+      .productName {
         display: none;
       }
-      .hamburger{
+      .hamburger {
         display: block;
       }
     }
@@ -66,7 +66,6 @@
   overflow-x: hidden;
   padding-bottom: 15px;
 
-  
   .logoContainer {
     height: 80px;
     display: flex;

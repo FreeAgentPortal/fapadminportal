@@ -51,8 +51,8 @@ const SideBar = (props: Props) => {
             <RxHamburgerMenu />
           </div>
         )}
-        {/* <Image
-          src="/images/logo.png"
+        <Image
+          src={ "/images/logo.png"}
           width={30}
           height={50}
           className={styles.logo + " " + styles.saltLogo}
@@ -60,18 +60,19 @@ const SideBar = (props: Props) => {
             objectFit: "contain",
           }}
           alt="logo"
-        /> */}
+        />
 
         <Image
           src={"/images/logo.png"}
           width={75}
           height={50}
-          className={styles.logo}
+          className={styles.logo + " " + styles.largeLogo}
           style={{
             objectFit: "contain",
           }}
           alt="logo"
         />
+
         <p className={`${styles.productName}`}>{process.env.SERVICE_NAME || "FAP - Admin"}</p>
       </div>
 
