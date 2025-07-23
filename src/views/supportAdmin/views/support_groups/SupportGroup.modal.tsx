@@ -16,7 +16,7 @@ const SupportGroup = ({ form, isOpen, isUpdate, setIsOpen, onFinish }: SupportGr
     url: "/admin",
     method: "GET",
     key: "agents",
-    filter: `role;{"$eq":"agent"}`,
+    filter: `roles;{"$eq":"agent"}`,
   }) as any;
 
   return (
