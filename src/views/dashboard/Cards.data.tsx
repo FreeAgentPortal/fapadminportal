@@ -1,8 +1,8 @@
-import { QueryClient } from '@tanstack/react-query';
-import NewsCard from './components/cards/newsCard/NewsCard.component';
-import PaymentCard from './components/cards/paymentCard/PaymentCard.component';
-import ProfileCard from './components/cards/profileCard/ProfileCard.component';
-import { DashboardRulesEngine } from './DashboardRulesEngine';
+import { QueryClient } from "@tanstack/react-query";
+import NewsCard from "./components/cards/newsCard/NewsCard.component";
+import ServiceChecker from "./components/cards/serviceChecker/ServiceChecker.component";
+import { DashboardRulesEngine } from "./DashboardRulesEngine";
+import RecentAthleteSignups from "./components/cards/recentAthletes/RecentAthleteSignups.component";
 export interface CardComponentProps {
   data: any; // or AthleteProfile | TeamProfile | etc when you type it
 }
@@ -18,12 +18,29 @@ export interface Card {
 
 export default [
   {
-    title: 'Related News',
+    title: "Service Status",
+    component: ({ data }: CardComponentProps) => <ServiceChecker />,
+    gridKey: "service-status",
+    order: 1,
+    size: 3,
+    isCard: false, // Already has its own Card wrapper
+  },
+  {
+    title: "Related News",
     component: ({ data }: CardComponentProps) => <NewsCard />,
-    gridKey: 'news-content',
+    gridKey: "news-content",
     order: 2,
     size: 2,
     isCard: true,
     // hideIf: DashboardRulesEngine.noNews,
-  }, 
+  },
+  {
+    title: "Recent Athlete Signups",
+    component: ({ data }: CardComponentProps) => <RecentAthleteSignups />,
+    gridKey: "recent-athlete-signups",
+    order: 3,
+    size: 1,
+    isCard: true,
+    // hideIf: DashboardRulesEngine.noRecentAthletes,
+  },
 ] as Card[];

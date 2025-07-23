@@ -1,41 +1,62 @@
-@use '@/styles/globals.scss' as *;
+@use "@/styles/globals.scss" as *;
+
+.wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
 .container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-md);
   align-items: start;
   justify-content: stretch;
+
+  // Responsive breakpoints
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .cardWrapper {
   transition: all 0.3s ease;
 }
 
+// Column span classes
 .small {
   grid-column: span 1;
+
+  @media (max-width: 700px) {
+    grid-column: span 1; // Always 1 column on mobile
+  }
 }
 
 .medium {
   grid-column: span 2;
+
+  @media (max-width: 1100px) {
+    grid-column: span 2; // 2 columns on tablet (out of 2)
+  }
+
+  @media (max-width: 700px) {
+    grid-column: span 1; // 1 column on mobile
+  }
 }
 
 .large {
   grid-column: span 3;
-}
-.masonryGrid {
-  display: flex;
-  margin-left: -var(--spacing-md);
-  width: auto;
-}
 
-.masonryColumn {
-  padding-left: var(--spacing-md);
-  background-clip: padding-box;
-  display: flex;
-  flex-direction: column;
-}
+  @media (max-width: 1100px) {
+    grid-column: span 2; // 2 columns on tablet (out of 2)
+  }
 
-.cardWrapper {
-  margin-bottom: var(--spacing-md);
-  transition: all 0.3s ease;
+  @media (max-width: 700px) {
+    grid-column: span 1; // 1 column on mobile
+  }
 }
