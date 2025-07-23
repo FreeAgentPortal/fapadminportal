@@ -14,7 +14,7 @@ const PlansFeatures: React.FC = () => {
   const [activeTab, setActiveTab] = useState("plans");
 
   // Check if user has developer role for features tab
-  const canAccessFeatures = hasRequiredRole(profile?.payload?.role, [ROLES.DEVELOPER]);
+  const canAccessFeatures = hasRequiredRole(profile?.payload?.permissions, ['api.create']);
 
   const tabItems = [
     {
