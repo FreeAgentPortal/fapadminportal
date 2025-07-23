@@ -20,10 +20,10 @@ export default [
   {
     title: 'Related News',
     component: ({ data }: CardComponentProps) => <NewsCard />,
-    gridKey: 'news',
+    gridKey: 'news-content',
     order: 2,
     size: 2,
     isCard: true,
-    hideIf: DashboardRulesEngine.noNews,
+    // hideIf: DashboardRulesEngine.noNews,
   }, 
 ] as Card[];

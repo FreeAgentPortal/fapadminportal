@@ -1,21 +1,16 @@
 @use "@/styles/globals.scss" as *;
+
 .container {
+  width: 100%;
+
   .newsContainer {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    .newsItem {
-      background-color: var(--primary-light);
-      padding: 20px;
+    gap: 16px;
 
-      h1 {
-        font-size: 15px;
-        color: var(--primary);
-      }
-      p {
-        font-size: 13px;
-        color: rgb(141, 141, 141);
-      }
+    // Remove any custom styling since NewsItem handles its own styling
+    > * {
+      width: 100%;
     }
   }
 }
