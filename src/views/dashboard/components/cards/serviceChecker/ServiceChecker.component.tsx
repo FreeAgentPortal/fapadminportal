@@ -58,8 +58,9 @@ const ServiceChecker: React.FC = () => {
           };
         }
       },
-      refetchInterval: 30000, // Refetch every 30 seconds
-      staleTime: 15000, // Consider data stale after 15 seconds
+      refetchInterval: 180000, // Refetch every 3 minutes
+      staleTime: 90000, // Consider data stale after 1.5 minutes
+      refetchOnMount: false,
       retry: 1, // Only retry once for health checks
     })),
   });
@@ -172,7 +173,7 @@ const ServiceChecker: React.FC = () => {
 
       <div style={{ marginTop: 16, textAlign: "center" }}>
         <Text type="warning" style={{ fontSize: "12px" }}>
-          Auto-refreshes every 30 seconds
+          Auto-refreshes every 3 minutes
         </Text>
       </div>
     </Card>
