@@ -1,5 +1,5 @@
 import React from "react";
-import { IScoutReport } from "@/types/IScoutReport";
+import { IScoutReport, IRatingField } from "@/types/IScoutReport";
 import { Button, Card, Row, Col, Tag, Rate, Divider } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import styles from "./ViewModal.module.scss";
@@ -13,14 +13,43 @@ interface ViewModalProps {
 const ViewModal: React.FC<ViewModalProps> = ({ isVisible, onClose, report }) => {
   if (!isVisible || !report) return null;
 
-  const renderRatingSection = (title: string, ratingData: { score: number; comments?: string }) => (
-    <div className={styles.ratingSection}>
-      <h4 className={styles.ratingTitle}>{title}</h4>
-      <Rate disabled value={ratingData?.score} count={5} className={styles.rating} />
-      <span className={styles.ratingScore}>({ratingData?.score}/5)</span>
-      {ratingData?.comments && <p className={styles.comments}>{ratingData.comments}</p>}
-    </div>
-  );
+  // Convert camelCase field names to readable titles
+  const formatFieldTitle = (fieldKey: string): string => {
+    // Handle special cases
+    const specialCases: Record<string, string> = {
+      iq: "IQ",
+      workEthic: "Work Ethic",
+      athleticism: "Athleticism",
+      technique: "Technique",
+      potential: "Potential",
+      durability: "Durability",
+    };
+
+    if (specialCases[fieldKey]) {
+      return specialCases[fieldKey];
+    }
+
+    // Convert camelCase to Title Case (e.g., fieldName -> Field Name)
+    return fieldKey
+      .replace(/([A-Z])/g, " $1")
+      .replace(/^./, (str) => str.toUpperCase())
+      .trim();
+  };
+
+  const renderRatingSection = (title: string, ratingData: IRatingField | null | undefined) => {
+    if (!ratingData || typeof ratingData.score !== "number") {
+      return null;
+    }
+
+    return (
+      <div className={styles.ratingSection}>
+        <h4 className={styles.ratingTitle}>{title}</h4>
+        <Rate disabled value={ratingData.score} count={5} className={styles.rating} />
+        <span className={styles.ratingScore}>({ratingData.score}/5)</span>
+        {ratingData.comments && <p className={styles.comments}>{ratingData.comments}</p>}
+      </div>
+    );
+  };
 
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
@@ -37,7 +66,7 @@ const ViewModal: React.FC<ViewModalProps> = ({ isVisible, onClose, report }) => 
               <Col span={12}>
                 <div className={styles.field}>
                   <label>Athlete:</label>
-                  <span>
+                  <span className={styles.name}>
                     {(report as any).athlete?.fullName ||
                       report.athleteId?._id ||
                       (typeof report.athleteId === "string" ? report.athleteId : "N/A")}
@@ -47,7 +76,7 @@ const ViewModal: React.FC<ViewModalProps> = ({ isVisible, onClose, report }) => 
               <Col span={12}>
                 <div className={styles.field}>
                   <label>Scout:</label>
-                  <span>
+                  <span className={styles.name}>
                     {(report as any).scout?.user?.fullName ||
                       (report as any).scout?.user?.email ||
                       report.scoutId?._id ||
@@ -85,17 +114,22 @@ const ViewModal: React.FC<ViewModalProps> = ({ isVisible, onClose, report }) => 
             </Row>
           </Card>
 
-          {/* Rating Breakdown */}
-          <Card title="Rating Breakdown" className={styles.section}>
-            <Row gutter={[16, 16]}>
-              <Col span={12}>{renderRatingSection("Athleticism", report.ratingBreakdown.athleticism)}</Col>
-              <Col span={12}>{renderRatingSection("Technique", report.ratingBreakdown.technique)}</Col>
-              <Col span={12}>{renderRatingSection("IQ", report.ratingBreakdown.iq)}</Col>
-              <Col span={12}>{renderRatingSection("Work Ethic", report.ratingBreakdown.workEthic)}</Col>
-              <Col span={12}>{renderRatingSection("Potential", report.ratingBreakdown.potential)}</Col>
-              <Col span={12}>{renderRatingSection("Durability", report.ratingBreakdown.durability)}</Col>
-            </Row>
-          </Card>
+          {/* Rating Breakdown - Dynamically renders all fields in ratingBreakdown object */}
+          {report.ratingBreakdown && Object.keys(report.ratingBreakdown).length > 0 && (
+            <Card title="Rating Breakdown" className={styles.section}>
+              <Row gutter={[16, 16]}>
+                {Object.entries(report.ratingBreakdown).map(([fieldKey, ratingData]) => {
+                  const fieldTitle = formatFieldTitle(fieldKey);
+
+                  return (
+                    <Col span={12} key={fieldKey}>
+                      {renderRatingSection(fieldTitle, ratingData)}
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Card>
+          )}
 
           {/* Observations and Notes */}
           {report.observations && (

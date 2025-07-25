@@ -40,6 +40,7 @@ const ScoutReports = () => {
   const { mutate: updateReport } = useApiHook({
     method: "POST",
     key: "scout_reports_update",
+    queriesToInvalidate: ["scout_reports", "scout_reports,pending"],
   }) as any;
   // Action handlers
   const handleView = (record: IScoutReport) => {

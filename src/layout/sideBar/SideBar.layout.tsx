@@ -36,7 +36,7 @@ const SideBar = (props: Props) => {
     url: "/scout",
     key: ["scout_reports", "pending"],
     method: "GET",
-    filter: `isDraft;false` // only fetch reports that are ready for review
+    filter: `isDraft;false|isFinalized;false` // only fetch reports that are ready for review
   }) as { data: { payload: any[]; metadata: any } };
 
   const sideBarOpen = useLayoutStore((state) => state.sideBarOpen);

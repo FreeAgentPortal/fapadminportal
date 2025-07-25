@@ -1,6 +1,11 @@
 import { IAdminType } from "./IAdminType";
 import { IAthlete } from "./IAthleteType";
 
+export interface IRatingField {
+  score: number;
+  comments?: string;
+}
+
 export interface IScoutReport {
   _id: string;
   athleteId: IAthlete;
@@ -9,38 +14,19 @@ export interface IScoutReport {
   league: string;
   reportType: "game" | "evaluation" | "camp" | "combine" | "interview" | "other";
   diamondRating: number; // number set automatically by aggregation
-  ratingBreakdown: {
-    athleticism: {
-      // speed, strength, agility
-      score: number;
-      comments?: string;
-    };
-    technique: {
-      // skills, form, mechanics
-      score: number;
-      comments?: string;
-    };
-    iq: {
-      // mental game, decision making, game awareness
-      score: number;
-      comments?: string;
-    };
-    workEthic: {
-      // effort, hustle, practice habits
-      score: number;
-      comments?: string;
-    };
-    potential: {
-      // future upside, growth potential
-      score: number;
-      comments?: string;
-    };
-    durability: {
-      // injury history, physical resilience
-      score: number;
-      comments?: string;
-    };
-  };
+  /**
+   * Dynamic rating breakdown object that can contain any number of rating fields
+   * Each field is a key-value pair where the key is the field name (e.g., 'athleticism', 'technique')
+   * and the value is an IRatingField object with score and optional comments
+   *
+   * Example:
+   * {
+   *   "athleticism": { score: 4, comments: "Excellent speed and agility" },
+   *   "technique": { score: 3, comments: "Needs work on fundamentals" },
+   *   "customField": { score: 5, comments: "Outstanding in this area" }
+   * }
+   */
+  ratingBreakdown: Record<string, IRatingField>; // Dynamic rating fields
   observations?: string; // detailed notes on performance
   strengths?: string[]; // key strengths observed
   weaknesses?: string[]; // areas for improvement
