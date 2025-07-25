@@ -31,6 +31,13 @@ const SideBar = (props: Props) => {
     method: "GET",
     filter: `status;pending`,
   }) as { data: { payload: any[]; metadata: any } };
+  
+  const { data: scoutReportData } = useApiHook({
+    url: "/scout",
+    key: ["scout_reports", "pending"],
+    method: "GET",
+    filter: `isDraft;false` // only fetch reports that are ready for review
+  }) as { data: { payload: any[]; metadata: any } };
 
   const sideBarOpen = useLayoutStore((state) => state.sideBarOpen);
   const toggleSideBar = useLayoutStore((state) => state.toggleSideBar);
@@ -80,6 +87,7 @@ const SideBar = (props: Props) => {
         navigation({
           user: profile?.payload,
           claimsCount: claimsData?.metadata?.totalCount || 0,
+          scoutReportsCount: scoutReportData?.metadata?.totalCount || 0,
         })
       )
         .filter((i: any) => !i.hidden)

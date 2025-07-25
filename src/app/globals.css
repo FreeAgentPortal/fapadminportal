@@ -22,9 +22,15 @@
   --primary-dark: var(--color-black);
   --disabled: var(--color-silver-dark);
   --success: var(--color-success-green);
+  --success-hover: color-mix(in srgb, var(--success), transparent 20%);
   --secondary: var(--color-silver);
   --secondary-dark: var(--color-silver-dark);
-
+  --warn: var(--color-warning-yellow);
+  --warn-hover: color-mix(in srgb, var(--warn), transparent 20%);
+  --error: var(--color-error-red);
+  --error-hover: color-mix(in srgb, var(--error), transparent 20%);
+  --info: var(--color-info-blue);
+  --info-hover: color-mix(in srgb, var(--info), transparent 20%);
   --text-color: var(--color-text-primary);
   --bg-color: var(--color-bg-dark);
   --bg-gradient: var(--color-bg-gradient);

@@ -1,0 +1,126 @@
+@use "@/styles/globals.scss" as *;
+
+.container {
+  padding: var(--spacing-md);
+}
+
+// Table styling
+.scoutReportsTable {
+  .ant-table-thead > tr > th {
+    background-color: var(--color-background-secondary);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .ant-table-tbody > tr:hover > td {
+    background-color: var(--color-background-hover) !important;
+  }
+}
+
+// Column specific styling
+.athleteId,
+.scoutId {
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sportTag,
+.leagueTag,
+.typeTag {
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.ratingContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .diamondRating {
+    .ant-rate-star {
+      font-size: 14px;
+      color: #fadb14;
+    }
+  }
+
+  .ratingText {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+}
+
+.dateText {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+// Action buttons
+.viewButton {
+  font-size: 12px;
+  height: 28px;
+  border-radius: 4px;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.moreButton {
+  height: 28px;
+  width: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: var(--color-background-hover);
+    border-color: var(--color-primary);
+  }
+}
+
+// Status indicators
+.statusPending {
+  color: var(--color-warning);
+}
+
+.statusApproved {
+  color: var(--color-success);
+}
+
+.statusDenied {
+  color: var(--color-error);
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .scoutReportsTable {
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+      padding: 8px 4px;
+      font-size: 12px;
+    }
+  }
+
+  .athleteId,
+  .scoutId {
+    max-width: 80px;
+  }
+
+  .ratingContainer {
+    flex-direction: column;
+    gap: 2px;
+
+    .ratingText {
+      font-size: 10px;
+    }
+  }
+}

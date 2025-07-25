@@ -48,6 +48,15 @@ export const navigation = (options?: any) => {
           link: "/users",
           icon: <BsFillPeopleFill />,
         },
+        scout_reports: {
+          title: "Scout Reports",
+          link: "/scout_reports",
+          icon: (
+            <Badge count={options?.scoutReportsCount}>
+              <BsBroadcastPin />
+            </Badge>
+          ),
+        },
       },
       hidden: false,
     },

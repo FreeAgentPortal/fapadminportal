@@ -59,12 +59,12 @@ const columns = (
     },
     {
       title: "Permissions",
-      dataIndex: "permissions",
+      dataIndex: "permissionsCount",
       key: "permissions",
-      render: (permissions: string[]) => (
+      render: (permissionsCount: number) => (
         <div className={styles.permissions}>
-          {permissions.length > 0 ? (
-            <Tag color="blue">{permissions.length} permission(s)</Tag>
+          {permissionsCount > 0 ? (
+            <Tag color="blue">{permissionsCount} permission(s)</Tag>
           ) : (
             <Tag color="default">No permissions</Tag>
           )}

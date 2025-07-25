@@ -1,4 +1,4 @@
-@use '@/styles/globals.scss' as *;
+@use "@/styles/globals.scss" as *;
 
 @mixin smallSideBar {
   &:hover {
@@ -171,6 +171,11 @@
           align-items: center;
           justify-content: center;
           margin: 0;
+          svg{
+            width: 16px;
+            height: 16px;
+            color: white;
+          }
         }
         .title {
           margin: 0;

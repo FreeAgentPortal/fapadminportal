@@ -371,6 +371,32 @@ export const ADMIN_PERMISSIONS: PermissionGroup[] = [
       },
     ],
   },
+  {
+    label: "Scouts Functionality",
+    value: "scouts",
+    permissions: [
+      {
+        label: "View Scout Reports",
+        value: "scouts.read",
+        description: "View scout reports and analytics",
+      },
+      {
+        label: "Create Scout Reports",
+        value: "scouts.create",
+        description: "Create new scout reports",
+      },
+      {
+        label: "Update Scout Reports",
+        value: "scouts.update",
+        description: "Update existing scout reports",
+      },
+      {
+        label: "Delete Scout Reports",
+        value: "scouts.delete",
+        description: "Delete scout reports",
+      },
+    ],
+  }
 ];
 
 // Helper functions for working with permissions
@@ -458,6 +484,10 @@ export const DEFAULT_ROLE_PERMISSIONS = {
     "analytics.users",
     "analytics.performance",
     "analytics.business",
+    "scouts.read",
+    "scouts.create",
+    "scouts.update",
+    "scouts.delete",
   ],
   developer: [
     "users.read",
@@ -517,5 +547,11 @@ export const DEFAULT_ROLE_PERMISSIONS = {
     "support.close",
     "support.analytics",
     "analytics.read",
+  ],
+  scout: [
+    "scouts.read",
+    "scouts.create",
+    "scouts.update",
+    "scouts.delete",
   ],
 };

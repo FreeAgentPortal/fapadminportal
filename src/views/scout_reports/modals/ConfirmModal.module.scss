@@ -1,0 +1,173 @@
+@use "@/styles/globals.scss" as *;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001; // Higher than ViewModal
+  padding: 20px;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 8px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.modalHeader {
+  padding: 24px 24px 16px 24px;
+  text-align: center;
+
+  .iconContainer {
+    margin-bottom: 16px;
+    font-size: 48px;
+
+    .approveIcon {
+      color: var(--success);
+    }
+
+    .denyIcon {
+      color: var(--color-warning);
+    }
+
+    .deleteIcon {
+      color: var(--color-error);
+    }
+
+    .defaultIcon {
+      color: var(--color-warning);
+    }
+  }
+
+  .title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+}
+
+.modalBody {
+  padding: 0 24px 20px 24px;
+  text-align: center;
+
+  .content {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+
+  .messageInputContainer {
+    margin-top: 16px;
+    text-align: left;
+
+    .messageInput {
+      width: 100%;
+      resize: vertical;
+
+      &.ant-input {
+        border-radius: 6px;
+        border: 1px solid var(--color-border);
+
+        &:focus,
+        &:focus-within {
+          border-color: var(--primary);
+          box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.1);
+        }
+      }
+    }
+  }
+}
+
+.modalFooter {
+  padding: 16px 24px 24px 24px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  .ant-btn {
+    min-width: 80px;
+  }
+
+  .approveButton {
+    background-color: var(--success);
+    border-color: var(--success);
+
+    &:hover {
+      background-color: var(--success-hover) !important;
+      border-color: var(--success-hover) !important;
+    }
+  }
+
+  .denyButton {
+    background-color: var(--warn);
+    border-color: var(--warn);
+    color: var(--text-color);
+
+    &:hover {
+      background-color: var(--warn-hover) !important;
+      border-color: var(--warn-hover) !important;
+      color: color-mix(in srgb, var(--text-color), transparent 20%) !important;
+    }
+  }
+
+  .deleteButton {
+    // Ant Design danger button styles are already applied via the danger prop
+    // Additional custom styling can be added here if needed
+  }
+}
+
+// Responsive design
+@media (max-width: 480px) {
+  .modalOverlay {
+    padding: 15px;
+  }
+
+  .modalContent {
+    max-width: 100%;
+  }
+
+  .modalHeader {
+    padding: 20px 20px 12px 20px;
+
+    .iconContainer {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .title {
+      font-size: 16px;
+    }
+  }
+
+  .modalBody {
+    padding: 0 20px 16px 20px;
+
+    .content {
+      font-size: 13px;
+    }
+
+    .messageInputContainer {
+      margin-top: 12px;
+    }
+  }
+
+  .modalFooter {
+    padding: 12px 20px 20px 20px;
+    flex-direction: column;
+
+    .ant-btn {
+      width: 100%;
+    }
+  }
+}

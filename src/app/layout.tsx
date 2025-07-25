@@ -6,7 +6,7 @@ import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@ant-design/v5-patch-for-react-19";
 import AppWrapper from "@/layout/appWrapper/AppWrapper";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { Suspense } from "react";
+import { Suspense } from "react"; 
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
