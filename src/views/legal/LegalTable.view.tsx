@@ -75,6 +75,7 @@ const LegalTable = () => {
               title: "Effective Date",
               dataIndex: "effective_date",
               key: "effective_date",
+              render: (date: string) => new Date(date).toLocaleDateString(),
             },
             {
               title: "Version",

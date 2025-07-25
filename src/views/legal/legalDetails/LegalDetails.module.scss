@@ -1,90 +1,197 @@
 @use "@/styles/globals.scss" as *;
 
 .container {
-  display: flex;
-  flex-direction: column;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 1.5rem;
-  gap: 2rem;
+  padding: 24px;
 
   @include mobile {
-    padding: 1rem;
-    gap: 1.5rem;
+    padding: 16px;
   }
+}
 
-  .header {
-    color: var(--primary);
-    margin: 0;
-    font-size: 1.75rem;
-    font-weight: 600;
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
 
-    @include mobile {
-      font-size: 1.5rem;
-    }
+  .loadingText {
+    color: var(--color-silver);
+    font-size: 16px;
   }
+}
 
-  .content {
-    display: flex;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, var(--color-metallic-blue) 0%, rgba(0, 0, 0, 1) 100%);
+  border: 1px solid var(--color-metallic-blue-dark);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+
+  @include mobile {
     flex-direction: column;
-    gap: 2rem;
+    gap: 16px;
+    padding: 20px;
   }
 
-  .formSection {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+  .headerInfo {
+    flex: 1;
 
-    @include tablet {
-      grid-template-columns: 1fr;
-      gap: 1rem;
+    .headerTitle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+
+      .headerIcon {
+        font-size: 28px;
+        color: var(--primary);
+      }
+
+      .title {
+        color: white;
+        margin: 0;
+        font-size: 1.75rem;
+        font-weight: 600;
+
+        @include mobile {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .headerDescription {
+      color: var(--color-silver);
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
     }
   }
 
-  .fullWidth {
-    grid-column: 1 / -1;
-  }
-
-  .editorSection {
-    margin-top: 1rem;
-  }
-
-  .buttonContainer {
+  .headerActions {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: 12px;
 
     @include mobile {
-      flex-direction: column;
       width: 100%;
-      gap: 0.75rem;
+      justify-content: center;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(75, 167, 214, 0.1) 100%);
+  border: 1px solid var(--color-metallic-blue-dark);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-silver);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  // Style form inputs to match the theme
+  :global(.ant-input),
+  :global(.ant-select-selector),
+  :global(.ant-picker) {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid var(--color-metallic-blue-dark) !important;
+    color: var(--color-silver) !important;
+
+    &:hover {
+      border-color: var(--primary) !important;
     }
 
-    .submitButton {
-      min-width: 200px;
-      height: 45px;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 8px;
-
-      @include mobile {
-        width: 100%;
-        min-width: unset;
-      }
+    &:focus,
+    &.ant-input-focused,
+    &.ant-select-focused .ant-select-selector {
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2) !important;
     }
+  }
 
-    .cancelButton {
-      min-width: 120px;
-      height: 45px;
-      font-size: 1rem;
-      border-radius: 8px;
+  :global(.ant-select-selector input) {
+    color: var(--color-silver) !important;
+  }
 
-      @include mobile {
-        width: 100%;
-        min-width: unset;
-      }
+  :global(.ant-form-item-label > label) {
+    color: var(--color-silver) !important;
+  }
+}
+
+.editorWrapper {
+  margin-top: 8px;
+
+  // Style the TinyMCE editor to match our theme
+  :global(.tox) {
+    background: transparent !important;
+    border: 1px solid var(--color-metallic-blue-dark) !important;
+    border-radius: 8px !important;
+  }
+
+  :global(.tox-tinymce) {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-radius: 8px !important;
+  }
+
+  :global(.tox-toolbar__group) {
+    background: rgba(0, 0, 0, 0.5) !important;
+  }
+
+  :global(.tox-edit-area__iframe) {
+    background: rgba(0, 0, 0, 0.2) !important;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 0;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  button {
+    min-width: 200px;
+    height: 45px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+
+    @include mobile {
+      width: 100%;
+      min-width: unset;
     }
   }
 }
