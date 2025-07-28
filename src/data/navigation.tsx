@@ -90,7 +90,12 @@ export const navigation = (options?: any) => {
         },
         admin_profiles: {
           title: "Admin Profiles",
-          link: "/admin/profiles",
+          link: "/admin/profiles/admin",
+          icon: <RiAdminFill />,
+        },
+        scout_profiles: {
+          title: "Scout Profiles",
+          link: "/admin/profiles/scout",
           icon: <RiAdminFill />,
         },
         legal: {

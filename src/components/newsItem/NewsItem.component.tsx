@@ -4,6 +4,7 @@ import { Avatar, Tag, Typography } from "antd";
 import { CalendarOutlined, UserOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { NewsItemProps } from "./NewsItem.types";
 import styles from "./NewsItem.module.scss";
+import Image from "next/image";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -84,7 +85,7 @@ const NewsItem: React.FC<NewsItemProps> = ({
         <article className={styles.articleContent}>
           {showImage && getFeaturedImage() && (
             <div className={styles.imageContainer}>
-              <img src={getFeaturedImage()!} alt={getCleanTitle()} className={styles.featuredImage} loading="lazy" />
+              <Image src={getFeaturedImage()!} alt={getCleanTitle()} className={styles.featuredImage} loading="lazy" width={300} height={200} />
             </div>
           )}
 
@@ -119,7 +120,7 @@ const NewsItem: React.FC<NewsItemProps> = ({
       <article className={styles.articleContent}>
         {showImage && getFeaturedImage() && (
           <div className={styles.imageContainer}>
-            <img src={getFeaturedImage()!} alt={getCleanTitle()} className={styles.featuredImage} loading="lazy" />
+            <Image src={getFeaturedImage()!} alt={getCleanTitle()} className={styles.featuredImage} loading="lazy" width={300} height={200} />
           </div>
         )}
 

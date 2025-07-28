@@ -1,0 +1,230 @@
+/* Scout Profiles Module Styles */
+
+.container {
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, rgba(45, 45, 45, 0.95) 0%, rgba(35, 35, 35, 0.98) 50%, rgba(25, 25, 25, 1) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.content {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  .title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .icon {
+      color: #1890ff;
+      font-size: 28px;
+    }
+  }
+
+  .description {
+    margin: 8px 0 0 0;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+
+  .leftActions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .rightActions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+.tableCard {
+}
+
+/* Scout Avatar and Info Column */
+.scoutInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .avatar {
+    flex-shrink: 0;
+  }
+
+  .details {
+    flex: 1;
+    min-width: 0;
+
+    .userName {
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contact {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .email,
+      .phone {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+/* Actions Column */
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Selected User Display */
+.selectedUser {
+  .userCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-bottom: 16px;
+
+    .userInfo {
+      flex: 1;
+
+      .userName {
+        font-weight: 600;
+        color: var(--color-text-primary);
+        margin-bottom: 4px;
+      }
+
+      .userDetails {
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .contactInfo {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+      }
+    }
+  }
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--color-text-secondary);
+
+  .emptyIcon {
+    font-size: 48px;
+    color: rgba(255, 255, 255, 0.3);
+    margin-bottom: 16px;
+  }
+
+  .emptyTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 8px;
+  }
+
+  .emptyDescription {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content {
+    padding: 16px;
+  }
+
+  .header {
+    padding: 16px;
+
+    .title {
+      font-size: 20px;
+    }
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+
+    .leftActions,
+    .rightActions {
+      justify-content: center;
+    }
+  }
+
+  .scoutInfo {
+    .details {
+      .contact {
+        .email,
+        .phone {
+          font-size: 11px;
+        }
+      }
+    }
+  }
+
+  .tagsColumn {
+    .tags {
+      max-height: 40px;
+    }
+  }
+
+  .bioCell {
+    max-width: 150px;
+  }
+}

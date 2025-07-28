@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { Table, Form } from "antd";
 import styles from "./AdminProfiles.module.scss";
