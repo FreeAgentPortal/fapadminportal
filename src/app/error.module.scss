@@ -1,0 +1,178 @@
+// error.module.scss
+.container {
+  min-height: 100vh;
+  background: var(--bg-gradient);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+}
+
+.content {
+  text-align: center;
+  max-width: 700px;
+  width: 100%;
+}
+
+.iconSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-sm);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+
+  @media (max-width: 480px) {
+    font-size: 3rem;
+  }
+}
+
+.errorCode {
+  font-size: 3rem;
+  font-weight: var(--font-weight-bold);
+  color: #ff6b6b;
+  font-family: var(--font-family-secondary);
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
+}
+
+.title {
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-metallic-blue-light);
+  margin: 0 0 var(--spacing-md) 0;
+  font-family: var(--font-family-secondary);
+
+  @media (max-width: 768px) {
+    font-size: var(--font-size-xl);
+  }
+
+  @media (max-width: 480px) {
+    font-size: var(--font-size-lg);
+  }
+}
+
+.description {
+  font-size: var(--font-size-md);
+  color: var(--color-silver);
+  margin: 0 0 var(--spacing-md) 0;
+  line-height: 1.6;
+
+  @media (max-width: 480px) {
+    font-size: var(--font-size-sm);
+  }
+}
+
+.errorDetails {
+  margin: var(--spacing-md) 0;
+  text-align: left;
+}
+
+.detailsContainer {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+}
+
+.detailsSummary {
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-metallic-blue-light);
+  margin-bottom: var(--spacing-sm);
+  user-select: none;
+
+  &:hover {
+    color: var(--color-metallic-blue);
+  }
+}
+
+.errorMessage {
+  font-family: "Courier New", monospace;
+  font-size: var(--font-size-xs);
+  color: #ff9999;
+  background: rgba(0, 0, 0, 0.3);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: var(--spacing-sm) 0;
+}
+
+.errorDigest {
+  font-size: var(--font-size-xs);
+  color: var(--color-silver);
+  margin: var(--spacing-xs) 0 0 0;
+  font-family: "Courier New", monospace;
+}
+
+.actions {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  margin: var(--spacing-lg) 0;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+}
+
+.button {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  @media (max-width: 480px) {
+    min-width: 100%;
+    padding: var(--spacing-md);
+  }
+}
+
+.buttonPrimary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+
+  &:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+  }
+}
+
+.help {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: var(--spacing-md);
+}
+
+.helpText {
+  font-size: var(--font-size-sm);
+  color: var(--color-silver);
+  margin: 0;
+  font-style: italic;
+}
