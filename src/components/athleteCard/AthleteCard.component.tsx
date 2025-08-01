@@ -16,6 +16,8 @@ import {
   TeamOutlined,
   LinkOutlined,
   ClockCircleOutlined,
+  CheckCircleOutlined,
+  StopOutlined,
 } from "@ant-design/icons";
 import formatPhoneNumber from "@/utils/formatPhoneNumber";
 import { timeDifference } from "@/utils/timeDifference";
@@ -63,6 +65,15 @@ const AthleteCard = ({ athlete, sm, onClick }: AthleteCardProps) => {
           <div className={styles.nameSection}>
             <h3 className={styles.name}>{athlete?.fullName}</h3>
             <div className={styles.badges}>
+              {athlete?.isActive !== undefined && (
+                <Tag
+                  color={athlete.isActive ? "green" : "red"}
+                  className={styles.activeStatusTag}
+                  icon={athlete.isActive ? <CheckCircleOutlined /> : <StopOutlined />}
+                >
+                  {athlete.isActive ? "Active" : "Inactive"}
+                </Tag>
+              )}
               {athlete?.positions && athlete?.positions?.length > 0 && (
                 <Tag color={getPositionColor(athlete?.positions[0]?.name)} className={styles.positionTag}>
                   <RiseOutlined /> {athlete.positions[0]?.abbreviation || athlete?.positions[0]?.name?.toUpperCase()}

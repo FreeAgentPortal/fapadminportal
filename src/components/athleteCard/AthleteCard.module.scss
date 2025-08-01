@@ -106,6 +106,29 @@
   flex-wrap: wrap;
 }
 
+.activeStatusTag {
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 2px 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid transparent;
+
+  &:global(.ant-tag-green) {
+    background: linear-gradient(135deg, #52c41a, #73d13d);
+    border-color: #73d13d;
+    color: #ffffff;
+  }
+
+  &:global(.ant-tag-red) {
+    background: linear-gradient(135deg, #ff4d4f, #ff7875);
+    border-color: #ff7875;
+    color: #ffffff;
+  }
+}
+
 .positionTag {
   font-size: 11px;
   font-weight: 600;

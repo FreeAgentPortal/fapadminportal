@@ -119,7 +119,7 @@ const AthleteDetails = () => {
             message: `Athlete ${action}d successfully!`,
             duration: 3000,
           });
-        }, 
+        },
         onError: (error: any) => {
           const errorMessage = error?.response?.data?.message || error.message || `Failed to ${action} athlete`;
           addAlert({
