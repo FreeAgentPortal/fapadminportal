@@ -4,7 +4,7 @@ import styles from "./AthleteDetails.module.scss";
 import useApiHook from "@/hooks/useApi";
 import { useParams } from "next/navigation";
 import { Tabs, Spin, Tag, Avatar, Rate, Button, Input, message, Modal } from "antd";
-import { UserOutlined, EditOutlined, LinkOutlined } from "@ant-design/icons";
+import { UserOutlined, EditOutlined, LinkOutlined, CheckCircleOutlined, StopOutlined } from "@ant-design/icons";
 import { IAthlete } from "@/types/IAthleteType";
 import { getPositionColor } from "@/components/athleteCard/getPositionColor";
 
@@ -13,6 +13,7 @@ import BasicInfo from "./subviews/basicInfo/BasicInfo.view";
 import Metrics from "./subviews/metrics/Metrics.view";
 import Measurements from "./subviews/measurements/Measurements.view";
 import UserAssociation from "./subviews/userAssociation/UserAssociation.view";
+import { useInterfaceStore } from "@/state/interface";
 
 const AthleteDetails = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ const AthleteDetails = () => {
   const [showEspnModal, setShowEspnModal] = useState(false);
   const [espnId, setEspnId] = useState("");
   const [isSubmittingEspn, setIsSubmittingEspn] = useState(false);
+  const { addAlert } = useInterfaceStore((state) => state);
 
   const { data, isLoading, error } = useApiHook({
     url: `/athlete/${id}`,
@@ -33,6 +35,13 @@ const AthleteDetails = () => {
     url: `/athlete/${id}/populate-espn`,
     method: "POST",
     key: ["athlete", `${id}`, "espn-populate"],
+  }) as any;
+
+  // Toggle active status API hook
+  const { mutate: toggleActiveStatus, isLoading: isTogglingStatus } = useApiHook({
+    method: "PUT",
+    key: ["athlete", `${id}`, "toggle-active"],
+    queriesToInvalidate: [`athlete,${id}`],
   }) as any;
 
   // Update local state when data changes
@@ -90,6 +99,37 @@ const AthleteDetails = () => {
     setShowEspnModal(false);
     setEspnId("");
     setIsSubmittingEspn(false);
+  };
+
+  const handleToggleActiveStatus = () => {
+    if (!athleteData) return;
+
+    const newStatus = !athleteData.isActive;
+    const action = newStatus ? "activate" : "deactivate";
+
+    toggleActiveStatus(
+      {
+        url: `/athlete/${id}`,
+        formData: { isActive: newStatus },
+      },
+      {
+        onSuccess: (response: any) => {
+          addAlert({
+            type: "success",
+            message: `Athlete ${action}d successfully!`,
+            duration: 3000,
+          });
+        }, 
+        onError: (error: any) => {
+          const errorMessage = error?.response?.data?.message || error.message || `Failed to ${action} athlete`;
+          addAlert({
+            type: "error",
+            message: errorMessage,
+            duration: 3000,
+          });
+        },
+      }
+    );
   };
 
   if (isLoading) {
@@ -199,6 +239,9 @@ const AthleteDetails = () => {
             <Tag color={athleteData.userId ? "green" : "orange"} className={styles.userStatusTag}>
               {athleteData.userId ? "User Linked" : "No User Account"}
             </Tag>
+            <Tag color={athleteData.isActive ? "green" : "red"} className={styles.activeStatusTag}>
+              {athleteData.isActive ? "Active" : "Inactive"}
+            </Tag>
             {athleteData.espnid ? (
               <Tag color="blue">ESPN Profile</Tag>
             ) : (
@@ -212,6 +255,17 @@ const AthleteDetails = () => {
                 Add ESPN ID
               </Button>
             )}
+            <Button
+              type={athleteData.isActive ? "default" : "primary"}
+              size="small"
+              icon={athleteData.isActive ? <StopOutlined /> : <CheckCircleOutlined />}
+              onClick={handleToggleActiveStatus}
+              loading={isTogglingStatus}
+              className={styles.toggleButton}
+              danger={athleteData.isActive}
+            >
+              {athleteData.isActive ? "Deactivate" : "Activate"}
+            </Button>
           </div>
         </div>
 

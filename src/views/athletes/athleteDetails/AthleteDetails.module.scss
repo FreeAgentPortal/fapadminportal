@@ -141,6 +141,10 @@
   font-weight: 600;
 }
 
+.activeStatusTag {
+  font-weight: 600;
+}
+
 .espnButton {
   background: linear-gradient(135deg, #1890ff, #40a9ff);
   border: none;
@@ -149,6 +153,35 @@
   &:hover {
     background: linear-gradient(135deg, #40a9ff, #69c0ff);
     transform: translateY(-1px);
+  }
+}
+
+.toggleButton {
+  margin-top: 0.5rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &.ant-btn-dangerous {
+    background: linear-gradient(135deg, #ff4d4f, #ff7875);
+    border: none;
+    box-shadow: 0 2px 6px rgba(255, 77, 79, 0.3);
+
+    &:hover {
+      background: linear-gradient(135deg, #ff7875, #ffadd6);
+    }
+  }
+
+  &:not(.ant-btn-dangerous) {
+    background: linear-gradient(135deg, #52c41a, #73d13d);
+    border: none;
+    box-shadow: 0 2px 6px rgba(82, 196, 26, 0.3);
+
+    &:hover {
+      background: linear-gradient(135deg, #73d13d, #95de64);
+    }
   }
 }
 
