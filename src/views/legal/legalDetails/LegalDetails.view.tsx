@@ -180,6 +180,7 @@ const LegalDetails = () => {
                         { label: "DMCA Policy", value: "dmca" },
                         { label: "Trademark Policy", value: "trademark" },
                         { label: "Anti-Spam Policy", value: "anti-spam" },
+                        { label: "Athlete Agreement Policy", value: "athlete-agreement" },
                       ],
                     },
                     {
