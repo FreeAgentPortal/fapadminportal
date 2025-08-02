@@ -30,8 +30,8 @@ const Athlete = () => {
           key: "",
         },
       ]}
-      placeholder="Search Teams"
-      queryKey="teams"
+      placeholder="Search Athletes"
+      queryKey="athletes"
       total={data?.metadata?.totalCount}
       isFetching={isLoading}
     >
