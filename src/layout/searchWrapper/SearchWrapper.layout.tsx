@@ -125,6 +125,7 @@ const SearchWrapper = (props: Props) => {
           enterButton
           variant="outlined"
           value={searchText}
+          
         />
         <div className={styles.buttonContainer}>
           {props.sort && (

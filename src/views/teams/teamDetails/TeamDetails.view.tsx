@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./TeamDetails.module.scss";
 import useApiHook from "@/hooks/useApi";
 import { useParams } from "next/navigation";
-import { Tabs, Spin, Alert, Tag } from "antd";
+import { Tabs, Spin, Alert, Tag, Card } from "antd";
 import { ITeamType } from "@/types/ITeamType";
 import ProfileDetails from "./subviews/profileDetails/ProfileDetails.view";
 import SearchPreferences from "./subviews/searchPreferences/SearchPreferences.view";
@@ -135,9 +135,9 @@ const TeamDetails = () => {
       </div>
 
       {/* Tabs Section */}
-      <div className={styles.tabsContainer}>
+      <Card className={styles.tabsContainer}>
         <Tabs defaultActiveKey="profile" items={tabItems} size="large" type="card" />
-      </div>
+      </Card>
     </div>
   );
 };

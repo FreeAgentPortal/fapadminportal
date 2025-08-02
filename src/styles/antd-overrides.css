@@ -45,7 +45,7 @@
   border-color: #1890ff !important;
 }
 
-.ant-input:focus,
+.ant-input:focus, 
 .ant-input-number:focus,
 .ant-picker:focus,
 .ant-select:focus .ant-select-selector,
@@ -56,12 +56,45 @@
   box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
 }
 
+/* Search Input Specific Styling */
+.ant-input-search {
+  background: rgba(3, 3, 3, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.ant-input-search:hover {
+  border-color: #1890ff !important;
+}
+
+.ant-input-search .ant-input {
+  background: transparent !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+
+.ant-input-search .ant-input:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.ant-input-search-button {
+  background: rgba(24, 144, 255, 0.8) !important;
+  border-color: #1890ff !important;
+  color: #ffffff !important;
+}
+
+.ant-input-search-button:hover {
+  background: rgba(24, 144, 255, 1) !important;
+  border-color: #40a9ff !important;
+}
+
 /* Input Placeholders */
 .ant-input::placeholder,
 .ant-input-number input::placeholder,
 .ant-picker-input input::placeholder,
-.ant-select-selection-placeholder {
-  color: rgba(54, 54, 54, 0.5) !important;
+.ant-select-selection-placeholder,
+.ant-input-search .ant-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
 }
 
 /* Input Number Specific */
