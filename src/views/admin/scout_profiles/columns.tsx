@@ -13,11 +13,11 @@ const columns = (handleEdit: (scout: IScoutProfile) => void, handleDelete: (scou
     key: "user",
     render: (_: any, record: IScoutProfile) => (
       <Space className={styles.scoutInfo}>
-        <Avatar size="large" icon={<UserOutlined />} src={record.user.profileImageUrl} />
+        <Avatar size="large" icon={<UserOutlined />} src={record?.user?.profileImageUrl} />
         <div className={styles.details}>
-          <div className={styles.userName}>{record.user.fullName || record.user.email || "Unknown User"}</div>
+          <div className={styles.userName}>{record?.user?.fullName || record?.user?.email || "Unknown User"}</div>
           <div className={styles.contact}>
-            {record.user.email && (
+            {record?.user?.email && (
               <span className={styles.email}>
                 <MailOutlined />
                 {record.user.email}
