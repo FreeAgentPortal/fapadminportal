@@ -35,6 +35,7 @@ const ScoutReports = () => {
     url: "/scout",
     method: "GET",
     key: "scout_reports",
+    filter: `isDraft;false`,
   }) as any;
 
   const { mutate: updateReport } = useApiHook({
