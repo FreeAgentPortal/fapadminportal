@@ -4,7 +4,7 @@ import styles from "./SupportDetails.module.scss";
 import { useParams } from "next/navigation";
 import Loader from "@/components/loader/Loader.component";
 import Error from "@/components/error/Error.component";
-import { Button, Divider, Form, Tag } from "antd";
+import { Button, Divider, Form, Input, Tag } from "antd";
 import { useUser } from "@/state/auth";
 import TinyEditor from "@/components/tinyEditor/TinyEditor.component";
 import parse from "html-react-parser";
@@ -19,7 +19,6 @@ const SupportDetails = () => {
   // pull the id from the url
   const { id } = useParams();
   const { data: loggedInData } = useUser();
-  console.log(loggedInData);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   // socket events
@@ -109,7 +108,6 @@ const SupportDetails = () => {
 
   // Flatten all messages into a single array
   const messages = messagesData?.pages.flatMap((page) => page.data) || [];
-  console.log(messages);
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
@@ -190,7 +188,11 @@ const SupportDetails = () => {
         <div className={styles.editor}>
           <Form layout="vertical" form={form}>
             <Form.Item name="message">
-              <TinyEditor handleChange={(value: string) => form.setFieldsValue({ message: value })} initialContent="" />
+              <Input.TextArea
+                placeholder="Type your message here..."
+                autoSize={{ minRows: 3, maxRows: 6 }}
+                className={styles.textArea}
+              />
             </Form.Item>
             <Button onClick={handleMessage}>Send</Button>
           </Form>

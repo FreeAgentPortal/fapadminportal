@@ -5,9 +5,11 @@ import parse from "html-react-parser";
 const TinyEditor = ({
   handleChange,
   initialContent,
+  height = 200,
 }: {
   handleChange: (content: string) => void;
   initialContent?: string;
+  height?: number;
 }) => {
   const editorRef = useRef<any>(null);
 
@@ -30,7 +32,7 @@ const TinyEditor = ({
           editor.setContent(parse(initialContent));
         }
       }}
-      initialValue={parse(initialContent as string) as string || ""}
+      initialValue={(parse(initialContent as string) as string) || ""}
       onChange={(e) => {
         if (editorRef.current) {
           handleChange(editorRef.current.getContent());
@@ -39,11 +41,12 @@ const TinyEditor = ({
       apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
       init={{
         placeholder: "Type your message here...",
-        height: 400,
+        height,
         menubar: "insert view",
         toolbar:
           "undo redo | formatselect | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link unlink image media | codesample | searchreplace visualblocks code fullscreen | insertdatetime table | help wordcount",
-        content_style: "body { font-family: Helvetica, Arial, sans-serif; font-size: 14px; background: transparent; color: #fff; }",
+        content_style:
+          "body { font-family: Helvetica, Arial, sans-serif; font-size: 14px; background: transparent; color: #fff; }",
         codesample_languages: [
           { text: "HTML/XML", value: "markup" },
           { text: "JavaScript", value: "javascript" },
