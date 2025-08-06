@@ -34,7 +34,6 @@ const AccountDetails = () => {
   // Update password
   const { mutate: updatePassword, isLoading: isUpdatingPassword } = useApiHook({
     method: "PUT",
-    url: `/user/${loggedInUser?._id}/password`,
     key: "user-password-update",
   }) as any;
 
@@ -95,6 +94,7 @@ const AccountDetails = () => {
 
     updatePassword(
       {
+        url: `/user/${loggedInUser?._id}/password`,
         formData: {
           currentPassword: values.currentPassword,
           newPassword: values.newPassword,
