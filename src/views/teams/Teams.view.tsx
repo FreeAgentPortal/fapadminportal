@@ -2,8 +2,8 @@
 import React from "react";
 import styles from "./Teams.module.scss";
 import SearchWrapper from "@/layout/searchWrapper/SearchWrapper.layout";
-import { Avatar, Button, Table } from "antd"; 
-import { FaEdit } from "react-icons/fa";
+import { Avatar, Button, Table } from "antd";
+import { FaEdit, FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import useApiHook from "@/hooks/useApi";
 import { ITeamType } from "@/types/ITeamType";
@@ -19,7 +19,14 @@ const Teams = () => {
 
   return (
     <SearchWrapper
-      buttons={[ 
+      buttons={[
+        {
+          icon: <FaPlus />,
+          type: "primary",
+          href: "/teams/invite",
+          onClick: () => {},
+          toolTip: "Invite Team",
+        },
       ]}
       filters={[
         {

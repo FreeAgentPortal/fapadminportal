@@ -1,0 +1,153 @@
+@use "@/styles/globals.scss" as *;
+
+.container {
+  padding: 24px;
+  margin: 0 auto;
+  min-height: 100vh;
+
+  @include mobile {
+    padding: 16px;
+  }
+}
+
+.header {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 24px 32px;
+  margin-bottom: 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  text-align: center;
+
+  @include mobile {
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .title {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    @include mobile {
+      font-size: 24px;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .icon {
+      color: #1890ff;
+      font-size: 32px;
+
+      @include mobile {
+        font-size: 28px;
+      }
+    }
+  }
+
+  .description {
+    color: var(--color-text-secondary);
+    font-size: 16px;
+    line-height: 1.5;
+
+    @include mobile {
+      font-size: 14px;
+    }
+  }
+}
+
+.submitSection {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  @include mobile {
+    padding: 24px;
+  }
+
+  .submitButton {
+    border: none;
+    box-shadow: 0 4px 16px rgba(24, 144, 255, 0.3);
+    font-size: 16px;
+    font-weight: 600;
+    height: 48px;
+    padding: 0 32px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(24, 144, 255, 0.4);
+    }
+
+    &:active {
+      transform: translateY(-1px);
+    }
+
+    @include mobile {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+
+  .submitText {
+    display: block;
+    margin-top: 16px;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+
+    @include mobile {
+      margin-top: 0;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .form .section {
+    margin-bottom: 16px;
+  }
+
+  :global(.ant-col) {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header .title {
+    font-size: 20px;
+  }
+
+  .header .description {
+    font-size: 13px;
+  }
+
+  .submitSection {
+    padding: 16px;
+  }
+
+  .submitButton {
+    font-size: 14px;
+    height: 40px;
+  }
+}

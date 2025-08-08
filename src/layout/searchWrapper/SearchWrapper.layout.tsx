@@ -7,6 +7,7 @@ import styles from "./SearchWrapper.module.scss";
 import type { MenuProps } from "antd";
 import { MdSort } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const { Search } = Input;
 
@@ -14,6 +15,7 @@ type Props = {
   buttons?: {
     icon: React.ReactNode;
     onClick: () => void;
+    href?: string;
     type: "link" | "text" | "primary" | "dashed" | "default" | undefined;
     toolTip?: string;
     shouldPulse?: boolean;
@@ -125,7 +127,6 @@ const SearchWrapper = (props: Props) => {
           enterButton
           variant="outlined"
           value={searchText}
-          
         />
         <div className={styles.buttonContainer}>
           {props.sort && (
@@ -157,14 +158,27 @@ const SearchWrapper = (props: Props) => {
 
           {props.buttons?.map((button, indx) => (
             <Tooltip title={button.toolTip} placement="bottomRight" key={indx + "tooltip" + button.toolTip}>
-              <Button
-                type={button.type}
-                shape="round"
-                className={`${styles.button} ${button.shouldPulse && styles.pulse}`}
-                onClick={button.onClick}
-              >
-                {button.icon}
-              </Button>
+              {button.href ? (
+                <Link href={button.href}>
+                  <Button
+                    type={button.type}
+                    shape="round"
+                    className={`${styles.button} ${button.shouldPulse && styles.pulse}`}
+                    onClick={button.onClick}
+                  >
+                    {button.icon}
+                  </Button>
+                </Link>
+              ) : (
+                <Button
+                  type={button.type}
+                  shape="round"
+                  className={`${styles.button} ${button.shouldPulse && styles.pulse}`}
+                  onClick={button.onClick}
+                >
+                  {button.icon}
+                </Button>
+              )}
             </Tooltip>
           ))}
         </div>
