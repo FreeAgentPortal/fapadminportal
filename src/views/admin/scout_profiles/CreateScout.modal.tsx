@@ -64,7 +64,7 @@ const CreateScout = ({ isModalVisible, setIsModalVisible, form, editingScout }: 
   useEffect(() => {
     if (editingScout) {
       form.setFieldsValue({
-        userId: editingScout.userId,
+        user: editingScout.userId,
         teams: editingScout.teams || [],
         sports: editingScout.sports || [],
         leagues: editingScout.leagues || [],
@@ -123,7 +123,7 @@ const CreateScout = ({ isModalVisible, setIsModalVisible, form, editingScout }: 
   };
 
   const handleSubmit = (values: any) => {
-    if (!values.userId) {
+    if (!values.user) {
       addAlert({
         type: "error",
         message: "Please select a user to create scout profile for",
@@ -133,7 +133,7 @@ const CreateScout = ({ isModalVisible, setIsModalVisible, form, editingScout }: 
     }
 
     const formData = {
-      userId: values.userId,
+      user: values.user,
     };
 
     // Create or update scout profile
@@ -190,7 +190,7 @@ const CreateScout = ({ isModalVisible, setIsModalVisible, form, editingScout }: 
         {/* User Selection - Only show when creating new scout */}
         {!editingScout && (
           <>
-            <Form.Item label="Select User" name="userId" rules={[{ required: true, message: "Please select a user" }]}>
+            <Form.Item label="Select User" name="user" rules={[{ required: true, message: "Please select a user" }]}>
               <Select
                 showSearch
                 placeholder="Search and select a user"
