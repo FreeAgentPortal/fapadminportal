@@ -12,6 +12,7 @@ const RecentAthleteSignups = () => {
     method: "GET",
     key: "recent-athlete-signups",
     filter: `createdAt;{"$gte":"${thirtyDaysAgo.toISOString()}"}`,
+    limit: 5,
   }) as any;
   return (
     <div>
