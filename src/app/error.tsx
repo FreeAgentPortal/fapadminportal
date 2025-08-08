@@ -29,7 +29,7 @@ export default function Error({ error, reset }: ErrorProps) {
   };
 
   return (
-    <PageLayout pages={[navigation().home.links.home]}>
+    <PageLayout pages={[navigation().error_boundary.links.error]}>
       <div className={styles.container}>
         <motion.div
           className={styles.content}
