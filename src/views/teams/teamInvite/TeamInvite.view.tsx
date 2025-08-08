@@ -539,17 +539,11 @@ const TeamInvite = () => {
           <ul style={{ marginTop: 12, marginBottom: 16 }}>
             <li>
               <Text>Create a new team record in the database with the name: </Text>
-              <Text strong>"{formDataToSubmit?.name || "Team Name"}"</Text>
+              <Text strong>&quot;{formDataToSubmit?.name || "Team Name"}&quot;</Text>
             </li>
             <li>
               <Text>Send an email invitation to: </Text>
               <Text strong>{formDataToSubmit?.inviteeEmail || "Invitee Email"}</Text>
-            </li>
-            <li>
-              <Text>Grant </Text>
-              <Text strong>{formDataToSubmit?.inviteeRole || "Team Administrator"}</Text>
-              <Text> access to </Text>
-              <Text strong>{formDataToSubmit?.inviteeName || "the invitee"}</Text>
             </li>
           </ul>
           <Text type="warning">Are you sure you want to proceed with sending this team invitation?</Text>
