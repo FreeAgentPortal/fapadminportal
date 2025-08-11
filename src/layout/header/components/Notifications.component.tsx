@@ -34,7 +34,7 @@ const Notifications = () => {
 
   const { data } = useApiHook({
     url: `/notification`,
-    key: "notifications",
+    key: ["notifications"],
     method: "GET",
     // include results that are sent to either the user, or the profile of the user
     include: createIncludeQuery(),
@@ -65,7 +65,7 @@ const Notifications = () => {
         ) : (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="You have no notifications" />
         )}
-        <Link href={"/home/notifications"} className={styles.viewAllButton}>
+        <Link href={"/notifications"} className={styles.viewAllButton}>
           <span>View all notifications</span>
         </Link>
       </div>
