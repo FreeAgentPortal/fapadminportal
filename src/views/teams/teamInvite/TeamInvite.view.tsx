@@ -13,7 +13,6 @@ import {
   Typography,
   Divider,
   ColorPicker,
-  message,
   Modal,
   Tooltip,
 } from "antd";
@@ -29,18 +28,23 @@ import {
   StarOutlined,
   BgColorsOutlined,
   ExclamationCircleOutlined,
+  PlusOutlined,
+  DeleteOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
 } from "@ant-design/icons";
 import useApiHook from "@/hooks/useApi";
 import { ITeamType } from "@/types/ITeamType";
 import { availablePositions } from "@/data/positions";
 import { availableLeagues } from "@/data/leagues";
+import { useInterfaceStore } from "@/state/interface";
 import Image from "next/image";
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
 
-interface TeamInviteFormData extends Partial<ITeamType> {
+interface TeamInviteFormData extends Omit<Partial<ITeamType>, "links"> {
   // Invitation-specific fields
   inviteeName: string;
   inviteeEmail: string;
@@ -51,25 +55,22 @@ interface TeamInviteFormData extends Partial<ITeamType> {
   teamDescription?: string;
   website?: string;
   profileImageUrl?: string;
-  socialMedia?: {
-    twitter?: string;
-    facebook?: string;
-    instagram?: string;
-  };
+  links?: { language: string; href: string; text: string; shortText: string }[];
 }
 
 const TeamInvite = () => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [primaryColor, setPrimaryColor] = useState("#1890ff");
-  const [alternateColor, setAlternateColor] = useState("#ffffff");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [formDataToSubmit, setFormDataToSubmit] = useState<TeamInviteFormData | null>(null);
   const [profileImageUrl, setProfileImageUrl] = useState<string>("");
+  const [submissionStatus, setSubmissionStatus] = useState<"idle" | "success" | "error">("idle");
+
+  // Interface store for alerts
+  const { addAlert } = useInterfaceStore();
 
   // API hook for sending team invitation
   const { mutate: sendTeamInvite } = useApiHook({
-    url: "/teams/invite",
     method: "POST",
     key: "team-invite",
   }) as any;
@@ -95,9 +96,7 @@ const TeamInvite = () => {
           shortDisplayName: formDataToSubmit.shortDisplayName,
           location: formDataToSubmit.location,
           league: formDataToSubmit.league,
-          color: primaryColor,
-          alternateColor: alternateColor,
-          profileImageUrl: formDataToSubmit.profileImageUrl,
+          logoUrl: formDataToSubmit.profileImageUrl,
           positionsNeeded: formDataToSubmit.positionsNeeded || [],
           isActive: formDataToSubmit.isActive ?? true,
           isAllStar: formDataToSubmit.isAllStar ?? false,
@@ -107,6 +106,7 @@ const TeamInvite = () => {
           email: formDataToSubmit.email,
           phone: formDataToSubmit.phone,
           verifiedDomain: formDataToSubmit.verifiedDomain,
+          links: formDataToSubmit.links,
         },
         // Invitation data
         invitationData: {
@@ -119,29 +119,61 @@ const TeamInvite = () => {
         additionalData: {
           teamDescription: formDataToSubmit.teamDescription,
           website: formDataToSubmit.website,
-          socialMedia: formDataToSubmit.socialMedia,
         },
       };
 
       sendTeamInvite(
-        { formData },
+        {
+          url: "/profiles/team/invite",
+          formData,
+        },
         {
           onSuccess: () => {
-            message.success("Team invitation sent successfully!");
+            setSubmissionStatus("success");
+            addAlert({
+              type: "success",
+              message: "Team invitation sent successfully!",
+              duration: 5000,
+            });
             form.resetFields();
-            setPrimaryColor("#1890ff");
-            setAlternateColor("#ffffff");
             setProfileImageUrl("");
             setFormDataToSubmit(null);
+
+            // Reset status after 5 seconds
+            setTimeout(() => {
+              setSubmissionStatus("idle");
+            }, 5000);
           },
           onError: (error: any) => {
+            setSubmissionStatus("error");
             const errorMessage = error?.response?.data?.message || "Failed to send team invitation";
-            message.error(errorMessage);
+            addAlert({
+              type: "error",
+              message: errorMessage,
+              duration: 5000,
+            });
+            console.error("Team invitation error:", error);
+
+            // Reset status after 5 seconds
+            setTimeout(() => {
+              setSubmissionStatus("idle");
+            }, 5000);
           },
         }
       );
     } catch (error) {
-      message.error("An error occurred while sending the invitation");
+      setSubmissionStatus("error");
+      addAlert({
+        type: "error",
+        message: "An error occurred while sending the invitation",
+        duration: 5000,
+      });
+      console.error("Team invitation error:", error);
+
+      // Reset status after 5 seconds
+      setTimeout(() => {
+        setSubmissionStatus("idle");
+      }, 5000);
     } finally {
       setIsSubmitting(false);
     }
@@ -360,145 +392,142 @@ const TeamInvite = () => {
           </div>
         </Card>
 
-        {/* Team Colors and Branding */}
-        <Card className={styles.section} title="Team Colors and Branding">
-          <div className={formStyles.row}>
-            <Form.Item label="Primary Color" tooltip="Team's primary color for branding" className={formStyles.field}>
-              <Space>
-                <ColorPicker value={primaryColor} onChange={(color) => setPrimaryColor(color.toHexString())} />
-                <Input
-                  value={primaryColor}
-                  onChange={(e) => setPrimaryColor(e.target.value)}
-                  placeholder="#1890ff"
-                  style={{ width: 100 }}
-                />
-              </Space>
-            </Form.Item>
-            <Form.Item label="Alternate Color" tooltip="Team's secondary/alternate color" className={formStyles.field}>
-              <Space>
-                <ColorPicker value={alternateColor} onChange={(color) => setAlternateColor(color.toHexString())} />
-                <Input
-                  value={alternateColor}
-                  onChange={(e) => setAlternateColor(e.target.value)}
-                  placeholder="#ffffff"
-                  style={{ width: 100 }}
-                />
-              </Space>
-            </Form.Item>
-          </div>
-        </Card>
+        {/* Team Links */}
+        <Card className={styles.section} title="Team Links (Optional)">
+          <Form.List name="links">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <div
+                    key={key}
+                    style={{
+                      marginBottom: 16,
+                      padding: 16,
+                      border: "1px solid #d9d9d9",
+                      borderRadius: 6,
+                      position: "relative",
+                    }}
+                  >
+                    <Button
+                      type="text"
+                      danger
+                      icon={<DeleteOutlined />}
+                      onClick={() => remove(name)}
+                      style={{ position: "absolute", top: 8, right: 8, zIndex: 1 }}
+                      size="small"
+                    />
 
-        {/* Team Configuration */}
-        <Card className={styles.section} title="Team Configuration">
-          <Form.Item
-            label="Positions Needed"
-            name="positionsNeeded"
-            tooltip="Select the positions this team is actively recruiting for"
-          >
-            <Select
-              mode="multiple"
-              placeholder="Select positions needed"
-              allowClear
-              showSearch
-              filterOption={(input, option) =>
-                String(option?.children || "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
-            >
-              {availablePositions.map((position) => (
-                <Option key={position.abbreviation} value={position.abbreviation}>
-                  {position.name} ({position.abbreviation})
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
+                    <div className={formStyles.row}>
+                      <Form.Item
+                        {...restField}
+                        label="Link Text"
+                        name={[name, "text"]}
+                        rules={[{ required: true, message: "Please enter link text" }]}
+                        className={formStyles.field}
+                      >
+                        <Input placeholder="Official Website" />
+                      </Form.Item>
+                      <Form.Item
+                        {...restField}
+                        label="Short Text"
+                        name={[name, "shortText"]}
+                        rules={[{ required: true, message: "Please enter short text" }]}
+                        className={formStyles.field}
+                      >
+                        <Input placeholder="Website" />
+                      </Form.Item>
+                    </div>
 
-          <Form.Item
-            label="Team Description"
-            name="teamDescription"
-            tooltip="Brief description of the team, its mission, and goals"
-          >
-            <TextArea
-              rows={4}
-              placeholder="Describe the team's mission, values, and what makes them unique..."
-              maxLength={1000}
-              showCount
-            />
-          </Form.Item>
+                    <div className={formStyles.row}>
+                      <Form.Item
+                        {...restField}
+                        label="URL"
+                        name={[name, "href"]}
+                        rules={[
+                          { required: true, message: "Please enter URL" },
+                          { type: "url", message: "Please enter a valid URL" },
+                        ]}
+                        className={formStyles.field}
+                      >
+                        <Input placeholder="https://www.team.com" prefix={<LinkOutlined />} />
+                      </Form.Item>
+                      <Form.Item
+                        {...restField}
+                        label="Language"
+                        name={[name, "language"]}
+                        rules={[{ required: true, message: "Please select language" }]}
+                        className={formStyles.field}
+                      >
+                        <Select placeholder="Select language">
+                          <Option value="en">English</Option>
+                          <Option value="es">Spanish</Option>
+                          <Option value="fr">French</Option>
+                          <Option value="de">German</Option>
+                          <Option value="it">Italian</Option>
+                          <Option value="pt">Portuguese</Option>
+                          <Option value="zh">Chinese</Option>
+                          <Option value="ja">Japanese</Option>
+                          <Option value="ko">Korean</Option>
+                        </Select>
+                      </Form.Item>
+                    </div>
+                  </div>
+                ))}
 
-          <Divider />
-
-          <div className={formStyles.row}>
-            <Form.Item
-              name="isActive"
-              valuePropName="checked"
-              tooltip="Whether the team is currently active"
-              className={formStyles.field}
-            >
-              <Space>
-                <Switch defaultChecked />
-                <Text>Team is Active</Text>
-              </Space>
-            </Form.Item>
-            <Form.Item
-              name="openToTryouts"
-              valuePropName="checked"
-              tooltip="Whether the team is accepting new athletes"
-              className={formStyles.field}
-            >
-              <Space>
-                <Switch defaultChecked />
-                <Text>Open to Tryouts</Text>
-              </Space>
-            </Form.Item>
-            <Form.Item
-              name="alertsEnabled"
-              valuePropName="checked"
-              tooltip="Whether to send notifications to the team"
-              className={formStyles.field}
-            >
-              <Space>
-                <Switch defaultChecked />
-                <Text>Alerts Enabled</Text>
-              </Space>
-            </Form.Item>
-          </div>
-
-          <div className={formStyles.row}>
-            <Form.Item
-              name="isAllStar"
-              valuePropName="checked"
-              tooltip="Whether this is an All-Star team"
-              className={formStyles.field}
-            >
-              <Space>
-                <Switch />
-                <Text>
-                  <StarOutlined /> All-Star Team
-                </Text>
-              </Space>
-            </Form.Item>
-          </div>
-        </Card>
-
-        {/* Social Media Links */}
-        <Card className={styles.section} title="Social Media (Optional)">
-          <div className={formStyles.row}>
-            <Form.Item label="Twitter" name={["socialMedia", "twitter"]} className={formStyles.field}>
-              <Input placeholder="@teamhandle" prefix="@" />
-            </Form.Item>
-            <Form.Item label="Facebook" name={["socialMedia", "facebook"]} className={formStyles.field}>
-              <Input placeholder="facebook.com/team" />
-            </Form.Item>
-            <Form.Item label="Instagram" name={["socialMedia", "instagram"]} className={formStyles.field}>
-              <Input placeholder="@teamhandle" prefix="@" />
-            </Form.Item>
-          </div>
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                    style={{ marginTop: fields.length > 0 ? 16 : 0 }}
+                  >
+                    Add Team Link
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
         </Card>
 
         {/* Submit Button */}
         <div className={styles.submitSection}>
+          {submissionStatus === "success" && (
+            <div
+              style={{
+                marginBottom: 16,
+                padding: 12,
+                backgroundColor: "#f6ffed",
+                border: "1px solid #b7eb8f",
+                borderRadius: 6,
+                textAlign: "center",
+              }}
+            >
+              <CheckCircleOutlined style={{ color: "#52c41a", marginRight: 8 }} />
+              <Text style={{ color: "#52c41a", fontWeight: 600 }}>
+                Team invitation sent successfully! The team will receive an email shortly.
+              </Text>
+            </div>
+          )}
+
+          {submissionStatus === "error" && (
+            <div
+              style={{
+                marginBottom: 16,
+                padding: 12,
+                backgroundColor: "#fff2f0",
+                border: "1px solid #ffccc7",
+                borderRadius: 6,
+                textAlign: "center",
+              }}
+            >
+              <CloseCircleOutlined style={{ color: "#ff4d4f", marginRight: 8 }} />
+              <Text style={{ color: "#ff4d4f", fontWeight: 600 }}>
+                Failed to send invitation. Please check your details and try again.
+              </Text>
+            </div>
+          )}
+
           <Button
             type="primary"
             htmlType="submit"
@@ -506,12 +535,16 @@ const TeamInvite = () => {
             loading={isSubmitting}
             icon={<SendOutlined />}
             className={styles.submitButton}
+            disabled={submissionStatus === "success"}
           >
-            Send Team Invitation
+            {submissionStatus === "success" ? "Invitation Sent!" : "Send Team Invitation"}
           </Button>
-          <Text className={styles.submitText}>
-            <InfoCircleOutlined /> The team will receive an email invitation with setup instructions
-          </Text>
+
+          {submissionStatus === "idle" && (
+            <Text className={styles.submitText}>
+              <InfoCircleOutlined /> The team will receive an email invitation with setup instructions
+            </Text>
+          )}
         </div>
       </Form>
 

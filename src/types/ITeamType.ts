@@ -13,6 +13,7 @@ export interface ITeamType  {
   isActive?: boolean; // Whether the team is currently active
   isAllStar?: boolean; // Whether the team is an All-Star team
   logos?: [{ href: string; alt: string; width: number; height: number }]; // Array of logo objects with href and alt text
+  logoUrl: string; // URL of the team's logo
   links?: [{ language: string; href: string; text: string; shortText: string }];
   location: string; // e.g., "CA", "TX"
   linkedUsers: string[]; // References to users with access
