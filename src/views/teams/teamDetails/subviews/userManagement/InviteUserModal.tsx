@@ -34,6 +34,7 @@ const InviteUserModal: React.FC<InviteUserModalProps> = ({ open, onClose, teamId
   const { mutate: sendTeamInvite } = useApiHook({
     method: "POST",
     key: "team-invite-user",
+    queriesToInvalidate: [`team,${teamId}`],
   }) as any;
 
   const handleInviteUser = async (values: InviteUserFormData) => {
@@ -51,7 +52,7 @@ const InviteUserModal: React.FC<InviteUserModalProps> = ({ open, onClose, teamId
 
       sendTeamInvite(
         {
-          url: "/profiles/team/invite-user",
+          url: `/profiles/team/${teamId}/invite-user`,
           formData: invitationData,
         },
         {
