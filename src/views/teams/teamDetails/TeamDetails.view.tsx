@@ -8,17 +8,18 @@ import { ITeamType } from "@/types/ITeamType";
 import ProfileDetails from "./subviews/profileDetails/ProfileDetails.view";
 import SearchPreferences from "./subviews/searchPreferences/SearchPreferences.view";
 import Reports from "./subviews/reports/Reports.view";
+import UserManagement from "./subviews/userManagement/UserManagement.view";
 import Image from "next/image";
 
 const TeamDetails = () => {
   const { id } = useParams();
 
-  const { data, isLoading, error } = useApiHook({
-    url: `/team/${id}`,
+  const { data, isLoading, error, refetch } = useApiHook({
+    url: `/profiles/team/${id}`,
     key: ["team", `${id}`],
     enabled: !!id,
     method: "GET",
-  }) as { data: { payload: ITeamType }; isLoading: boolean; error: any };
+  }) as { data: { payload: ITeamType }; isLoading: boolean; error: any; refetch: () => void };
 
   if (isLoading) {
     return (
@@ -50,6 +51,11 @@ const TeamDetails = () => {
       key: "profile",
       label: "Profile Details",
       children: <ProfileDetails teamData={team} />,
+    },
+    {
+      key: "users",
+      label: "Team Members",
+      children: <UserManagement teamData={team} onUserRemoved={() => refetch()} />,
     },
     {
       key: "search",
@@ -85,7 +91,6 @@ const TeamDetails = () => {
                 style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "8px" }}
                 width={100}
                 height={100}
-                
               />
             ) : (
               getInitials(team.name)
@@ -135,9 +140,9 @@ const TeamDetails = () => {
       </div>
 
       {/* Tabs Section */}
-      <Card className={styles.tabsContainer}>
+      <div className={styles.tabsContainer}>
         <Tabs defaultActiveKey="profile" items={tabItems} size="large" type="card" />
-      </Card>
+      </div>
     </div>
   );
 };

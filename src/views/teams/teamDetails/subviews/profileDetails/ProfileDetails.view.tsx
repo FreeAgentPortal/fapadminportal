@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import styles from "./ProfileDetails.module.scss";
 import formStyles from "@/styles/Form.module.scss";
-import { Form, Input, Button, Switch, Select, Tag, ColorPicker, Space, Divider, Row, Col } from "antd";
+import { Form, Input, Button, Switch, Select, Tag, ColorPicker, Space, Divider, Row, Col, Card } from "antd";
 import {
   SaveOutlined,
   ReloadOutlined,
@@ -85,7 +85,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <Card className={styles.container}>
       <Form form={form} layout="vertical" className={formStyles.form}>
         {/* Basic Information Section */}
         <div className={styles.section}>
@@ -284,7 +284,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
           </Space>
         </div>
       </Form>
-    </div>
+    </Card>
   );
 };
 

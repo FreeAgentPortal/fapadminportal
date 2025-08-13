@@ -1,4 +1,11 @@
-export interface ITeamType  {
+import User from "./User";
+
+export interface TeamMember {
+  user: User;
+  role: string;
+}
+
+export interface ITeamType {
   coachName: string;
   _id: string; // Unique identifier for the team
   name: string;
@@ -16,7 +23,7 @@ export interface ITeamType  {
   logoUrl: string; // URL of the team's logo
   links?: [{ language: string; href: string; text: string; shortText: string }];
   location: string; // e.g., "CA", "TX"
-  linkedUsers: string[]; // References to users with access
+  linkedUsers: TeamMember[]; // Array of user objects with roles
   alertsEnabled: boolean;
   verifiedDomain?: string; // e.g., "example.edu"
   openToTryouts?: boolean; // Whether the team is open to new athletes

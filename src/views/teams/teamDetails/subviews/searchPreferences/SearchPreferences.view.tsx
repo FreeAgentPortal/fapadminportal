@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./SearchPreferences.module.scss";
-import { Button, Spin } from "antd";
+import { Button, Card, Spin } from "antd";
 import { SearchOutlined, PlusOutlined } from "@ant-design/icons";
 import { ISearchPreferences } from "@/types/ISearchPreferences";
 import useApiHook from "@/hooks/useApi";
@@ -43,7 +43,7 @@ const SearchPreferences: React.FC<SearchPreferencesProps> = ({ teamId }) => {
   }
 
   return (
-    <div className={styles.container}>
+    <Card className={styles.container}>
       {/* Header with stats */}
       <div className={styles.header}>
         <div className={styles.headerInfo}>
@@ -97,7 +97,7 @@ const SearchPreferences: React.FC<SearchPreferencesProps> = ({ teamId }) => {
           </div>
         </div>
       )}
-    </div>
+    </Card>
   );
 };
 

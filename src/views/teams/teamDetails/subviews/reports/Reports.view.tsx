@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./Reports.module.scss";
+import { Card } from "antd";
 
 interface ReportsProps {
   teamId: string;
@@ -8,7 +9,7 @@ interface ReportsProps {
 
 const Reports: React.FC<ReportsProps> = ({ teamId }) => {
   return (
-    <div className={styles.container}>
+    <Card className={styles.container}>
       <div className={styles.section}>
         <h3 className={styles.sectionTitle}>Team Analytics & Reports</h3>
         <div className={styles.placeholder}>
@@ -18,7 +19,7 @@ const Reports: React.FC<ReportsProps> = ({ teamId }) => {
           audit logs.
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

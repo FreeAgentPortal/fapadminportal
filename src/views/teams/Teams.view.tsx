@@ -60,12 +60,7 @@ const Teams = () => {
               return (
                 // check the logos array for a value, use the first one if it exists
                 <div className={styles.avatar}>
-                  <Avatar
-                    src={
-                      record.logos && record.logos.length > 0 ? record.logos[0].href : "https://via.placeholder.com/150"
-                    }
-                    alt={record.name}
-                  />
+                  <Avatar src={record.logoUrl} alt={record.name} />
                 </div>
               );
             },
