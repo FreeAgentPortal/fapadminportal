@@ -17,7 +17,7 @@ const RecentAthleteSignups = () => {
   return (
     <div>
       {data?.payload?.map((athlete: any) => (
-        <AthleteCard key={athlete._id} athlete={athlete} sm />
+        <AthleteCard key={athlete._id} athlete={athlete} variant="compact" />
       ))}
     </div>
   );

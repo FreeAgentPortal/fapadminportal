@@ -1,10 +1,6 @@
 @use "@/styles/globals.scss" as *;
 /* stylelint-disable selector-class-pattern */
 
-:root {
-  --athlete-card-min-height: 76px;
-}
-
 .card {
   --card-radius: 12px;
   --pad-x: 12px;
@@ -19,7 +15,7 @@
   box-shadow: var(--shadow-default);
   transition: box-shadow 160ms ease, transform 160ms ease, border-color 160ms ease;
   border: 1px solid rgba(0, 0, 0, 0.06);
-  min-height: var(--athlete-card-min-height);
+  min-height: 80px;
   cursor: pointer;
 
   &:hover {
