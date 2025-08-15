@@ -24,6 +24,14 @@ const Users = () => {
           label: "All",
           key: "",
         },
+        {
+          label: "Active",
+          key: "isActive;true"
+        },
+        {
+          label: "Inactive",
+          key: "isActive;false"
+        }
       ]}
       sort={[
         {

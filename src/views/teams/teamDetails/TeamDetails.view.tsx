@@ -1,18 +1,27 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./TeamDetails.module.scss";
 import useApiHook from "@/hooks/useApi";
 import { useParams } from "next/navigation";
-import { Tabs, Spin, Alert, Tag, Card } from "antd";
+import { Tabs, Spin, Alert, Tag, Card, Button, Modal, Space } from "antd";
+import { DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { ITeamType } from "@/types/ITeamType";
 import ProfileDetails from "./subviews/profileDetails/ProfileDetails.view";
 import SearchPreferences from "./subviews/searchPreferences/SearchPreferences.view";
 import Reports from "./subviews/reports/Reports.view";
 import UserManagement from "./subviews/userManagement/UserManagement.view";
 import Image from "next/image";
+import { useQueryClient } from "@tanstack/react-query";
+import { IAdminType } from "@/types/IAdminType";
+import { useInterfaceStore } from "@/state/interface";
+import { hasRequiredRole } from "@/utils/roleUtils";
 
 const TeamDetails = () => {
   const { id } = useParams();
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const { addAlert } = useInterfaceStore();
+  const queryClient = useQueryClient();
+  const selectedProfile = queryClient.getQueryData(["profile", "admin"]) as { payload: IAdminType };
 
   const { data, isLoading, error, refetch } = useApiHook({
     url: `/profiles/team/${id}`,
@@ -20,6 +29,42 @@ const TeamDetails = () => {
     enabled: !!id,
     method: "GET",
   }) as { data: { payload: ITeamType }; isLoading: boolean; error: any; refetch: () => void };
+
+  // Delete team mutation
+  const { mutate: deleteTeam, isLoading: isDeleting } = useApiHook({
+    method: "DELETE",
+    key: "team.delete",
+  }) as any;
+
+  const handleDeleteTeam = () => {
+    setDeleteModalVisible(true);
+  };
+
+  const confirmDeleteTeam = () => {
+    deleteTeam(
+      {
+        url: `/profiles/team/${id}`,
+      },
+      {
+        onSuccess: () => {
+          addAlert({
+            type: "success",
+            message: "Team deleted successfully!",
+          });
+          setDeleteModalVisible(false);
+          // Navigate back to teams list
+          window.history.back();
+        },
+        onError: (error: any) => {
+          addAlert({
+            type: "error",
+            message: error?.response?.data?.message || "Failed to delete team",
+          });
+          setDeleteModalVisible(false);
+        },
+      }
+    );
+  };
 
   if (isLoading) {
     return (
@@ -112,6 +157,19 @@ const TeamDetails = () => {
             </div>
             {team.isAllStar && <Tag color="gold">All-Star Team</Tag>}
             {team.openToTryouts && <Tag color="green">Open to Tryouts</Tag>}
+
+            {/* Show delete button only if user has 'teams.delete' permission */}
+            {hasRequiredRole(selectedProfile?.payload?.permissions, ["teams.delete"]) && (
+              <Button
+                type="primary"
+                danger
+                icon={<DeleteOutlined />}
+                onClick={handleDeleteTeam}
+                style={{ marginLeft: "12px" }}
+              >
+                Delete Team
+              </Button>
+            )}
           </div>
         </div>
 
@@ -143,6 +201,39 @@ const TeamDetails = () => {
       <div className={styles.tabsContainer}>
         <Tabs defaultActiveKey="profile" items={tabItems} size="large" type="card" />
       </div>
+
+      {/* Delete Team Confirmation Modal */}
+      <Modal
+        title={
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <ExclamationCircleOutlined style={{ color: "#ff4d4f" }} /> Delete Team
+          </div>
+        }
+        open={deleteModalVisible}
+        onCancel={() => setDeleteModalVisible(false)}
+        footer={null}
+        width={600}
+      >
+        <div style={{ marginBottom: "24px" }}>
+          <p style={{ color: "var(--color-silver)", fontSize: "16px", marginBottom: "16px" }}>
+            Are you sure you want to permanently delete <strong>{team?.name}</strong>?
+          </p>
+          <p style={{ color: "#ff4d4f", fontSize: "14px", fontWeight: "500", marginBottom: "8px" }}>
+            ⚠️ This action cannot be undone!
+          </p>
+          <p style={{ color: "var(--color-silver-dark)", fontSize: "14px" }}>
+            All team data, member associations, search preferences, and reports will be permanently removed from the
+            system.
+          </p>
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
+          <Button onClick={() => setDeleteModalVisible(false)}>Cancel</Button>
+          <Button type="primary" danger onClick={confirmDeleteTeam} loading={isDeleting} icon={<DeleteOutlined />}>
+            Delete Team
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };
