@@ -15,6 +15,7 @@ import {
   IdcardOutlined,
   LockOutlined,
   UnlockOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import User from "@/types/User";
 import useApiHook from "@/hooks/useApi";
@@ -22,6 +23,9 @@ import { useInterfaceStore } from "@/state/interface";
 import formatPhoneNumber from "@/utils/formatPhoneNumber";
 import { timeDifference } from "@/utils/timeDifference";
 import { useParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { IAdminType } from "@/types/IAdminType";
+import { hasRequiredRole } from "@/utils/roleUtils";
 
 const UserDetails = () => {
   const { id } = useParams();
@@ -30,8 +34,10 @@ const UserDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [passwordModalVisible, setPasswordModalVisible] = useState(false);
   const [resetPasswordModalVisible, setResetPasswordModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const { addAlert } = useInterfaceStore((state) => state);
-
+  const queryClient = useQueryClient();
+  const selectedProfile = queryClient.getQueryData(["profile", "admin"]) as { payload: IAdminType };
   // Fetch user data if userId is provided
   const {
     data: userData,
@@ -63,6 +69,12 @@ const UserDetails = () => {
   const { mutate: setCustomPassword, isLoading: isSettingPassword } = useApiHook({
     method: "POST",
     key: "user.setPassword",
+  }) as any;
+
+  // Delete user mutation
+  const { mutate: deleteUser, isLoading: isDeleting } = useApiHook({
+    method: "DELETE",
+    key: "user.delete",
   }) as any;
 
   const handleSaveChanges = async (values: any) => {
@@ -157,6 +169,36 @@ const UserDetails = () => {
     }
   };
 
+  const handleDeleteUser = () => {
+    setDeleteModalVisible(true);
+  };
+
+  const confirmDeleteUser = () => {
+    deleteUser(
+      {
+        url: `/user/${user?._id}`,
+      },
+      {
+        onSuccess: () => {
+          addAlert({
+            type: "success",
+            message: "User deleted successfully!",
+          });
+          setDeleteModalVisible(false);
+          // Navigate back to users list or appropriate page
+          window.history.back();
+        },
+        onError: (error: any) => {
+          addAlert({
+            type: "error",
+            message: error?.response?.data?.message || "Failed to delete user",
+          });
+          setDeleteModalVisible(false);
+        },
+      }
+    );
+  };
+
   const getProfileRefColor = (refType: string) => {
     switch (refType.toLowerCase()) {
       case "admin":
@@ -241,9 +283,24 @@ const UserDetails = () => {
         </div>
 
         <div className={styles.actions}>
-          <Button type="primary" icon={<EditOutlined />} onClick={() => setIsEditing(!isEditing)}>
-            {isEditing ? "Cancel" : "Edit User"}
-          </Button>
+          <Space>
+            <Button type="primary" icon={<EditOutlined />} onClick={() => setIsEditing(!isEditing)}>
+              {isEditing ? "Cancel" : "Edit User"}
+            </Button>
+
+            {/* Show delete button only if user has 'users.delete' permission and it's not self-deletion */}
+            {hasRequiredRole(selectedProfile?.payload.permissions, ["users.delete"]) && (
+              <Button
+                type="primary"
+                danger
+                icon={<DeleteOutlined />}
+                onClick={handleDeleteUser}
+                disabled={selectedProfile?.payload?._id === user?._id} // Prevent self-deletion
+              >
+                Delete User
+              </Button>
+            )}
+          </Space>
         </div>
       </div>
 
@@ -475,6 +532,38 @@ const UserDetails = () => {
           <Button onClick={() => setResetPasswordModalVisible(false)}>Cancel</Button>
           <Button type="primary" danger onClick={confirmResetPassword} loading={isResetting} icon={<ReloadOutlined />}>
             Reset Password
+          </Button>
+        </div>
+      </Modal>
+
+      {/* Delete User Confirmation Modal */}
+      <Modal
+        title={
+          <div className={styles.modalTitle}>
+            <ExclamationCircleOutlined style={{ color: "#ff4d4f" }} /> Delete User
+          </div>
+        }
+        open={deleteModalVisible}
+        onCancel={() => setDeleteModalVisible(false)}
+        footer={null}
+        className={styles.passwordModal}
+      >
+        <div style={{ marginBottom: "24px" }}>
+          <p style={{ color: "var(--color-silver)", fontSize: "16px", marginBottom: "16px" }}>
+            Are you sure you want to permanently delete <strong>{user?.fullName}</strong>?
+          </p>
+          <p style={{ color: "#ff4d4f", fontSize: "14px", fontWeight: "500", marginBottom: "8px" }}>
+            ⚠️ This action cannot be undone!
+          </p>
+          <p style={{ color: "var(--color-silver-dark)", fontSize: "14px" }}>
+            All user data, profile information, and associated records will be permanently removed from the system.
+          </p>
+        </div>
+
+        <div className={styles.modalActions}>
+          <Button onClick={() => setDeleteModalVisible(false)}>Cancel</Button>
+          <Button type="primary" danger onClick={confirmDeleteUser} loading={isDeleting} icon={<DeleteOutlined />}>
+            Delete User
           </Button>
         </div>
       </Modal>

@@ -27,6 +27,7 @@
 
 .compact {
   grid-template-rows: auto; /* hide bottom row */
+  --pad-y: 8px; /* reduce vertical padding */
 }
 
 .rowTop {
@@ -34,6 +35,11 @@
   grid-template-columns: 48px 1fr auto;
   align-items: center;
   gap: 12px;
+}
+
+.compact .rowTop {
+  grid-template-columns: 36px 1fr auto; /* smaller avatar column */
+  gap: 10px; /* tighter spacing */
 }
 
 .avatar {
@@ -60,7 +66,12 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
+}
+
+.compact .name {
+  font-size: 0.95rem; /* slightly smaller in compact mode */
 }
 
 .chips {

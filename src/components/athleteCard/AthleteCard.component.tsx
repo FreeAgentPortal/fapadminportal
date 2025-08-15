@@ -28,7 +28,8 @@ interface AthleteCardV2Props {
  * AthleteCardV2 – a compact, responsive, glanceable admin card.
  *
  * Design goals:
- *  - Minimal surface area; one-line summary row + tiny meta strip
+ *  - Default: Full information with chips, metadata, and rating details
+ *  - Compact: Minimal surface area; name + rating only, smaller avatar
  *  - Mobile-first, grid-based layout
  *  - No local state; purely derived UI (functional, predictable)
  *  - Strict typography + line-clamp to avoid vertical growth
@@ -76,7 +77,7 @@ export default function AthleteCard({
         <Avatar
           src={athlete?.profileImageUrl || undefined}
           icon={<UserOutlined />}
-          size={48}
+          size={variant === "compact" ? 36 : 48}
           className={styles.avatar}
         />
 
@@ -85,52 +86,69 @@ export default function AthleteCard({
             <h3 className={styles.name} title={athlete?.fullName || "Unnamed"}>
               {athlete?.fullName || "Unnamed"}
             </h3>
-            <div className={styles.chips}>
-              {typeof athlete?.isActive === "boolean" && (
-                <Tag
-                  className={styles.chip}
-                  color={athlete.isActive ? "green" : "red"}
-                  icon={athlete.isActive ? <CheckCircleOutlined /> : <StopOutlined />}
-                >
-                  {athlete.isActive ? "Active" : "Inactive"}
-                </Tag>
-              )}
-              {primaryPosition && (
-                <Tag className={styles.chip} color={getPositionColor(primaryPosition?.name)}>
-                  <RiseOutlined /> {primaryPosition?.abbreviation || primaryPosition?.name?.toUpperCase()}
-                </Tag>
-              )}
-              {grad && (
-                <Tag className={styles.chip} color={grad.color}>
-                  <CalendarOutlined /> {grad.label}
-                </Tag>
-              )}
-            </div>
-          </div>
-
-          <div className={styles.metaLine}>
-            {/* keep metadata terse; more is on the details page */}
-            {athlete?.college && <span className={styles.meta}>{athlete.college}</span>}
-            {athlete?.birthPlace?.state && <span className={styles.meta}>• {athlete.birthPlace.state}</span>}
-            {athlete?.createdAt && (
-              <span className={styles.meta}>• Joined {timeDifference(new Date(), new Date(athlete.createdAt))}</span>
+            {variant === "default" && (
+              <div className={styles.chips}>
+                {typeof athlete?.isActive === "boolean" && (
+                  <Tag
+                    className={styles.chip}
+                    color={athlete.isActive ? "green" : "red"}
+                    icon={athlete.isActive ? <CheckCircleOutlined /> : <StopOutlined />}
+                  >
+                    {athlete.isActive ? "Active" : "Inactive"}
+                  </Tag>
+                )}
+                {primaryPosition && (
+                  <Tag className={styles.chip} color={getPositionColor(primaryPosition?.name)}>
+                    <RiseOutlined /> {primaryPosition?.abbreviation || primaryPosition?.name?.toUpperCase()}
+                  </Tag>
+                )}
+                {grad && (
+                  <Tag className={styles.chip} color={grad.color}>
+                    <CalendarOutlined /> {grad.label}
+                  </Tag>
+                )}
+              </div>
             )}
           </div>
+
+          {variant === "default" && (
+            <div className={styles.metaLine}>
+              {/* keep metadata terse; more is on the details page */}
+              {athlete?.college && <span className={styles.meta}>{athlete.college}</span>}
+              {athlete?.birthPlace?.state && <span className={styles.meta}>• {athlete.birthPlace.state}</span>}
+              {athlete?.createdAt && (
+                <span className={styles.meta}>• Joined {timeDifference(new Date(), new Date(athlete.createdAt))}</span>
+              )}
+            </div>
+          )}
         </div>
 
         <div className={styles.right}>
-          {rating > 0 ? (
-            <Tooltip title={`${rating}/5`}>
+          {variant === "compact" ? (
+            // Compact mode: only show rating number or essential info
+            rating > 0 ? (
               <div className={styles.rating} style={{ color: ratingColor }}>
-                <StarFilled className={styles.star} />
                 <span className={styles.ratingText}>{rating.toFixed(1)}</span>
               </div>
-            </Tooltip>
+            ) : (
+              <div className={styles.ratingMuted}>NR</div>
+            )
           ) : (
-            <div className={styles.ratingMuted}>NR</div>
+            // Default mode: full rating with star and tooltip
+            <>
+              {rating > 0 ? (
+                <Tooltip title={`${rating}/5`}>
+                  <div className={styles.rating} style={{ color: ratingColor }}>
+                    <StarFilled className={styles.star} />
+                    <span className={styles.ratingText}>{rating.toFixed(1)}</span>
+                  </div>
+                </Tooltip>
+              ) : (
+                <div className={styles.ratingMuted}>NR</div>
+              )}
+              {rightSlot && <div className={styles.actions}>{rightSlot}</div>}
+            </>
           )}
-
-          {rightSlot && <div className={styles.actions}>{rightSlot}</div>}
         </div>
       </div>
 
