@@ -213,7 +213,7 @@ const CreateScout = ({ isModalVisible, setIsModalVisible, form, editingScout }: 
             {/* Show selected user info */}
             {selectedUser && (
               <div className={styles.selectedUser}>
-                <UserItem user={selectedUser} sm />
+                <UserItem user={selectedUser} variant="compact" />
               </div>
             )}
             <Divider />

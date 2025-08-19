@@ -135,7 +135,7 @@ const CreateAdmin = ({ isModalVisible, setIsModalVisible, form, editingUser }: C
       <div className={formStyles.form}>
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           {editingUser ? (
-            <UserItem user={editingUser.user} sm />
+            <UserItem user={editingUser.user} variant="compact" />
           ) : (
             <Form.Item
               label={

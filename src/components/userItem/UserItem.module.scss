@@ -1,14 +1,20 @@
 @use "@/styles/globals.scss" as *;
 
-.container {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+.card {
+  --card-radius: 12px;
+  --pad-x: 12px;
+  --pad-y: 10px;
+
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 8px;
+  padding: var(--pad-y) var(--pad-x);
   background: linear-gradient(135deg, rgb(0, 0, 0) 0%, var(--primary) 100%);
+  border-radius: var(--card-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  transition: all 1s ease;
+  transition: all 0.2s ease;
+  min-height: 80px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -34,208 +40,193 @@
       opacity: 1;
     }
   }
-
-  &.compact {
-    padding: 12px 16px;
-
-    .header {
-      margin-bottom: 0;
-    }
-  }
-
-  @include mobile {
-    padding: 16px;
-    margin-bottom: 12px;
-  }
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 16px;
-
-  @include mobile {
-    flex-direction: column;
-    gap: 12px;
-  }
+.compact {
+  grid-template-rows: auto; /* hide bottom row */
+  --pad-y: 8px; /* reduce vertical padding */
 }
 
-.userBasics {
-  display: flex;
+.rowTop {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
   align-items: center;
-  gap: 16px;
-  flex: 1;
+  gap: 12px;
+}
 
-  @include mobile {
-    gap: 12px;
-  }
+.compact .rowTop {
+  grid-template-columns: 36px 1fr auto; /* smaller avatar column */
+  gap: 10px; /* tighter spacing */
 }
 
 .avatar {
-  flex-shrink: 0;
   border: 2px solid rgba(24, 144, 255, 0.3);
   box-shadow: 0 4px 16px rgba(24, 144, 255, 0.2);
+  flex-shrink: 0;
 }
 
-.nameSection {
-  flex: 1;
+.main {
+  min-width: 0; /* allow clamps */
+}
+
+.nameLine {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 8px;
 }
 
 .name {
-  font-size: 18px;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0;
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.2px;
   line-height: 1.2;
-
-  @include mobile {
-    font-size: 16px;
-  }
+  margin: 0;
+  color: #ffffff;
+  max-width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
-.badges {
-  display: flex;
-  gap: 8px;
+.compact .name {
+  font-size: 0.95rem; /* slightly smaller in compact mode */
+}
+
+.chips {
+  display: inline-flex;
   flex-wrap: wrap;
+  gap: 6px;
 }
 
-.profileRefTag {
+.chip {
+  margin: 0 !important;
+  line-height: 18px;
+  height: 20px;
+  padding-inline: 6px !important;
   font-size: 11px;
   font-weight: 600;
   border-radius: 6px;
-  padding: 2px 8px;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.statusTag {
-  font-size: 11px;
-  font-weight: 500;
-  border-radius: 6px;
-  padding: 2px 8px;
+.metaLine {
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.quickActions {
-  display: flex;
+.meta {
+  margin-right: 8px;
+}
+
+.right {
+  display: grid;
   align-items: center;
-  gap: 12px;
-
-  @include mobile {
-    width: 100%;
-    justify-content: flex-end;
-  }
+  justify-items: end;
+  gap: 6px;
 }
 
-.customerId {
+.status {
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.permissionCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(24, 144, 255, 0.1);
+  border: 1px solid rgba(24, 144, 255, 0.3);
+  color: rgba(24, 144, 255, 0.9);
   font-size: 12px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+  min-width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  padding: 0 6px;
+}
+
+.permissionMuted {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+}
+
+.actions {
+  margin-top: 4px;
+}
+
+.rowBottom {
+  display: flex;
+  align-items: center;
+}
+
+.permissionPreview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.permissionTag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(24, 144, 255, 0.1);
+  border: 1px solid rgba(24, 144, 255, 0.3);
+  color: rgba(24, 144, 255, 0.9);
+  white-space: nowrap;
+}
+
+.morePermissions {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.1);
-  padding: 4px 8px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
 }
 
-.details {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* === Responsiveness === */
+@media (max-width: 640px) {
+  .card {
+    --pad-x: 10px;
+    --pad-y: 10px;
+  }
+  
+  .rowTop {
+    grid-template-columns: 44px 1fr auto;
+  }
+  
+  .chip {
+    display: none;
+  } /* keep top row ultra clean on mobile */
+  
+  .permissionPreview {
+    display: none;
+  }
 }
 
-.contactInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.infoItem {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  .icon {
-    color: rgba(24, 144, 255, 0.8);
+@include mobile {
+  .card {
+    padding: 10px;
+    margin-bottom: 12px;
+  }
+  
+  .name {
     font-size: 14px;
-    flex-shrink: 0;
   }
-
-  .text {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 14px;
-    word-break: break-word;
-
-    @include mobile {
-      font-size: 13px;
-    }
+  
+  .metaLine {
+    font-size: 11px;
   }
-}
-
-.metadata {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.metaItem {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  .metaIcon {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 12px;
-  }
-
-  .metaText {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 12px;
-  }
-}
-
-.permissions {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-
-  .permissionsLabel {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 12px;
-    font-weight: 500;
-  }
-
-  .permissionTags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-
-  .permissionTag {
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background: rgba(24, 144, 255, 0.1);
-    border: 1px solid rgba(24, 144, 255, 0.3);
-    color: rgba(24, 144, 255, 0.9);
-  }
-
-  .moreTag {
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.7);
-  }
-}
-
-.warning {
-  display: flex;
-  align-items: center;
 }

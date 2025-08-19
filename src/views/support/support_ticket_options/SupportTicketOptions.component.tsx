@@ -61,7 +61,7 @@ const SupportTicketOptions = () => {
         {data?.payload?.requester && (
           <div className={styles.userContainer}>
             <Link href={`/users/${data?.payload?.requester?._id}`} passHref>
-              <UserItem user={data?.payload?.requester} sm />
+              <UserItem user={data?.payload?.requester} variant="compact" />
             </Link>
           </div>
         )}
