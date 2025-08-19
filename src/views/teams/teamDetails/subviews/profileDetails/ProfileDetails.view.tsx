@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ProfileDetails.module.scss";
 import formStyles from "@/styles/Form.module.scss";
 import { Form, Input, Button, Switch, Select, Tag, ColorPicker, Space, Divider, Row, Col, Card } from "antd";
@@ -14,6 +14,8 @@ import {
 import { ITeamType } from "@/types/ITeamType";
 import useApiHook from "@/hooks/useApi";
 import { availablePositions } from "@/data/positions";
+import { availableLeagues } from "@/data/leagues";
+import PhotoUpload from "@/components/photoUpload/PhotoUpload.component";
 
 interface ProfileDetailsProps {
   teamData: ITeamType;
@@ -21,6 +23,7 @@ interface ProfileDetailsProps {
 
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
   const [form] = Form.useForm();
+  const [logoImageUrl, setLogoImageUrl] = useState<string>("");
 
   const { mutate: updateTeam } = useApiHook({
     method: "PUT",
@@ -32,8 +35,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
   // Initialize form with team data
   useEffect(() => {
     if (teamData) {
+      const logoUrl = teamData.logos?.[0]?.href || teamData.logoUrl || "";
+      setLogoImageUrl(logoUrl);
       form.setFieldsValue({
         ...teamData,
+        logoUrl: logoUrl,
       });
     }
   }, [teamData, form]);
@@ -49,12 +55,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
     form.resetFields();
     // Re-initialize with original data
     if (teamData) {
+      const logoUrl = teamData.logos?.[0]?.href || teamData.logoUrl || "";
+      setLogoImageUrl(logoUrl);
       form.setFieldsValue({
         ...teamData,
-        logoUrl: teamData.logos?.[0]?.href || "",
-        logoAlt: teamData.logos?.[0]?.alt || "",
-        logoWidth: teamData.logos?.[0]?.width || 100,
-        logoHeight: teamData.logos?.[0]?.height || 100,
+        logoUrl: logoUrl,
       });
     }
   };
@@ -100,6 +105,21 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
               rules={[{ required: true, message: "Coach name is required" }]}
             >
               <Input placeholder="Enter coach name" size="large" />
+            </Form.Item>
+
+            <Form.Item
+              label="League"
+              name="league"
+              rules={[{ required: true, message: "Please select the team's league" }]}
+              tooltip="The league or organization this team competes in"
+            >
+              <Select placeholder="Select league" showSearch size="large">
+                {availableLeagues.map((league) => (
+                  <Select.Option key={league.abbreviation} value={league.abbreviation}>
+                    {league.name} ({league.abbreviation})
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </div>
         </div>
@@ -165,27 +185,68 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
           <div className={styles.logoSection}>
             <Row gutter={[16, 16]}>
               <Col xs={24} sm={12}>
-                <Form.Item label="Logo URL" name="logoUrl">
-                  <Input placeholder="https://example.com/logo.png" size="large" />
-                </Form.Item>
+                <div className={`${styles.imageContainer} ${formStyles.field}`}>
+                  <PhotoUpload
+                    default={logoImageUrl}
+                    name="logoUrl"
+                    label="Upload Team Logo"
+                    action={`${process.env.API_URL}/upload/cloudinary/file`}
+                    isAvatar={false}
+                    form={form}
+                    aspectRatio={1}
+                    placeholder="Upload team logo"
+                    tooltip="Upload a team logo image file"
+                    imgStyle={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "200px",
+                      height: "200px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
               </Col>
 
               <Col xs={24} sm={12}>
-                <Form.Item label="Logo Alt Text" name="logoAlt">
-                  <Input placeholder="Team logo description" size="large" />
+                <Form.Item label="Logo URL" name="logoUrl" tooltip="Or enter a direct URL to an existing logo image">
+                  <Input
+                    placeholder="https://example.com/logo.png"
+                    size="large"
+                  />
                 </Form.Item>
-              </Col>
 
-              <Col xs={24} sm={6}>
-                <Form.Item label="Logo Width" name="logoWidth">
-                  <Input type="number" placeholder="100" size="large" />
-                </Form.Item>
-              </Col>
-
-              <Col xs={24} sm={6}>
-                <Form.Item label="Logo Height" name="logoHeight">
-                  <Input type="number" placeholder="100" size="large" />
-                </Form.Item>
+                {logoImageUrl && (
+                  <div style={{ textAlign: "center", marginTop: "16px" }}>
+                    <div
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        margin: "0 auto",
+                        border: "1px solid #d9d9d9",
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <img
+                        src={logoImageUrl}
+                        alt="Logo preview"
+                        style={{
+                          maxWidth: "100%",
+                          maxHeight: "100%",
+                          objectFit: "contain",
+                        }}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = "none";
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
               </Col>
             </Row>
           </div>

@@ -79,9 +79,9 @@ const SearchPreferences: React.FC<SearchPreferencesProps> = ({ teamId }) => {
             This team hasn&apos;t set up any automated search preferences yet. Create search criteria to help find potential
             athletes.
           </p>
-          <Button type="primary" icon={<PlusOutlined />} className={styles.addButton} style={{ marginTop: "1rem" }}>
+          {/* <Button type="primary" icon={<PlusOutlined />} className={styles.addButton} style={{ marginTop: "1rem" }}>
             Create First Search
-          </Button>
+          </Button> */}
         </div>
       ) : (
         <div className={styles.searchPreferencesList}>
@@ -90,11 +90,11 @@ const SearchPreferences: React.FC<SearchPreferencesProps> = ({ teamId }) => {
           ))}
 
           {/* Add New Search Button */}
-          <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
+          {/* <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
             <Button type="dashed" icon={<PlusOutlined />} className={styles.addButton} size="large">
               Add New Search Preference
             </Button>
-          </div>
+          </div> */}
         </div>
       )}
     </Card>

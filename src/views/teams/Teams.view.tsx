@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./Teams.module.scss";
 import SearchWrapper from "@/layout/searchWrapper/SearchWrapper.layout";
 import { Avatar, Button, Table } from "antd";
-import { FaEdit, FaPlus } from "react-icons/fa";
+import { FaCheck, FaEdit, FaPlus, FaTimes } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import useApiHook from "@/hooks/useApi";
 import { ITeamType } from "@/types/ITeamType";
@@ -71,6 +71,16 @@ const Teams = () => {
             key: "name",
           },
           {
+            title: "Email",
+            dataIndex: "email",
+            key: "email",
+          },
+          {
+            title: "League",
+            dataIndex: "league",
+            key: "league",
+          },
+          {
             title: "Claimed",
             dataIndex: "linkedUsers",
             key: "linkedUsers",
@@ -80,6 +90,14 @@ const Teams = () => {
                 // greater than 0 means claimed
                 <span>{Array.isArray(text) && text.length > 0 ? "Claimed" : "Unclaimed"}</span>
               );
+            },
+          },
+          {
+            title: "Active Team",
+            dataIndex: "isActive",
+            key: "isActive",
+            render: (isActive: boolean) => {
+              return <span>{isActive ? <FaCheck /> : <FaTimes />}</span>;
             },
           },
           {
