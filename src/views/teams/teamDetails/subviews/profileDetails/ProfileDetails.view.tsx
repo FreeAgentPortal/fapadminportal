@@ -12,6 +12,8 @@ import {
   PictureOutlined,
 } from "@ant-design/icons";
 import { ITeamType } from "@/types/ITeamType";
+import useApiHook from "@/hooks/useApi";
+import { availablePositions } from "@/data/positions";
 
 interface ProfileDetailsProps {
   teamData: ITeamType;
@@ -20,44 +22,18 @@ interface ProfileDetailsProps {
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
   const [form] = Form.useForm();
 
-  // Available positions (you can move this to a constants file)
-  const availablePositions = [
-    "QB",
-    "RB",
-    "FB",
-    "WR",
-    "TE",
-    "OL",
-    "C",
-    "OG",
-    "OT",
-    "DL",
-    "DE",
-    "DT",
-    "NT",
-    "LB",
-    "ILB",
-    "OLB",
-    "CB",
-    "S",
-    "FS",
-    "SS",
-    "K",
-    "P",
-    "LS",
-    "KR",
-    "PR",
-  ];
+  const { mutate: updateTeam } = useApiHook({
+    method: "PUT",
+    key: "team.update",
+    queriesToInvalidate: [`team,${teamData._id}`],
+    successMessage: "Team updated successfully",
+  }) as any;
 
   // Initialize form with team data
   useEffect(() => {
     if (teamData) {
       form.setFieldsValue({
         ...teamData,
-        logoUrl: teamData.logos?.[0]?.href || "",
-        logoAlt: teamData.logos?.[0]?.alt || "",
-        logoWidth: teamData.logos?.[0]?.width || 100,
-        logoHeight: teamData.logos?.[0]?.height || 100,
       });
     }
   }, [teamData, form]);
@@ -65,8 +41,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
   const handleSave = () => {
     form.validateFields().then((values) => {
       console.log("Form values to save:", values);
-      // TODO: Implement save functionality
-      // You can add your API call here later
+      updateTeam({ url: `/profiles/team/${teamData._id}`, formData: { teamId: teamData._id, ...values } });
     });
   };
 
@@ -229,17 +204,23 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
                 mode="multiple"
                 placeholder="Select positions needed"
                 size="large"
-                options={availablePositions.map((pos) => ({ label: pos, value: pos }))}
+                options={availablePositions.map((pos) => ({
+                  label: `${pos.name} (${pos.abbreviation})`,
+                  value: pos.abbreviation,
+                }))}
                 className={styles.fullWidth}
               />
             </Form.Item>
 
             <div className={styles.positionTags}>
-              {form.getFieldValue("positionsNeeded")?.map((position: string) => (
-                <Tag key={position} color="blue">
-                  {position}
-                </Tag>
-              ))}
+              {form.getFieldValue("positionsNeeded")?.map((positionAbbr: string) => {
+                const position = availablePositions.find((p) => p.abbreviation === positionAbbr);
+                return (
+                  <Tag key={positionAbbr} color="blue">
+                    {position ? `${position.name} (${position.abbreviation})` : positionAbbr}
+                  </Tag>
+                );
+              })}
             </div>
           </div>
 

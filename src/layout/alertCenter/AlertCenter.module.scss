@@ -1,13 +1,31 @@
+@use "@/styles/globals.scss" as *;
+
 .container {
-  position: absolute;
-  top: 1rem;
-  width: 100%;
+  position: fixed;
+  top: calc($header-height + 1rem); // Header height + some spacing
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 2rem);
+  max-width: 600px;
   z-index: 10000;
-  justify-content: center;
-  align-items: center;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  pointer-events: none; // Allow clicks to pass through the container
+
+  // Enable pointer events only on the actual alerts
+  > * {
+    pointer-events: auto;
+  }
+
+  // Mobile responsiveness
+  @media (max-width: 768px) {
+    width: calc(100% - 1rem);
+    max-width: none;
+    left: 0.5rem;
+    right: 0.5rem;
+    transform: none;
+  }
 }
 
 .alert {
@@ -17,7 +35,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-weight: 500;
   transition: opacity 0.3s ease-in-out;
 }

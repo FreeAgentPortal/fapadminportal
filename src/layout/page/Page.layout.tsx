@@ -69,6 +69,7 @@ const PageLayout = (props: Props) => {
         {loggedInData ? (
           <>
             <Header pages={props.pages} />
+            <AlertCenter />
             {!props.sidebarHidden && (
               <div className={styles.sideBar}>
                 {props?.pages && <SideBar page={props.pages[0]} large={props.largeSideBar} />}
@@ -112,7 +113,6 @@ const PageLayout = (props: Props) => {
                         shadow="0 0 10px var(--primary-dark),0 0 5px var(--primary)"
                         showForHashAnchor
                       />
-                      <AlertCenter />
                       <LoaderProvider>{props.loading ? <Skeleton active /> : props.children}</LoaderProvider>
                     </>
                   )}

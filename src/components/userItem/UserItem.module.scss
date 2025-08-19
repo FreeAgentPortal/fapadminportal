@@ -202,15 +202,15 @@
     --pad-x: 10px;
     --pad-y: 10px;
   }
-  
+
   .rowTop {
     grid-template-columns: 44px 1fr auto;
   }
-  
+
   .chip {
     display: none;
   } /* keep top row ultra clean on mobile */
-  
+
   .permissionPreview {
     display: none;
   }
@@ -221,11 +221,11 @@
     padding: 10px;
     margin-bottom: 12px;
   }
-  
+
   .name {
     font-size: 14px;
   }
-  
+
   .metaLine {
     font-size: 11px;
   }

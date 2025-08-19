@@ -1,4 +1,4 @@
-@use '@/styles/globals.scss' as *;
+@use "@/styles/globals.scss" as *;
 
 .container {
   display: grid;
@@ -15,14 +15,15 @@
   //   height: 100%;
 
   grid-template-areas:
-    'sidebar header'
-    'sidebar content';
+    "sidebar header"
+    "sidebar content";
 
   transition: $animation;
   -webkit-transition: $animation;
+  position: relative;
 
   &::after {
-    content: '';
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
@@ -38,8 +39,8 @@
   @include mobile {
     grid-template-columns: auto;
     grid-template-areas:
-      'header'
-      'content';
+      "header"
+      "content";
     .sideBar {
       position: fixed;
       left: -100%;
