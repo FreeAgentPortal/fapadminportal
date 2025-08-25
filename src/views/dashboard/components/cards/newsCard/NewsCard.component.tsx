@@ -2,8 +2,8 @@ import styles from "./NewsCard.module.scss";
 import { Skeleton } from "antd";
 import Error from "@/components/error/Error.component";
 import useApiHook from "@/hooks/useApi";
-import NewsItem from "@/components/newsItem/NewsItem.component";
-import { NewsItemData } from "@/components/newsItem/NewsItem.types";
+import NewsItem from "@/views/dashboard/components/cards/newsCard/newsItem/NewsItem.component";
+import { NewsItemData } from "@/views/dashboard/components/cards/newsCard/newsItem/NewsItem.types";
 
 const NewsCard = () => {
   const {
