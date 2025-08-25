@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, Row, Col, Typography, Tag, Space, Tooltip, Statistic, Divider, Button } from "antd";
 import { ClockCircleOutlined, WarningOutlined, SettingOutlined } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
 import { SchedulerStatus } from "../SchedulerChecker.types";
+import Link from "next/link";
 
 const { Text } = Typography;
 
@@ -19,14 +19,9 @@ const AthleteProfileCheckerCard: React.FC<AthleteProfileCheckerCardProps> = ({
   getStatusColor,
   formatNextRun,
 }) => {
-  const router = useRouter();
   const isRunning = scheduler.schedulerData?.data?.scheduler?.isRunning;
   const nextRun = scheduler.schedulerData?.data?.scheduler?.nextRun;
   const stats = scheduler.schedulerData?.data?.statistics;
-
-  const handleNavigateToDetails = () => {
-    router.push("/admin/schedulers/athlete-profile");
-  };
 
   return (
     <Card
@@ -44,13 +39,9 @@ const AthleteProfileCheckerCard: React.FC<AthleteProfileCheckerCardProps> = ({
       }
       extra={
         <Tooltip title="View detailed scheduler information">
-          <Button
-            type="text"
-            icon={<SettingOutlined />}
-            size="small"
-            onClick={handleNavigateToDetails}
-            style={{ color: "#1890ff" }}
-          />
+          <Link href="/admin/schedulers/athlete-profile">
+            <Button type="text" icon={<SettingOutlined />} size="small" style={{ color: "#1890ff" }} />
+          </Link>
         </Tooltip>
       }
       style={{ marginBottom: 8 }}

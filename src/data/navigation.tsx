@@ -1,6 +1,6 @@
 import { RiHome2Fill } from "react-icons/ri";
 import { MdSportsHandball, MdSupportAgent } from "react-icons/md";
-import { FaRegBell, FaStickyNote } from "react-icons/fa";
+import { FaClock, FaRegBell, FaStickyNote } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { GiAmericanFootballHelmet } from "react-icons/gi";
 import { BsBox, BsBroadcastPin } from "react-icons/bs";
@@ -113,6 +113,16 @@ export const navigation = (options?: any) => {
           link: "/account_details/support_admin",
           icon: <MdSupportAgent />,
         },
+        schedulers: {
+          title: "Schedulers",
+          link: "/admin/schedulers",
+          icon: (
+            <Badge count={options?.schedulersCount}>
+              <FaClock />
+            </Badge>
+          ),
+          hidden: true,
+        },
       },
       // Only show to users with admin or developer roles
       hidden: shouldHideForRoles(options?.user?.roles, ROLE_GROUPS.ADMIN_AND_DEV),
@@ -133,6 +143,6 @@ export const navigation = (options?: any) => {
         },
       },
       hidden: true,
-    }, 
+    },
   };
 };
