@@ -1,10 +1,12 @@
 export const availableLeagues = [
   // Professional Football
   { name: "National Football League", abbreviation: "NFL" },
-  { name: "XFL", abbreviation: "XFL" },
+  { name: "UFL", abbreviation: "UFL" },
   { name: "Indoor Football League", abbreviation: "IFL" },
   { name: "Canadian Football League", abbreviation: "CFL" },
   { name: "Arena Football League", abbreviation: "AFL" },
+  { name: "Liga de Fútbol", abbreviation: "LFA" },
+  { name: "Eurpoean League of Football", abbreviation: "ELF" },
 
   // College Football
   { name: "NCAA Division I FBS", abbreviation: "D1 FBS" },
