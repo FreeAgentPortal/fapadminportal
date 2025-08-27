@@ -1,20 +1,19 @@
-"use client";
-
-import WorkInProgress from "@/components/wip/WorkInProgress.component";
 import { navigation } from "@/data/navigation";
 import PageLayout from "@/layout/page/Page.layout";
+import IncompleteProfiles from "@/views/athletes/incompleteProfiles/IncompleteProfiles.view";
+import { Metadata } from "next";
 import React from "react";
+
+// metadata
+export const metadata: Metadata = {
+  title: "Athlete Profile Scheduler",
+  description: "Manage athlete profile scheduling and completion.",
+};
 
 const AthleteProfileSchedulerPage: React.FC = () => {
   return (
     <PageLayout pages={[navigation().admin.links.schedulers]}>
-      <WorkInProgress
-        title="Athlete Profile Checker Details"
-        description="Detailed analytics and management for the Athlete Profile Checker. This will include profile completion analytics, missing field reports, athlete management tools, and automated profile enhancement features."
-        backUrl="/"
-        backLabel="Back to Dashboard"
-        estimatedCompletion="Phase 2"
-      />
+      <IncompleteProfiles />
     </PageLayout>
   );
 };

@@ -73,6 +73,7 @@ const useApiHook = (options: {
   sort?: any;
   limit?: number;
   include?: any;
+  pageNumber?: number;
   queriesToInvalidate?: string[];
   successMessage?: string;
   redirectUrl?: string;
@@ -93,6 +94,7 @@ const useApiHook = (options: {
     key,
     filter,
     sort,
+    pageNumber,
     include,
     limit,
     queriesToInvalidate,
@@ -115,11 +117,12 @@ const useApiHook = (options: {
       fetchData(url!, "GET", undefined, {
         defaultKeyword: keyword,
         defaultFilter: filter,
+        defaultPageNumber: pageNumber,
         defaultSort: sort,
         defaultInclude: include,
         defaultPageLimit: limit,
       }),
-    enabled: enabled && method === "GET",
+    enabled: enabled && method === "GET" && !!url,
     refetchOnWindowFocus,
     retry: 1,
     staleTime: staleTime,

@@ -1,0 +1,166 @@
+.incompleteProfiles {
+  padding: 24px;
+  max-width: 100%;
+
+  .header {
+    margin-bottom: 24px;
+
+    .titleRow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+  }
+
+  .loadingContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+
+  .errorContainer {
+    margin: 24px 0;
+  }
+
+  .emptyState {
+    margin: 24px 0;
+
+    .ant-card-body {
+      padding: 40px 20px;
+    }
+  }
+
+  .tableCard {
+    margin-bottom: 24px;
+
+    .ant-card-body {
+      padding: 0;
+    }
+  }
+
+  .athletesTable {
+    .athleteInfo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .avatar {
+        flex-shrink: 0;
+      }
+
+      .athleteDetails {
+        flex: 1;
+        min-width: 0;
+        
+        .name {
+          font-weight: 600;
+          font-size: 14px;
+          color: var(--primary);
+          margin-bottom: 4px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .metadata {
+          font-size: 12px;
+          color: #d3d2d2;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    .completionInfo {
+
+      .completionText {
+        font-size: 11px;
+        color: #c0c0c0;
+        text-align: center;
+      }
+    }
+
+    .missingFields {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      max-height: 60px;
+      overflow-y: auto;
+
+      .fieldTag {
+        margin: 0;
+        font-size: 11px;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+
+      .noMissing {
+        color: #52c41a;
+        font-size: 12px;
+        font-style: italic;
+      }
+    }
+
+    .actions {
+      display: flex;
+      gap: 4px;
+
+      .actionButton {
+        padding: 4px 8px;
+        height: auto;
+        font-size: 12px;
+        color: var(--primary);
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+      }
+    }
+
+    // Mobile responsiveness
+    @media (max-width: 768px) {
+      .athleteInfo {
+        gap: 8px;
+
+        .athleteDetails {
+          .name {
+            font-size: 13px;
+          }
+
+          .metadata {
+            font-size: 11px;
+          }
+        }
+      }
+
+      .actions {
+        flex-direction: column;
+        gap: 2px;
+
+        .actionButton {
+          padding: 2px 6px;
+          font-size: 11px;
+        }
+      }
+
+      .missingFields {
+        max-height: 40px;
+
+        .fieldTag {
+          font-size: 10px;
+          padding: 1px 4px;
+        }
+      }
+    }
+  }
+
+  .pagination {
+    margin-top: 24px;
+    text-align: center;
+  }
+}

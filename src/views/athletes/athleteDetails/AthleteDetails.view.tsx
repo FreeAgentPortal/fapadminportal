@@ -3,10 +3,9 @@ import React, { useState } from "react";
 import styles from "./AthleteDetails.module.scss";
 import useApiHook from "@/hooks/useApi";
 import { useParams } from "next/navigation";
-import { Tabs, Spin, Tag, Avatar, Rate, Button, Input, message, Modal } from "antd";
-import { UserOutlined, EditOutlined, LinkOutlined, CheckCircleOutlined, StopOutlined } from "@ant-design/icons";
+import { Tabs, Spin, Tag, Avatar, Rate, Button } from "antd";
+import { UserOutlined, LinkOutlined, CheckCircleOutlined, StopOutlined } from "@ant-design/icons";
 import { IAthlete } from "@/types/IAthleteType";
-import { getPositionColor } from "@/components/athleteCard/getPositionColor";
 
 // Import subviews
 import BasicInfo from "./subviews/basicInfo/BasicInfo.view";
@@ -14,28 +13,30 @@ import Metrics from "./subviews/metrics/Metrics.view";
 import Measurements from "./subviews/measurements/Measurements.view";
 import UserAssociation from "./subviews/userAssociation/UserAssociation.view";
 import { useInterfaceStore } from "@/state/interface";
+import EspnModal from "./components/EspnModal";
+import AlertModal from "./components/AlertModal";
+import ProfileCompletion from "./components/ProfileCompletion";
 
 const AthleteDetails = () => {
   const { id } = useParams();
   const [athleteData, setAthleteData] = useState<IAthlete | null>(null);
   const [showEspnModal, setShowEspnModal] = useState(false);
-  const [espnId, setEspnId] = useState("");
-  const [isSubmittingEspn, setIsSubmittingEspn] = useState(false);
+  const [showAlertModal, setShowAlertModal] = useState(false);
   const { addAlert } = useInterfaceStore((state) => state);
 
   const { data, isLoading, error } = useApiHook({
-    url: `/athlete/${id}`,
+    url: `/profiles/athlete/${id}`,
     key: ["athlete", `${id}`],
     enabled: !!id,
     method: "GET",
   }) as { data: { payload: IAthlete }; isLoading: boolean; error: any };
 
-  // ESPN API hook for populating athlete data
-  const { mutate: populateFromEspn } = useApiHook({
-    url: `/athlete/${id}/populate-espn`,
-    method: "POST",
-    key: ["athlete", `${id}`, "espn-populate"],
-  }) as any;
+  const { data: profileCompletion, isLoading: isLoadingProfileCompletion } = useApiHook({
+    url: `/profiles/athlete/completion-report/${id}`,
+    key: ["athlete", `${id}`, "profile-completion"],
+    enabled: !!id,
+    method: "GET",
+  }) as { data: { data: any }; isLoading: boolean; error: any };
 
   // Toggle active status API hook
   const { mutate: toggleActiveStatus, isLoading: isTogglingStatus } = useApiHook({
@@ -57,48 +58,13 @@ const AthleteDetails = () => {
     }
   };
 
-  const handleEspnSubmit = () => {
-    const trimmedId = espnId.trim();
-
-    if (!trimmedId) {
-      message.error("Please enter a valid ESPN ID");
-      return;
-    }
-
-    // Basic validation - ESPN IDs are typically numeric
-    if (!/^\d+$/.test(trimmedId)) {
-      message.error("ESPN ID should contain only numbers");
-      return;
-    }
-
-    setIsSubmittingEspn(true);
-    populateFromEspn(
-      {
-        url: `/athlete/${id}/populate-espn`,
-        formData: { espnId: trimmedId },
-      },
-      {
-        onSuccess: (response: any) => {
-          message.success("Athlete data populated from ESPN successfully!");
-          setAthleteData(response.payload);
-          setShowEspnModal(false);
-          setEspnId("");
-          setIsSubmittingEspn(false);
-        },
-        onError: (error: any) => {
-          const errorMessage =
-            error?.response?.data?.message || error.message || "Failed to populate athlete data from ESPN";
-          message.error(errorMessage);
-          setIsSubmittingEspn(false);
-        },
-      }
-    );
+  const handleEspnSuccess = (updatedAthleteData: IAthlete) => {
+    setAthleteData(updatedAthleteData);
+    setShowEspnModal(false);
   };
 
-  const handleEspnModalCancel = () => {
-    setShowEspnModal(false);
-    setEspnId("");
-    setIsSubmittingEspn(false);
+  const handleAlertSuccess = () => {
+    setShowAlertModal(false);
   };
 
   const handleToggleActiveStatus = () => {
@@ -269,6 +235,11 @@ const AthleteDetails = () => {
           </div>
         </div>
 
+        {/* Profile Completion Section */}
+        {!isLoadingProfileCompletion && profileCompletion?.data && (
+          <ProfileCompletion profileCompletion={profileCompletion.data} onSendAlert={() => setShowAlertModal(true)} />
+        )}
+
         {/* Athlete Metrics */}
         <div className={styles.athleteMetrics}>
           <div className={styles.metricCard}>
@@ -298,60 +269,22 @@ const AthleteDetails = () => {
         <Tabs defaultActiveKey="basic" items={tabItems} size="large" type="card" />
       </div>
 
-      {/* ESPN ID Modal */}
-      <Modal
-        title={
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <LinkOutlined />
-            Add ESPN ID
-          </div>
-        }
+      {/* ESPN Modal */}
+      <EspnModal
         open={showEspnModal}
-        onOk={handleEspnSubmit}
-        onCancel={handleEspnModalCancel}
-        confirmLoading={isSubmittingEspn}
-        okText="Populate from ESPN"
-        cancelText="Cancel"
-        destroyOnClose
-        okButtonProps={{
-          disabled: !espnId.trim() || !/^\d+$/.test(espnId.trim()),
-        }}
-      >
-        <div style={{ marginBottom: 16 }}>
-          <p>Enter the ESPN athlete ID to automatically populate athlete information from ESPN&apos;s database.</p>
-          <div
-            style={{
-              padding: "12px",
-              background: "#f0f9ff",
-              border: "1px solid #0ea5e9",
-              borderRadius: "6px",
-              fontSize: "12px",
-              color: "#0369a1",
-            }}
-          >
-            <strong>How to find ESPN ID:</strong>
-            <br />
-            1. Go to the athlete&apos;s ESPN profile page
-            <br />
-            2. Look at the URL: espn.com/college-football/player/_/id/<strong>1234567</strong>/name
-            <br />
-            3. The ESPN ID is the number after &quot;/id/&quot; (e.g., 1234567)
-          </div>
-        </div>
-        <Input
-          placeholder="Enter ESPN ID (e.g., 1234567)"
-          value={espnId}
-          onChange={(e) => setEspnId(e.target.value)}
-          onPressEnter={handleEspnSubmit}
-          disabled={isSubmittingEspn}
-          status={espnId && !/^\d+$/.test(espnId.trim()) ? "error" : ""}
-        />
-        {espnId && !/^\d+$/.test(espnId.trim()) && (
-          <div style={{ color: "#ff4d4f", fontSize: "12px", marginTop: "4px" }}>
-            ESPN ID should contain only numbers
-          </div>
-        )}
-      </Modal>
+        athleteId={id as string}
+        onSuccess={handleEspnSuccess}
+        onCancel={() => setShowEspnModal(false)}
+      />
+
+      {/* Alert Modal */}
+      <AlertModal
+        open={showAlertModal}
+        athleteId={id as string}
+        profileCompletion={profileCompletion?.data}
+        onSuccess={handleAlertSuccess}
+        onCancel={() => setShowAlertModal(false)}
+      />
     </div>
   );
 };

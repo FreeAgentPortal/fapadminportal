@@ -28,8 +28,7 @@ const AppWrapper = (props: Props) => {
   useEffect(() => {
     if (process.env.API_URL) {
       setIsConnecting(true);
-      const socket = io(
-        process.env.NODE_ENV === "development" ? "http://localhost:5000" : process.env.API_URL.replace("/api/v1", "")
+      const socket = io(process.env.API_URL.replace("/api/v1", "")
       );
       socket.on("connect", () => {
         setIsConnecting(false);
