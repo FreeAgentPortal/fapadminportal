@@ -31,12 +31,8 @@ const AlertModal: React.FC<AlertModalProps> = ({ open, athleteId, profileComplet
   const handleSend = () => {
     sendCompletionAlert(
       {
-        url: `/athlete/${athleteId}/completion-alert`,
-        formData: {
-          athleteId: athleteId,
-          trigger: "manual",
-          adminId: "current-admin", // This would typically come from auth context
-        },
+        url: `/profiles/athlete/scheduler/trigger/${athleteId}`,
+        formData: {},
       },
       {
         onSuccess: (response: any) => {
