@@ -7,6 +7,7 @@ export const availableLeagues = [
   { name: "Arena Football League", abbreviation: "AFL" },
   { name: "Liga de Fútbol", abbreviation: "LFA" },
   { name: "Eurpoean League of Football", abbreviation: "ELF" },
+  { name: "X-League Japan", abbreviation: "XL" },
 
   // College Football
   { name: "NCAA Division I FBS", abbreviation: "D1 FBS" },
