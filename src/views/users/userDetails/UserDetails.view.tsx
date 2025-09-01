@@ -278,6 +278,9 @@ const UserDetails = () => {
               <span>
                 <CalendarOutlined /> Joined {timeDifference(new Date(), new Date(user.createdAt))}
               </span>
+              <span>
+                <CalendarOutlined /> Last Login {timeDifference(new Date(), new Date(user.lastSignedIn as any))}
+              </span>
             </div>
           </div>
         </div>

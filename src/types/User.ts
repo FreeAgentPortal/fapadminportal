@@ -16,6 +16,7 @@ export default interface User {
   updatedAt: Date;
   isEmailVerified: boolean;
   token?: string;
+  lastSignedIn: Date | undefined | null;
   needsBillingSetup: boolean;
   permissions: string[];
   emailVerificationToken: string | undefined | null;
