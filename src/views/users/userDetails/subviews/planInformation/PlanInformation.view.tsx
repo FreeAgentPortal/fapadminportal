@@ -37,7 +37,20 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
     filter: `payor;${userData?._id}`,
   }) as any;
 
+  // Fetch plan details
+  const {
+    data: planDetailsData,
+    isLoading: isLoadingPlanDetails,
+    error: planDetailsError,
+  } = useApiHook({
+    url: `/auth/plan/${planData?.payload[0]?.plan?._id}`,
+    key: ["plan", planData?.payload[0]?.plan?._id],
+    method: "GET",
+    enabled: !!planData?.payload[0]?.plan?._id,
+  }) as any;
+
   const billing = planData?.payload[0];
+  const planDetails = planDetailsData?.payload;
   const customer = billing?.paymentProcessorData?.stripe?.customer;
   const paymentMethod = billing?.paymentProcessorData?.stripe?.paymentMethod;
 
@@ -85,7 +98,37 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
     return brand?.charAt(0).toUpperCase() + brand?.slice(1) || "Unknown";
   };
 
-  if (isLoading) {
+  const getTierColor = (tier: string) => {
+    switch (tier?.toLowerCase()) {
+      case "diamond":
+        return "#722ed1";
+      case "gold":
+        return "#faad14";
+      case "silver":
+        return "#8c8c8c";
+      case "bronze":
+        return "#d4380d";
+      default:
+        return "#1890ff";
+    }
+  };
+
+  const getTierIcon = (tier: string) => {
+    switch (tier?.toLowerCase()) {
+      case "diamond":
+        return "💎";
+      case "gold":
+        return "🥇";
+      case "silver":
+        return "🥈";
+      case "bronze":
+        return "🥉";
+      default:
+        return "⭐";
+    }
+  };
+
+  if (isLoading || isLoadingPlanDetails) {
     return (
       <div className={styles.container}>
         <Card className={styles.card}>
@@ -178,6 +221,42 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
           </div>
         )}
       </Card>
+
+      {/* Plan Details */}
+      {planDetails && (
+        <Card
+          title={
+            <div className={styles.cardTitle}>
+              <CrownOutlined /> Current Plan Details
+            </div>
+          }
+          className={styles.card}
+          extra={
+            <Space>
+              {planDetails.mostPopular && <Tag color="gold">Most Popular</Tag>}
+              <Tag color={getTierColor(planDetails.tier)} style={{ color: "white" }}>
+                {getTierIcon(planDetails.tier)} {planDetails.tier?.toUpperCase() || "STANDARD"}
+              </Tag>
+            </Space>
+          }
+        >
+          <Descriptions column={2} size="small">
+            <Descriptions.Item label="Plan Name">
+              <strong>{planDetails.name}</strong>
+            </Descriptions.Item>
+            <Descriptions.Item label="Monthly Price">
+              <Tag color="green" style={{ fontSize: "14px", padding: "4px 8px" }}>
+                ${planDetails.price}/month
+              </Tag>
+            </Descriptions.Item>
+            <Descriptions.Item label="Tier">
+              <Tag color={getTierColor(planDetails.tier)} style={{ color: "white" }}>
+                {getTierIcon(planDetails.tier)} {planDetails.tier?.toUpperCase() || "STANDARD"}
+              </Tag>
+            </Descriptions.Item>
+          </Descriptions>
+        </Card>
+      )}
 
       {/* Customer Information */}
       {customer && (
