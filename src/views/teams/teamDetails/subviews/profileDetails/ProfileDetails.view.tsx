@@ -16,6 +16,7 @@ import useApiHook from "@/hooks/useApi";
 import { availablePositions } from "@/data/positions";
 import { availableLeagues } from "@/data/leagues";
 import PhotoUpload from "@/components/photoUpload/PhotoUpload.component";
+import Image from "next/image";
 
 interface ProfileDetailsProps {
   teamData: ITeamType;
@@ -231,7 +232,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
                         overflow: "hidden",
                       }}
                     >
-                      <img
+                      <Image
                         src={logoImageUrl}
                         alt="Logo preview"
                         style={{
@@ -243,6 +244,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ teamData }) => {
                           const target = e.target as HTMLImageElement;
                           target.style.display = "none";
                         }}
+                        width={100}
+                        height={100}
                       />
                     </div>
                   </div>

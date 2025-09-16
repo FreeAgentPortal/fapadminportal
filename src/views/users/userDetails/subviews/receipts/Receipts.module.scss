@@ -1,0 +1,158 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.receiptsContent {
+  padding: 8px 0;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 48px 0;
+
+  p {
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+}
+
+.emptyDescription {
+  text-align: center;
+
+  p {
+    margin: 0 0 8px 0;
+    color: var(--color-text-secondary);
+  }
+
+  .subText {
+    font-size: 14px;
+    color: var(--color-text-tertiary);
+  }
+}
+
+.tableContainer {
+  margin-top: 24px;
+}
+
+.emptyTableText {
+  text-align: center;
+  padding: 32px 0;
+
+  .emptyIcon {
+    font-size: 48px;
+    color: var(--color-text-quaternary);
+    margin-bottom: 16px;
+  }
+
+  p {
+    margin: 0 0 8px 0;
+    color: var(--color-text-secondary);
+  }
+
+  .subText {
+    font-size: 14px;
+    color: var(--color-text-tertiary);
+    font-style: italic;
+  }
+}
+
+.receiptId {
+  font-family: monospace;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-secondary);
+}
+
+.amount {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--color-success);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.summaryStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--color-background-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+
+  .statIcon {
+    font-size: 24px;
+    color: var(--color-primary);
+    opacity: 0.8;
+  }
+
+  .statInfo {
+    h4 {
+      margin: 0 0 4px 0;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-size: 14px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .summaryStats {
+    grid-template-columns: 1fr;
+  }
+
+  .statCard {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 4px;
+  }
+}

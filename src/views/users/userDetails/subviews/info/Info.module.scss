@@ -1,0 +1,123 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600; 
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.saveActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.authSection {
+  .authInfo {
+    margin-bottom: 16px;
+  }
+
+  .authItem {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    .authIcon {
+      font-size: 24px;
+      color: var(--color-primary);
+    }
+
+    .authDetails {
+      h4 {
+        margin: 0 0 4px 0;
+        font-weight: 600;
+        color: var(--color-text-primary);
+      }
+
+      p {
+        margin: 0;
+        color: var(--color-text-secondary);
+        font-size: 14px;
+      }
+    }
+  }
+
+  .warning {
+    margin-top: 12px;
+  }
+
+  .passwordActions {
+    margin: 16px 0;
+  }
+
+  .permissions {
+    h4 {
+      margin: 0 0 12px 0;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .permissionsList {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      .permissionTag {
+        background: white;
+        color: var(--primary);
+        border: 1px solid var(--color-primary);
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.passwordModal {
+  .modalTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+  }
+
+  .modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+@media (max-width: 768px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .saveActions {
+    flex-direction: column;
+  }
+}

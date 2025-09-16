@@ -1,0 +1,105 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 48px 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+.featuresSection {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+
+  h4 {
+    margin: 0 0 12px 0;
+    font-weight: 600; 
+  }
+
+  .featuresList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+.emptyDescription {
+  text-align: center;
+
+  p {
+    margin: 0 0 8px 0; 
+  }
+
+  .subText {
+    font-size: 14px; 
+  }
+}
+
+.planPlaceholder {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+}
+
+.planItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px dashed var(--color-border);
+
+  .planIcon {
+    font-size: 24px;
+    color: var(--primary);
+    opacity: 0.7;
+  }
+
+  .planDetails {
+    h4 {
+      margin: 0 0 4px 0;
+      font-weight: 600; 
+    }
+
+    p {
+      margin: 0; 
+      font-size: 14px;
+      font-style: italic;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    gap: 16px;
+  }
+
+  .planItem {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: center;
+  }
+}

@@ -24,6 +24,13 @@
 .ant-statistic-title {
   color: var(--primary) !important;
 }
+.ant-descriptions-item-label{
+  color: var(--primary) !important;
+  font-weight: 500;
+}
+.ant-descriptions-item-content{
+  color: #d6d6d6 !important;
+}
 
 /* ===========================================
    FORM COMPONENTS

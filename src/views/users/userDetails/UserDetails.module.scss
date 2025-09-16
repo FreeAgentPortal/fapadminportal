@@ -35,10 +35,8 @@
   font-size: 16px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+// User Header Section
+.userHeader {
   margin-bottom: 32px;
   padding: 24px;
   background: linear-gradient(135deg, var(--color-metallic-blue) 0%, rgba(0, 0, 0, 1) 100%);
@@ -47,238 +45,153 @@
   backdrop-filter: blur(10px);
 
   @include mobile {
+    padding: 16px;
+  }
+}
+
+.userBasicInfo {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+
+  @include mobile {
     flex-direction: column;
-    gap: 20px;
-    padding: 20px;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+}
+
+.userAvatar {
+  flex-shrink: 0;
+
+  .avatar {
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
 }
 
 .userInfo {
-  display: flex;
-  align-items: center;
-  gap: 20px;
   flex: 1;
+  min-width: 0;
 
-  @include mobile {
-    flex-direction: column;
-    text-align: center;
+  .userName {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-white);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    @include mobile {
+      font-size: 24px;
+      text-align: center;
+    }
   }
-}
 
-.avatar {
-  border: 3px solid var(--color-metallic-blue);
-  box-shadow: 0 8px 32px var(--color-silver);
-}
+  .userSubtitle {
+    margin-bottom: 16px;
 
-.userBasics {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  @include mobile {
-    align-items: center;
+    .userEmail {
+      color: var(--color-silver-light);
+      font-size: 16px;
+      font-weight: 500;
+    }
   }
-}
-
-.userName {
-  font-size: 28px;
-  font-weight: 700;
-  color: white;
-  margin: 0;
-  line-height: 1.2;
-
-  @include mobile {
-    font-size: 24px;
-  }
-}
-
-.badges {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-
-  @include mobile {
-    justify-content: center;
-  }
-}
-
-.profileRefTag {
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: 6px;
-  padding: 4px 10px;
 }
 
 .userMeta {
-  display: flex;
-  gap: 20px;
-  color: white;
-  font-size: 14px;
-
-  span {
+  .badges {
     display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  @include mobile {
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 8px;
-    align-items: center;
+    margin-bottom: 12px;
+
+    @include mobile {
+      justify-content: center;
+    }
+
+    .profileRefTag {
+      border-radius: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 11px;
+      padding: 4px 8px;
+    }
   }
-}
 
-.actions {
-  display: flex;
-  gap: 12px;
-
-  @include mobile {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-.content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-
-  @include desktop {
-    grid-template-columns: 2fr 1fr;
-  }
-}
-
-.card {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(75, 167, 214, 0.1) 100%);
-  border: 1px solid var(--color-metallic-blue-dark);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
-}
-
-.cardTitle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-silver);
-}
-
-.formGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-
-  @include mobile {
-    grid-template-columns: 1fr;
+  .metaInfo {
+    display: flex;
+    flex-wrap: wrap;
     gap: 16px;
-  }
-}
-
-.saveActions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid var(--color-metallic-blue-dark);
-}
-
-.authSection {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.authInfo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  @include mobile {
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
-  }
-}
-
-.authItem {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.authIcon {
-  font-size: 24px;
-  color: var(--color-metallic-blue);
-}
-
-.authDetails {
-  h4 {
-    color: var(--primary);
-    margin: 0 0 4px 0;
-    font-size: 16px;
-    font-weight: 600;
-  }
-
-  p {
-    color: var(--color-silver-dark);
-    margin: 0;
     font-size: 14px;
+    color: var(--color-silver-light);
+
+    @include mobile {
+      justify-content: center;
+      gap: 12px;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+
+      svg {
+        flex-shrink: 0;
+      }
+    }
   }
 }
 
-.warning {
-  display: flex;
-  align-items: center;
-}
+// Tabs Section
+.tabsContainer {
+  background: var(--color-background-primary);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 
-.passwordActions {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 8px;
+  :global(.ant-tabs-nav) {
+    margin: 0;
+    background: var(--color-background-secondary);
+    border-bottom: 1px solid var(--color-border);
 
-  @include mobile {
-    flex-direction: column;
-    gap: 12px;
+    &::before {
+      border: none;
+    }
   }
-}
 
-.permissions {
-  h4 {
-    color: var(--primary);
-    margin: 0 0 12px 0;
-    font-size: 16px;
-    font-weight: 600;
+  :global(.ant-tabs-tab) {
+    &.ant-tabs-tab-active {
+      background: var(--color-background-primary);
+      border-color: var(--color-primary);
+
+      .ant-tabs-tab-btn {
+        color: var(--color-primary);
+        font-weight: 600;
+      }
+    }
+
+    .ant-tabs-tab-btn {
+      color: var(--color-text-secondary);
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
   }
-}
 
-.permissionsList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+  :global(.ant-tabs-content) {
+    padding: 24px;
 
-.permissionTag {
-  font-size: 12px;
-  padding: 4px 10px;
-  border-radius: 6px;
-  background: rgba(122, 205, 242, 0.2);
-  border: 1px solid var(--color-metallic-blue);
-  color: var(--color-metallic-blue-light);
-}
+    @include mobile {
+      padding: 16px;
+    }
+  }
 
-.modalTitle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--primary);
-}
-
-.modalActions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 24px;
+  :global(.ant-tabs-tabpane) {
+    background: var(--color-background-primary);
+  }
 }

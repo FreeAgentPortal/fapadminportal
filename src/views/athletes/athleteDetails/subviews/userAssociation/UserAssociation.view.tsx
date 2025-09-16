@@ -13,6 +13,8 @@ import {
 import { IAthlete } from "@/types/IAthleteType";
 import useApiHook from "@/hooks/useApi";
 import { timeDifference } from "@/utils/timeDifference";
+import Link from "next/link";
+import { FaBoxOpen } from "react-icons/fa";
 
 interface UserAssociationProps {
   athleteData: IAthlete;
@@ -148,6 +150,11 @@ const UserAssociation: React.FC<UserAssociationProps> = ({ athleteData, onDataUp
                 </div>
 
                 <div className={styles.userActions}>
+                  <Link href={`/users/${userData.payload._id}`} passHref>
+                    <Button type="default" icon={<FaBoxOpen />} loading={userLoading}>
+                      Go to User
+                    </Button>
+                  </Link>
                   <Button type="primary" icon={<EyeOutlined />} onClick={handleViewUser} loading={userLoading}>
                     View Full Details
                   </Button>
