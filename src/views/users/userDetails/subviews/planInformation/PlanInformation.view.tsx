@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./PlanInformation.module.scss";
-import { Card, Tag, Spin, Empty, Descriptions, Space, Button, Alert } from "antd";
+import { Card, Tag, Spin, Empty, Descriptions, Space, Button, Alert, message } from "antd";
 import {
   CrownOutlined,
   CalendarOutlined,
@@ -14,10 +14,12 @@ import {
   CheckCircleOutlined,
   ExclamationCircleOutlined,
   ReloadOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import User from "@/types/User";
 import useApiHook from "@/hooks/useApi";
 import { useUser } from "@/state/auth";
+import { useInterfaceStore } from "@/state/interface";
 
 interface PlanInformationProps {
   userData: User;
@@ -37,6 +39,12 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
     filter: `payor;${userData?._id}`,
   }) as any;
 
+  const { mutate: updateBilling, isLoading: isUpdatingBilling } = useApiHook({
+    key: ["auth", "plan", "update"],
+    method: "PUT",
+    queriesToInvalidate: ["auth,plan"],
+  }) as any;
+
   // Fetch plan details
   const {
     data: planDetailsData,
@@ -48,6 +56,8 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
     method: "GET",
     enabled: !!planData?.payload[0]?.plan?._id,
   }) as any;
+
+  const { addAlert } = useInterfaceStore((state) => state);
 
   const billing = planData?.payload[0];
   const planDetails = planDetailsData?.payload;
@@ -128,6 +138,21 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
     }
   };
 
+  const handleForceUpdate = async () => {
+    try {
+      await updateBilling({
+        url: `/auth/billing/${billing?._id}`,
+        formData: { needsUpdate: true },
+      });
+      addAlert({ message: "User has been flagged for billing update", type: "success" });
+      // Optionally refresh the data
+      onDataUpdate({ ...userData });
+    } catch (error) {
+      addAlert({ message: "Failed to update billing status", type: "error" });
+      console.error("Error updating billing:", error);
+    }
+  };
+
   if (isLoading || isLoadingPlanDetails) {
     return (
       <div className={styles.container}>
@@ -184,6 +209,16 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
               {billing.status?.toUpperCase() || "UNKNOWN"}
             </Tag>
             <Tag color={billing.isYearly ? "blue" : "orange"}>{billing.isYearly ? "Yearly" : "Monthly"}</Tag>
+            <Button
+              type="primary"
+              size="small"
+              icon={<EditOutlined />}
+              loading={isUpdatingBilling}
+              onClick={handleForceUpdate}
+              disabled={isUpdatingBilling || billing.needsUpdate}
+            >
+              Force Account Update
+            </Button>
           </Space>
         }
       >
