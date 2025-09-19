@@ -16,6 +16,8 @@ import { useInterfaceStore } from "@/state/interface";
 import EspnModal from "./components/EspnModal";
 import AlertModal from "./components/AlertModal";
 import ProfileCompletion from "./components/ProfileCompletion";
+import ConversationsView from "./subviews/conversations/Conversations.view";
+import { useUser } from "@/state/auth";
 
 const AthleteDetails = () => {
   const { id } = useParams();
@@ -24,6 +26,13 @@ const AthleteDetails = () => {
   const [showAlertModal, setShowAlertModal] = useState(false);
   const { addAlert } = useInterfaceStore((state) => state);
 
+  const { data: loggedInData, isLoading: userIsLoading } = useUser();
+  const { data: selectedProfile } = useApiHook({
+    method: "GET",
+    key: ["profile", "admin"],
+    url: `/admin/profile/${loggedInData?.profileRefs["admin"]}`,
+    enabled: !!loggedInData?.profileRefs["admin"],
+  }) as any;
   const { data, isLoading, error } = useApiHook({
     url: `/profiles/athlete/${id}`,
     key: ["athlete", `${id}`],
@@ -159,6 +168,11 @@ const AthleteDetails = () => {
       key: "user",
       label: athleteData.userId ? "User Account" : "Associate User",
       children: <UserAssociation athleteData={athleteData} onDataUpdate={handleDataUpdate} />,
+    },
+    {
+      key: "conversations",
+      label: "Conversations",
+      children: <ConversationsView athleteData={athleteData} loggedInUser={selectedProfile?.payload} />,
     },
   ];
 
