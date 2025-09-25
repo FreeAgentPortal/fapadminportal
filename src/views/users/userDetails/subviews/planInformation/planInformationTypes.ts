@@ -63,6 +63,28 @@ export interface PlanDetails {
   mostPopular?: boolean;
 }
 
+export interface BillingData {
+  _id: string;
+  status: string;
+  isYearly: boolean;
+  credits: number;
+  profileType: string;
+  customerId: string;
+  profileId: string;
+  processor: string;
+  vaulted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  needsUpdate?: boolean;
+  features?: string[];
+  paymentProcessorData?: {
+    stripe?: {
+      customer?: StripeCustomer;
+      paymentMethod?: StripePaymentMethod;
+    };
+  };
+}
+
 export type StatusType = "active" | "inactive" | "cancelled" | "trial";
 export type TierType = "diamond" | "gold" | "silver" | "bronze";
 export type ColorType = "green" | "red" | "orange" | "blue" | "default";
