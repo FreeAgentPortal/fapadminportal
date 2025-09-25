@@ -12,6 +12,7 @@ export interface BillingAccountType {
   trialLength: number;
   processor?: string;
   setupFeePaid?: boolean;
+  credits?: number;
   createdAt: Date;
   updatedAt: Date;
   vaulted: boolean;

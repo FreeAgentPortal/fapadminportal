@@ -1,31 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import styles from "./UserDetails.module.scss";
-import { Tag, Avatar, Spin, Space, Button, Tabs } from "antd";
+import { Tag, Avatar, Spin, Tabs } from "antd";
 import {
   UserOutlined,
   ExclamationCircleOutlined,
-  EditOutlined,
   CalendarOutlined,
   IdcardOutlined,
-  DeleteOutlined,
 } from "@ant-design/icons";
 import User from "@/types/User";
 import useApiHook from "@/hooks/useApi";
-import { useInterfaceStore } from "@/state/interface";
 import { timeDifference } from "@/utils/timeDifference";
 import { useParams } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
-import { IAdminType } from "@/types/IAdminType";
-import { hasRequiredRole } from "@/utils/roleUtils";
 import { getUserDetailsTabs } from "./tabs";
 
 const UserDetails = () => {
   const { id } = useParams();
   const [userData, setUserData] = useState<User | null>(null);
-  const { addAlert } = useInterfaceStore((state) => state);
-  const queryClient = useQueryClient();
-  const selectedProfile = queryClient.getQueryData(["profile", "admin"]) as { payload: IAdminType };
 
   // Fetch user data if userId is provided
   const { data, isLoading, refetch } = useApiHook({

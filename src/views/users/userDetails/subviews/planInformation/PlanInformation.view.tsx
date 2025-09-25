@@ -1,11 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./PlanInformation.module.scss";
-import { Card, Tag, Spin, Empty, Descriptions, Space, Button, Alert, message } from "antd";
+import { Card, Tag, Spin, Descriptions, Space, Button, Alert } from "antd";
 import {
   CrownOutlined,
-  CalendarOutlined,
-  DollarOutlined,
   CreditCardOutlined,
   UserOutlined,
   PhoneOutlined,
@@ -15,11 +13,28 @@ import {
   ExclamationCircleOutlined,
   ReloadOutlined,
   EditOutlined,
+  GiftOutlined,
 } from "@ant-design/icons";
 import User from "@/types/User";
 import useApiHook from "@/hooks/useApi";
-import { useUser } from "@/state/auth";
 import { useInterfaceStore } from "@/state/interface";
+import CreditsUpdateModal from "./CreditsUpdateModal";
+import {
+  getStatusColor,
+  getStatusIconType,
+  formatAddress,
+  formatCardBrand,
+  getTierColor,
+  getTierIcon,
+  formatTimestamp,
+  formatCurrency,
+  getCreditsColor,
+  getBooleanColor,
+  formatBoolean,
+  formatCardExpiry,
+} from "./planInformationUtils";
+import { MESSAGES } from "./planInformationConstants";
+import formatPhoneNumber from "@/utils/formatPhoneNumber";
 
 interface PlanInformationProps {
   userData: User;
@@ -27,10 +42,12 @@ interface PlanInformationProps {
 }
 
 const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdate }) => {
+  const [isCreditsModalVisible, setIsCreditsModalVisible] = useState(false);
   const {
     data: planData,
     isLoading,
     error,
+    refetch: refetchBilling,
   } = useApiHook({
     url: `/auth/billing`,
     key: ["auth", "plan"],
@@ -64,78 +81,10 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
   const customer = billing?.paymentProcessorData?.stripe?.customer;
   const paymentMethod = billing?.paymentProcessorData?.stripe?.paymentMethod;
 
-  const getStatusColor = (status: string) => {
-    switch (status?.toLowerCase()) {
-      case "active":
-        return "green";
-      case "inactive":
-        return "red";
-      case "cancelled":
-        return "orange";
-      case "trial":
-        return "blue";
-      default:
-        return "default";
-    }
-  };
-
+  // Helper function to get the actual icon component
   const getStatusIcon = (status: string) => {
-    switch (status?.toLowerCase()) {
-      case "active":
-        return <CheckCircleOutlined />;
-      case "inactive":
-      case "cancelled":
-        return <ExclamationCircleOutlined />;
-      default:
-        return <CheckCircleOutlined />;
-    }
-  };
-
-  const formatAddress = (address: any) => {
-    if (!address) return "Not provided";
-    const parts = [
-      address.line1,
-      address.line2,
-      address.city,
-      address.state,
-      address.postal_code,
-      address.country,
-    ].filter(Boolean);
-    return parts.join(", ");
-  };
-
-  const formatCardBrand = (brand: string) => {
-    return brand?.charAt(0).toUpperCase() + brand?.slice(1) || "Unknown";
-  };
-
-  const getTierColor = (tier: string) => {
-    switch (tier?.toLowerCase()) {
-      case "diamond":
-        return "#722ed1";
-      case "gold":
-        return "#faad14";
-      case "silver":
-        return "#8c8c8c";
-      case "bronze":
-        return "#d4380d";
-      default:
-        return "#1890ff";
-    }
-  };
-
-  const getTierIcon = (tier: string) => {
-    switch (tier?.toLowerCase()) {
-      case "diamond":
-        return "💎";
-      case "gold":
-        return "🥇";
-      case "silver":
-        return "🥈";
-      case "bronze":
-        return "🥉";
-      default:
-        return "⭐";
-    }
+    const iconType = getStatusIconType(status);
+    return iconType === "check-circle" ? <CheckCircleOutlined /> : <ExclamationCircleOutlined />;
   };
 
   const handleForceUpdate = async () => {
@@ -144,13 +93,18 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
         url: `/auth/billing/${billing?._id}`,
         formData: { needsUpdate: true },
       });
-      addAlert({ message: "User has been flagged for billing update", type: "success" });
+      addAlert({ message: MESSAGES.SUCCESS_UPDATE, type: "success" });
       // Optionally refresh the data
       onDataUpdate({ ...userData });
     } catch (error) {
-      addAlert({ message: "Failed to update billing status", type: "error" });
+      addAlert({ message: MESSAGES.ERROR_UPDATE, type: "error" });
       console.error("Error updating billing:", error);
     }
+  }; 
+
+  const handleCreditsUpdated = () => {
+    refetchBilling();
+    onDataUpdate({ ...userData });
   };
 
   if (isLoading || isLoadingPlanDetails) {
@@ -159,7 +113,7 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
         <Card className={styles.card}>
           <div className={styles.loading}>
             <Spin size="large" />
-            <p>Loading plan information...</p>
+            <p>{MESSAGES.LOADING}</p>
           </div>
         </Card>
       </div>
@@ -178,8 +132,8 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
           className={styles.card}
         >
           <Alert
-            message="Unable to load plan information"
-            description="There was an error loading the billing data or no plan is associated with this user."
+            message={MESSAGES.ERROR_LOAD}
+            description={MESSAGES.ERROR_DESCRIPTION}
             type="warning"
             showIcon
             action={
@@ -209,6 +163,20 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
               {billing.status?.toUpperCase() || "UNKNOWN"}
             </Tag>
             <Tag color={billing.isYearly ? "blue" : "orange"}>{billing.isYearly ? "Yearly" : "Monthly"}</Tag>
+            {typeof billing.credits === "number" && billing.credits >= 0 && (
+              <Tag color="green" icon={<GiftOutlined />}>
+                {billing.credits} Credits
+              </Tag>
+            )}
+            <Button
+              type="default"
+              size="small"
+              icon={<GiftOutlined />}
+              onClick={() => setIsCreditsModalVisible(true)}
+              style={{ marginRight: 8 }}
+            >
+              Manage Credits
+            </Button>
             <Button
               type="primary"
               size="small"
@@ -237,7 +205,12 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
             <Tag>{billing.processor?.toUpperCase() || "Unknown"}</Tag>
           </Descriptions.Item>
           <Descriptions.Item label="Vaulted">
-            <Tag color={billing.vaulted ? "green" : "red"}>{billing.vaulted ? "Yes" : "No"}</Tag>
+            <Tag color={getBooleanColor(billing.vaulted)}>{formatBoolean(billing.vaulted)}</Tag>
+          </Descriptions.Item>
+          <Descriptions.Item label="Account Credits">
+            <Tag color={getCreditsColor(billing.credits)} icon={<GiftOutlined />}>
+              {billing.credits || 0} credits
+            </Tag>
           </Descriptions.Item>
           <Descriptions.Item label="Created">{new Date(billing.createdAt).toLocaleDateString()}</Descriptions.Item>
           <Descriptions.Item label="Last Updated">{new Date(billing.updatedAt).toLocaleDateString()}</Descriptions.Item>
@@ -314,11 +287,11 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
             <Descriptions.Item label="Phone">
               <Space>
                 <PhoneOutlined />
-                {customer.phone || "Not provided"}
+                {formatPhoneNumber(customer.phone) || "Not provided"}
               </Space>
             </Descriptions.Item>
             <Descriptions.Item label="Customer Since">
-              {customer.created ? new Date(customer.created * 1000).toLocaleDateString() : "Unknown"}
+              {customer.created ? formatTimestamp(customer.created) : "Unknown"}
             </Descriptions.Item>
             <Descriptions.Item label="Address" span={2}>
               <Space>
@@ -327,10 +300,10 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
               </Space>
             </Descriptions.Item>
             <Descriptions.Item label="Account Balance">
-              <Tag color={customer.balance === 0 ? "green" : "orange"}>${(customer.balance / 100).toFixed(2)}</Tag>
+              <Tag color={customer.balance === 0 ? "green" : "orange"}>{formatCurrency(customer.balance)}</Tag>
             </Descriptions.Item>
             <Descriptions.Item label="Delinquent">
-              <Tag color={customer.delinquent ? "red" : "green"}>{customer.delinquent ? "Yes" : "No"}</Tag>
+              <Tag color={customer.delinquent ? "red" : "green"}>{formatBoolean(customer.delinquent)}</Tag>
             </Descriptions.Item>
           </Descriptions>
         </Card>
@@ -354,7 +327,7 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
               <code>**** **** **** {paymentMethod.card?.last4}</code>
             </Descriptions.Item>
             <Descriptions.Item label="Expiry">
-              {paymentMethod.card?.exp_month?.toString().padStart(2, "0")}/{paymentMethod.card?.exp_year}
+              {formatCardExpiry(paymentMethod.card?.exp_month, paymentMethod.card?.exp_year)}
             </Descriptions.Item>
             <Descriptions.Item label="Country">
               {paymentMethod.card?.country?.toUpperCase() || "Unknown"}
@@ -363,7 +336,7 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
               <Tag>{paymentMethod.card?.funding?.toUpperCase() || "Unknown"}</Tag>
             </Descriptions.Item>
             <Descriptions.Item label="3D Secure">
-              <Tag color={paymentMethod.card?.three_d_secure_usage?.supported ? "green" : "orange"}>
+              <Tag color={getBooleanColor(paymentMethod.card?.three_d_secure_usage?.supported)}>
                 {paymentMethod.card?.three_d_secure_usage?.supported ? "Supported" : "Not Supported"}
               </Tag>
             </Descriptions.Item>
@@ -375,6 +348,16 @@ const PlanInformation: React.FC<PlanInformationProps> = ({ userData, onDataUpdat
             </Descriptions.Item>
           </Descriptions>
         </Card>
+      )}
+
+      {/* Credits Update Modal */}
+      {billing && (
+        <CreditsUpdateModal
+          isVisible={isCreditsModalVisible}
+          onClose={() => setIsCreditsModalVisible(false)}
+          billingData={billing}
+          onCreditsUpdated={handleCreditsUpdated}
+        />
       )}
     </div>
   );
