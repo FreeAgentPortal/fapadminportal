@@ -6,8 +6,7 @@ import { GiAmericanFootballHelmet } from "react-icons/gi";
 import { BsBox, BsBroadcastPin } from "react-icons/bs";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoCodeSlashOutline } from "react-icons/io5";
-import { RiAdminFill } from "react-icons/ri";
-import { profile } from "console";
+import { RiAdminFill } from "react-icons/ri"; 
 import { shouldHideForRoles, ROLE_GROUPS } from "@/utils/roleUtils";
 import { Badge } from "antd";
 

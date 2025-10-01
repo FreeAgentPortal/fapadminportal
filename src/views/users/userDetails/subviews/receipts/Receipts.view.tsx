@@ -1,11 +1,15 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Receipts.module.scss";
 import { Card, Table, Tag, Button, Empty, Spin } from "antd";
 import { FileTextOutlined, DownloadOutlined, EyeOutlined, CalendarOutlined, DollarOutlined } from "@ant-design/icons";
 import User from "@/types/User";
+import { IReceiptType } from "@/types/IReceiptType";
 import useApiHook from "@/hooks/useApi";
 import { useParams } from "next/navigation";
+import { useInterfaceStore } from "@/state/interface";
+import { getReceiptsColumns } from "./ReceiptsColumns";
+import ReceiptDetailsModal from "./ReceiptDetailsModal";
 
 interface ReceiptsProps {
   userData: User;
@@ -14,77 +18,75 @@ interface ReceiptsProps {
 
 const Receipts: React.FC<ReceiptsProps> = ({ userData, onDataUpdate }) => {
   const { id } = useParams();
+  const { addAlert } = useInterfaceStore();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedReceipt, setSelectedReceipt] = useState<IReceiptType | null>(null);
 
-  // TODO: Implement receipts fetching logic
-  // This is a minimal scaffolding that will be expanded later
-  const {
-    data: receiptsData,
-    isLoading,
-    error,
-  } = useApiHook({
-    url: `/user/${id}/receipts`,
+  const { data: receiptsData, isLoading } = useApiHook({
+    url: `/payment/receipt`,
     key: ["user", id as string, "receipts"],
     method: "GET",
-    enabled: false, // Disabled for now since endpoint doesn't exist yet
+    filter: `userId;${id}`,
   }) as { data: any; isLoading: boolean; error: any };
+  const { data: statisticData, isLoading: isLoadingStats } = useApiHook({
+    url: `/payment/receipt/payment-statistics/${userData?._id}`,
+    key: ["statistics", id as string],
+    method: "GET",
+    enabled: !!userData?._id,
+  }) as any;
 
-  // Placeholder columns for future receipts table
-  const columns = [
-    {
-      title: "Receipt ID",
-      dataIndex: "receiptId",
-      key: "receiptId",
-      render: (text: string) => <span className={styles.receiptId}>{text}</span>,
-    },
-    {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
-      render: (date: string) => (
-        <span className={styles.date}>
-          <CalendarOutlined /> {date}
-        </span>
-      ),
-    },
-    {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
-      render: (amount: number) => (
-        <span className={styles.amount}>
-          <DollarOutlined /> ${amount.toFixed(2)}
-        </span>
-      ),
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status: string) => {
-        const color = status === "paid" ? "green" : status === "pending" ? "orange" : "red";
-        return <Tag color={color}>{status.toUpperCase()}</Tag>;
-      },
-    },
-    {
-      title: "Actions",
-      key: "actions",
-      render: (record: any) => (
-        <div className={styles.actions}>
-          <Button type="link" icon={<EyeOutlined />} size="small">
-            View
-          </Button>
-          <Button type="link" icon={<DownloadOutlined />} size="small">
-            Download
-          </Button>
-        </div>
-      ),
-    },
-  ];
+  // Function to copy transaction ID to clipboard
+  const copyToClipboard = async (transactionId: string) => {
+    try {
+      await navigator.clipboard.writeText(transactionId);
+      addAlert({
+        type: "success",
+        message: "Transaction ID copied to clipboard",
+      });
+    } catch (error) {
+      addAlert({
+        type: "error",
+        message: "Failed to copy to clipboard",
+      });
+    }
+  };
 
-  // Placeholder data for demonstration
-  const placeholderData: any[] = [
-    // Empty array - will be populated when API is ready
-  ];
+  // Helper function to truncate transaction ID
+  const truncateTransactionId = (transactionId: string, maxLength: number = 12) => {
+    if (transactionId.length <= maxLength) return transactionId;
+    return `${transactionId.substring(0, maxLength)}...`;
+  };
+
+  // Function to handle viewing a receipt
+  const handleViewReceipt = (receipt: IReceiptType) => {
+    setSelectedReceipt(receipt);
+    setIsModalVisible(true);
+  };
+
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    setSelectedReceipt(null);
+  };
+
+  // Get table columns
+  const columns = getReceiptsColumns({
+    copyToClipboard,
+    truncateTransactionId,
+    onViewReceipt: handleViewReceipt,
+  });
+
+  // Get actual receipts data
+  const receipts: IReceiptType[] = receiptsData?.payload || [];
+
+  // Get statistics from API
+  const stats = statisticData?.payload || {
+    totalReceipts: 0,
+    totalAmountPaid: 0,
+    totalRefunds: 0,
+    totalFailedPayments: 0,
+    lastSuccessfulPaymentDate: null,
+  };
 
   return (
     <div className={styles.container}>
@@ -108,47 +110,35 @@ const Receipts: React.FC<ReceiptsProps> = ({ userData, onDataUpdate }) => {
               <p>Loading receipts...</p>
             </div>
           ) : (
-            <>
-              <Empty
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description={
-                  <div className={styles.emptyDescription}>
-                    <p>No receipts found for this user</p>
-                    <p className={styles.subText}>
-                      User receipts and billing history will be displayed here when available
-                    </p>
-                  </div>
-                }
+            <div className={styles.tableContainer}>
+              <Table
+                columns={columns}
+                dataSource={receipts}
+                rowKey="_id"
+                pagination={{
+                  pageSize: 10,
+                  showSizeChanger: true,
+                  showQuickJumper: true,
+                  showTotal: (total) => `Total ${total} receipts`,
+                }}
+                locale={{
+                  emptyText: (
+                    <div className={styles.emptyTableText}>
+                      <FileTextOutlined className={styles.emptyIcon} />
+                      <p>No receipts found for this user</p>
+                      <p className={styles.subText}>
+                        User receipts and billing history will appear here when available
+                      </p>
+                    </div>
+                  ),
+                }}
+                scroll={{ x: 600 }}
               />
-
-              {/* Placeholder table for future implementation */}
-              <div className={styles.tableContainer}>
-                <Table
-                  columns={columns}
-                  dataSource={placeholderData}
-                  rowKey="receiptId"
-                  pagination={{
-                    pageSize: 10,
-                    showSizeChanger: true,
-                    showQuickJumper: true,
-                    showTotal: (total) => `Total ${total} receipts`,
-                  }}
-                  locale={{
-                    emptyText: (
-                      <div className={styles.emptyTableText}>
-                        <FileTextOutlined className={styles.emptyIcon} />
-                        <p>Receipt data will be populated here</p>
-                        <p className={styles.subText}>Connect to the receipts API to display user billing history</p>
-                      </div>
-                    ),
-                  }}
-                />
-              </div>
-            </>
+            </div>
           )}
         </div>
 
-        {/* Summary Stats Placeholder */}
+        {/* Summary Stats */}
         <div className={styles.summaryStats}>
           <div className={styles.statCard}>
             <div className={styles.statIcon}>
@@ -156,7 +146,7 @@ const Receipts: React.FC<ReceiptsProps> = ({ userData, onDataUpdate }) => {
             </div>
             <div className={styles.statInfo}>
               <h4>Total Receipts</h4>
-              <p>0</p>
+              <p>{isLoadingStats ? "..." : stats.totalReceipts}</p>
             </div>
           </div>
 
@@ -165,8 +155,8 @@ const Receipts: React.FC<ReceiptsProps> = ({ userData, onDataUpdate }) => {
               <DollarOutlined />
             </div>
             <div className={styles.statInfo}>
-              <h4>Total Amount</h4>
-              <p>$0.00</p>
+              <h4>Total Amount Paid</h4>
+              <p>{isLoadingStats ? "..." : `$${stats.totalAmountPaid.toFixed(2)}`}</p>
             </div>
           </div>
 
@@ -176,11 +166,40 @@ const Receipts: React.FC<ReceiptsProps> = ({ userData, onDataUpdate }) => {
             </div>
             <div className={styles.statInfo}>
               <h4>Last Payment</h4>
-              <p>N/A</p>
+              <p>
+                {isLoadingStats
+                  ? "..."
+                  : stats.lastSuccessfulPaymentDate
+                  ? new Date(stats.lastSuccessfulPaymentDate).toLocaleDateString()
+                  : "N/A"}
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.statCard}>
+            <div className={styles.statIcon}>
+              <DollarOutlined style={{ color: "#ff4d4f" }} />
+            </div>
+            <div className={styles.statInfo}>
+              <h4>Total Refunds</h4>
+              <p>{isLoadingStats ? "..." : `$${stats.totalRefunds.toFixed(2)}`}</p>
+            </div>
+          </div>
+
+          <div className={styles.statCard}>
+            <div className={styles.statIcon}>
+              <FileTextOutlined style={{ color: "#ff4d4f" }} />
+            </div>
+            <div className={styles.statInfo}>
+              <h4>Failed Payments</h4>
+              <p>{isLoadingStats ? "..." : stats.totalFailedPayments}</p>
             </div>
           </div>
         </div>
       </Card>
+
+      {/* Receipt Details Modal */}
+      <ReceiptDetailsModal isVisible={isModalVisible} onClose={handleCloseModal} receipt={selectedReceipt} />
     </div>
   );
 };

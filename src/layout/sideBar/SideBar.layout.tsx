@@ -1,14 +1,10 @@
 import React from "react";
 import styles from "./SideBar.module.scss";
 import { navigation } from "@/data/navigation";
-import { Button } from "antd";
 import Link from "next/link";
 import Image from "next/image";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useUser } from "@/state/auth";
 import { useLayoutStore } from "@/state/layout";
-import { useQuery } from "@tanstack/react-query";
-import Loader from "@/components/loader/Loader.component";
 import useApiHook from "@/hooks/useApi";
 
 //make a type with children as a prop
@@ -31,12 +27,12 @@ const SideBar = (props: Props) => {
     method: "GET",
     filter: `status;pending`,
   }) as { data: { payload: any[]; metadata: any } };
-  
+
   const { data: scoutReportData } = useApiHook({
     url: "/scout",
     key: ["scout_reports", "pending"],
     method: "GET",
-    filter: `isDraft;false|isFinalized;false` // only fetch reports that are ready for review
+    filter: `isDraft;false|isFinalized;false`, // only fetch reports that are ready for review
   }) as { data: { payload: any[]; metadata: any } };
 
   const sideBarOpen = useLayoutStore((state) => state.sideBarOpen);
@@ -59,7 +55,7 @@ const SideBar = (props: Props) => {
           </div>
         )}
         <Image
-          src={ "/images/logo.png"}
+          src={"/images/logo.png"}
           width={30}
           height={50}
           className={styles.logo + " " + styles.saltLogo}
