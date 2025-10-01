@@ -1,12 +1,12 @@
 import { RiHome2Fill } from "react-icons/ri";
 import { MdSportsHandball, MdSupportAgent } from "react-icons/md";
-import { FaClock, FaRegBell, FaStickyNote } from "react-icons/fa";
+import { FaClock, FaReceipt, FaRegBell, FaStickyNote } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { GiAmericanFootballHelmet } from "react-icons/gi";
 import { BsBox, BsBroadcastPin } from "react-icons/bs";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoCodeSlashOutline } from "react-icons/io5";
-import { RiAdminFill } from "react-icons/ri"; 
+import { RiAdminFill } from "react-icons/ri";
 import { shouldHideForRoles, ROLE_GROUPS } from "@/utils/roleUtils";
 import { Badge } from "antd";
 
@@ -78,6 +78,11 @@ export const navigation = (options?: any) => {
     admin: {
       title: "Admin Tools",
       links: {
+        transactions: {
+          title: "Transactions",
+          link: "/admin/transactions",
+          icon: <FaReceipt />,
+        },
         claims: {
           title: "Profile Claims",
           link: "/admin/claims",
