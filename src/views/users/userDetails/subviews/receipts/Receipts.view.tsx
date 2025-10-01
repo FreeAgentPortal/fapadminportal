@@ -8,8 +8,8 @@ import { IReceiptType } from "@/types/IReceiptType";
 import useApiHook from "@/hooks/useApi";
 import { useParams } from "next/navigation";
 import { useInterfaceStore } from "@/state/interface";
-import { getReceiptsColumns } from "./ReceiptsColumns";
-import ReceiptDetailsModal from "./ReceiptDetailsModal";
+import { getReceiptsColumns } from "../../../../admin/transactions/ReceiptsColumns";
+import ReceiptDetailsModal from "../../../../admin/transactions/ReceiptDetailsModal";
 
 interface ReceiptsProps {
   userData: User;

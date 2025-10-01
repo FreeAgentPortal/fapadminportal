@@ -11,7 +11,7 @@ import {
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import { IReceiptType } from "@/types/IReceiptType";
-import styles from "./Receipts.module.scss";
+import styles from "./Transactions.module.scss";
 
 const { Text, Title } = Typography;
 
@@ -27,6 +27,7 @@ const ReceiptDetailsModal: React.FC<ReceiptDetailsModalProps> = ({ isVisible, on
   // Helper functions for display
   const getStatusColor = (status: string) => {
     switch (status) {
+      case "succeeded":
       case "success":
         return "green";
       case "pending":

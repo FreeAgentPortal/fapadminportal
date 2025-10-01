@@ -2,7 +2,7 @@ import React from "react";
 import { Tag, Button } from "antd";
 import { EyeOutlined, DownloadOutlined, CalendarOutlined, DollarOutlined } from "@ant-design/icons";
 import { IReceiptType } from "@/types/IReceiptType";
-import styles from "./Receipts.module.scss";
+import styles from "./Transactions.module.scss";
 
 interface ReceiptsColumnsProps {
   copyToClipboard: (transactionId: string) => void;
@@ -62,7 +62,7 @@ export const getReceiptsColumns = ({ copyToClipboard, truncateTransactionId, onV
     key: "status",
     render: (status: string) => {
       const color =
-        status === "success" ? "green" : status === "pending" ? "orange" : status === "failed" ? "red" : "default";
+        status === "success" || status === "succeeded" ? "green" : status === "pending" ? "orange" : status === "failed" ? "red" : "default";
       return <Tag color={color}>{status.toUpperCase()}</Tag>;
     },
   },
