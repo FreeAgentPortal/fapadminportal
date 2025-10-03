@@ -8,7 +8,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { IoCodeSlashOutline } from "react-icons/io5";
 import { RiAdminFill } from "react-icons/ri";
 import { shouldHideForRoles, ROLE_GROUPS } from "@/utils/roleUtils";
-import { Badge } from "antd";
+import { Badge, notification } from "antd";
 
 export const navigation = (options?: any) => {
   return {
@@ -82,6 +82,11 @@ export const navigation = (options?: any) => {
           title: "Transactions",
           link: "/admin/transactions",
           icon: <FaReceipt />,
+        },
+        notifications: {
+          title: "Alert System",
+          link: "/admin/notifications",
+          icon: <FaRegBell />,
         },
         claims: {
           title: "Profile Claims",
