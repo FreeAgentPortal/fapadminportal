@@ -26,7 +26,7 @@ const NotificationItem = ({ notification, small = false }: Props) => {
   // Check if notification is from system (no userFrom or userFrom is null)
   const isSystemNotification = !notification?.userFrom;
   const isUnread = !notification?.opened;
-  
+
   // Check if system notification has entityId - if not, don't make it a link
   const shouldUseLink = !isSystemNotification || (isSystemNotification && notification?.entityId);
 
@@ -108,7 +108,7 @@ const NotificationItem = ({ notification, small = false }: Props) => {
             isSystemNotification ? styles.systemNotification : ""
           } ${small ? styles.small : ""} ${styles.nonClickable}`}
           onClick={handleNotificationClick}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: "pointer" }}
         >
           {notificationContent}
         </div>
