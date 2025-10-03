@@ -8,6 +8,7 @@ import { BellOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import useApiHook from "@/hooks/useApi";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useUser } from "@/state/auth";
 
 interface Props {
   notification: NotificationType;
@@ -15,12 +16,13 @@ interface Props {
 }
 const NotificationItem = ({ notification, small = false }: Props) => {
   dayjs.extend(relativeTime);
-
+  const { data: loggedInUser } = useUser();
   const { mutate: updateNotification } = useApiHook({
     queriesToInvalidate: ["notifications"],
     method: "PUT",
-    key: "notification",
+    key: "notification-update",
     url: notification._id !== "" ? `/notification/${notification._id}` : `/notification/all`,
+    enabled: !!loggedInUser?._id,
   }) as any;
 
   // Check if notification is from system (no userFrom or userFrom is null)

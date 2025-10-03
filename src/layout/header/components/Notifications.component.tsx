@@ -12,33 +12,30 @@ import { useUser } from "@/state/auth";
 const Notifications = () => {
   const { data: loggedInUser } = useUser();
   const [isOpen, setIsOpen] = useState<any>();
+  // Extract all values from profileRefs map and combine with user ID
+  const getAllUserIds = () => {
+    const userIds: string[] = [];
 
-  // Create include query for user and all profile references
-  const createIncludeQuery = () => {
-    if (!loggedInUser) return "";
-
-    // Start with the user's direct ID
-    const includeItems = [`userTo;${loggedInUser._id}`];
-
-    // Add all profileRefs if they exist
-    if (loggedInUser.profileRefs && typeof loggedInUser.profileRefs === "object") {
-      Object.values(loggedInUser.profileRefs).forEach((profileId) => {
-        if (profileId && profileId !== null) {
-          includeItems.push(`userTo;${profileId}`);
-        }
-      });
+    // Add the main user ID
+    if (loggedInUser?._id) {
+      userIds.push(loggedInUser._id);
     }
 
-    return includeItems.join("|");
+    // Add all profile reference IDs
+    if (loggedInUser?.profileRefs) {
+      const profileRefValues = Object.values(loggedInUser.profileRefs).filter(Boolean) as string[];
+      userIds.push(...profileRefValues);
+    }
+    return userIds;
   };
 
   const { data } = useApiHook({
     url: `/notification`,
-    key: ["notifications"],
+    key: "notifications",
     method: "GET",
-    // include results that are sent to either the user, or the profile of the user
-    include: createIncludeQuery(),
-  }) as any;
+    filter: `userTo;{"$in":"${getAllUserIds().join(",")}"}`,
+    enabled: !!loggedInUser?._id, // Only run query when user is loaded
+  });
 
   return (
     <div className={styles.container}>
