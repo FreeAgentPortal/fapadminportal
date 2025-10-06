@@ -1,11 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import parse from "html-react-parser";
 
 const TinyEditor = ({
   handleChange,
   initialContent,
-  height = 200,
+  height = 600,
 }: {
   handleChange: (content: string) => void;
   initialContent?: string;
@@ -29,10 +28,10 @@ const TinyEditor = ({
         editorRef.current = editor;
         // Set initial content if available
         if (initialContent) {
-          editor.setContent(parse(initialContent));
+          editor.setContent(initialContent);
         }
       }}
-      initialValue={(parse(initialContent as string) as string) || ""}
+      initialValue={initialContent || ""}
       onChange={(e) => {
         if (editorRef.current) {
           handleChange(editorRef.current.getContent());
@@ -42,9 +41,11 @@ const TinyEditor = ({
       init={{
         placeholder: "Type your message here...",
         height,
+        plugins:
+          "paste  print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help",
         menubar: "insert view",
         toolbar:
-          "undo redo | formatselect | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link unlink image media | codesample | searchreplace visualblocks code fullscreen | insertdatetime table | help wordcount",
+          "paste | undo redo | formatselect | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link unlink image media | codesample | searchreplace visualblocks code fullscreen | insertdatetime table | help wordcount",
         content_style:
           "body { font-family: Helvetica, Arial, sans-serif; font-size: 14px; background: transparent; color: #fff; }",
         codesample_languages: [
