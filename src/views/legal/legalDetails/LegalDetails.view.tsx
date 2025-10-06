@@ -140,6 +140,7 @@ const LegalDetails = () => {
                         { label: "Cookie Policy", value: "cookie" },
                         { label: "Data Processing Agreement (DPA)", value: "dpa" },
                         { label: "Service Level Agreement (SLA)", value: "sla" },
+                        { label: "Text Message Terms of Service", value: "sms-terms" },
                       ],
                     },
                     {
