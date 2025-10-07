@@ -8,6 +8,7 @@ import { EditOutlined, FileTextOutlined, SaveOutlined, CloseOutlined } from "@an
 import TinyEditor from "@/components/tinyEditor/TinyEditor.component";
 import useApiHook from "@/hooks/useApi";
 import dayjs from "dayjs";
+import parser from "html-react-parser";
 
 const LegalDetails = () => {
   const { id } = useParams();
@@ -68,7 +69,7 @@ const LegalDetails = () => {
         version: payload.version,
       });
       // Set editor content separately
-      setEditorContent(payload.content || "");
+      setEditorContent(parser(payload.content || "") as unknown as string); // Ensure it's a string
     }
   }, [data?.payload, form]);
 
