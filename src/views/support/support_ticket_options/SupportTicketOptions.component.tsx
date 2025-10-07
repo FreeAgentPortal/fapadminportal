@@ -105,21 +105,21 @@ const SupportTicketOptions = () => {
         <Form.Item label="Ticket Status" name="status">
           <Select
             options={[
-              { label: "Open", value: "Open" },
-              { label: "Closed", value: "Closed" },
-              { label: "Pending", value: "Pending" },
-              { label: "Solved", value: "Solved" },
-              { label: "New", value: "New" },
+              { label: "Open", value: "open" },
+              { label: "Closed", value: "closed" },
+              { label: "Pending", value: "pending" },
+              { label: "Solved", value: "solved" },
+              { label: "New", value: "new" },
             ]}
           />
         </Form.Item>
         <Form.Item label="Priority" name="priority">
           <Select
             options={[
-              { label: "Low", value: "Low" },
-              { label: "Medium", value: "Medium" },
-              { label: "High", value: "High" },
-              { label: "Urgent", value: "Urgent" },
+              { label: "Low", value: "low" },
+              { label: "Medium", value: "medium" },
+              { label: "High", value: "high" },
+              { label: "Urgent", value: "urgent" },
             ]}
           />
         </Form.Item>
