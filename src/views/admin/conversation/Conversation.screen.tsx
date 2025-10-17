@@ -275,7 +275,9 @@ const ConversationScreen = () => {
                         {moderationStatus && moderationStatus.tag}
                       </div>
                       <p className={styles.conversationPreview}>
-                        Last message: {conversation.lastMessage?.content || "No messages yet"}
+                        {/* uppercase first letter of role */}
+                        Last message: <strong>{conversation.lastMessage?.sender?.role.charAt(0).toUpperCase() + conversation.lastMessage?.sender?.role.slice(1)}:</strong> {" "}
+                        {conversation.lastMessage?.content || "No messages yet"}
                       </p>
                       {moderationStatus && moderationStatus.reason && (
                         <p className={styles.moderationReason}>Reason: {moderationStatus.reason}</p>
