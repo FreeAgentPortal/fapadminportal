@@ -1,6 +1,6 @@
 import { RiHome2Fill } from "react-icons/ri";
 import { MdSportsHandball, MdSupportAgent } from "react-icons/md";
-import { FaClock, FaReceipt, FaRegBell, FaStickyNote } from "react-icons/fa";
+import { FaClock, FaComments, FaReceipt, FaRegBell, FaStickyNote } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { GiAmericanFootballHelmet } from "react-icons/gi";
 import { BsBox, BsBroadcastPin } from "react-icons/bs";
@@ -78,6 +78,11 @@ export const navigation = (options?: any) => {
     admin: {
       title: "Admin Tools",
       links: {
+        conversations: {
+          title: "Conversations",
+          link: "/admin/conversations",
+          icon: <FaComments />,
+        },
         transactions: {
           title: "Transactions",
           link: "/admin/transactions",
