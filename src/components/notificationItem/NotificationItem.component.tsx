@@ -2,7 +2,7 @@ import NotificationType from "@/types/NotificationType";
 import styles from "./NotificationItem.module.scss";
 import Link from "next/link";
 import React from "react";
-import getNotificationLink from "@/utils/getNotificationLink";
+import getNotificationLink from "@/components/notificationItem/getNotificationLink";
 import { Avatar, Badge } from "antd";
 import { BellOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import useApiHook from "@/hooks/useApi";
@@ -19,7 +19,7 @@ const NotificationItem = ({ notification, small = false }: Props) => {
   const { data: loggedInUser } = useUser();
   const { mutate: updateNotification } = useApiHook({
     queriesToInvalidate: ["notifications"],
-    method: "PUT",
+    method: "POST",
     key: "notification-update",
     url: notification._id !== "" ? `/notification/${notification._id}` : `/notification/all`,
     enabled: !!loggedInUser?._id,
