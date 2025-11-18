@@ -7,6 +7,8 @@ import { IAdminType } from "@/types/IAdminType";
 interface ProfileType extends IAdminType {
   needsBillingSetup: boolean;
   billingValidation: BillingValidation;
+  profileImageUrl?: string;
+  fullName?: string;
   // Add other profile properties as needed
 }
 
