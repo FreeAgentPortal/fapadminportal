@@ -1,0 +1,96 @@
+@import '@/styles/globals.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.reactions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reactionIcons {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
+
+.views {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.reactionIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  margin-left: -6px;
+  transition: transform 0.2s;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+    z-index: 1;
+  }
+}
+
+.reactionLike {
+  background: #0066cc;
+  color: white;
+}
+
+.reactionLove {
+  background: #e91e63;
+  color: white;
+}
+
+.reactionFire {
+  background: #ff5722;
+  color: white;
+}
+
+.reactionClap {
+  background: #4caf50;
+  color: white;
+}
+
+.reactionTrophy {
+  background: #ffc107;
+  color: white;
+}
+
+.count {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #0066cc;
+    text-decoration: underline;
+  }
+}
+
+.viewIcon {
+  color: #999;
+}
+
+.viewCount {
+  font-size: 13px;
+  color: #999;
+  font-weight: 400;
+}

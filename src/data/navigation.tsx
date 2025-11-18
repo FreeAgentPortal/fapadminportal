@@ -20,6 +20,16 @@ export const navigation = (options?: any) => {
           link: "/",
           icon: <RiHome2Fill />,
         },
+        feed: {
+          title: "Feed",
+          link: "/feed",
+          icon: <BsBroadcastPin />,
+        },
+        my_posts: {
+          title: "My Posts",
+          link: "/feed/me",
+          icon: <BsBroadcastPin />,
+        },
         notifications: {
           title: "Notifications",
           link: "/notifications",

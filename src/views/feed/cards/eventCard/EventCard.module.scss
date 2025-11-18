@@ -1,0 +1,339 @@
+@import '@/styles/globals.scss';
+
+.container {
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.typeAndStatus {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.eventType {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0066cc;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.statusScheduled {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.statusActive {
+  background: #e1f5fe;
+  color: #0288d1;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.statusCompleted {
+  background: #e8f5e9;
+  color: #388e3c;
+}
+
+.statusCanceled {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.statusPostponed {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.sport {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(0, 102, 204, 0.1);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0066cc;
+}
+
+.eventInfo {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.description {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detailItem {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.icon {
+  color: #0066cc;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.detailContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detailLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detailValue {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.registrationInfo {
+  padding: 16px;
+  background: #f0f7ff;
+  border-left: 4px solid #0066cc;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.registrationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.registrationLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0066cc;
+}
+
+.capacity {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  padding: 4px 8px;
+  background: white;
+  border-radius: 4px;
+}
+
+.registrationDates {
+  font-size: 13px;
+  color: #555;
+  margin: 4px 0;
+}
+
+.price {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2e7d32;
+  margin: 4px 0 0 0;
+}
+
+.eligibility {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  background: #fff8e1;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.eligibilityLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f57c00;
+}
+
+.eligibilityItem {
+  font-size: 13px;
+  color: #666;
+  padding: 4px 10px;
+  background: white;
+  border-radius: 4px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tag {
+  font-size: 12px;
+  font-weight: 500;
+  color: #0066cc;
+  padding: 6px 12px;
+  background: rgba(0, 102, 204, 0.08);
+  border-radius: 16px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(0, 102, 204, 0.15);
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primaryButton {
+  flex: 1;
+  min-width: 150px;
+  padding: 14px 24px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+
+  &:hover {
+    background: #0052a3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: #bdbdbd;
+    color: #757575;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+
+    &:hover {
+      background: #bdbdbd;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.secondaryButton {
+  flex: 1;
+  min-width: 150px;
+  padding: 14px 24px;
+  background: white;
+  color: #0066cc;
+  border: 2px solid #0066cc;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #f0f7ff;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.virtualButton {
+  flex: 1;
+  min-width: 150px;
+  padding: 14px 24px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  &:hover {
+    background: #43a047;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}

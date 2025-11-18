@@ -1,0 +1,49 @@
+@import '@/styles/globals.scss';
+
+.commentsList {
+  flex: 1;
+  overflow-y: auto;
+
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 3px;
+
+    &:hover {
+      background: #bbb;
+    }
+  }
+}
+
+.loading,
+.error,
+.emptyState {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+  font-size: 14px;
+}
+
+.error {
+  color: #ff6b6b;
+}
+
+.scrollTrigger {
+  height: 20px;
+  visibility: hidden;
+}
+
+.loadingMore {
+  text-align: center;
+  padding: 16px;
+  color: #999;
+  font-size: 13px;
+}

@@ -1,0 +1,247 @@
+@import '@/styles/globals.scss';
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 32px;
+
+  &:hover {
+    color: #333;
+  }
+
+  &:active {
+    transform: translateX(-2px);
+  }
+}
+
+// Two Column Grid Layout
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+
+  // Large screens: side-by-side layout (60/40 split)
+  @media (min-width: 1024px) {
+    grid-template-columns: 2.5fr 1fr;
+  }
+}
+
+.postColumn {
+  width: 100%;
+}
+
+.commentsColumn {
+  width: 100%;
+
+  // On large screens, make comments sticky
+  @media (min-width: 1024px) {
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+  }
+}
+
+.postContainer {
+  margin-bottom: 24px;
+}
+
+.commentsSection {
+  background: transparent;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #e0e0e0;
+  padding-left: 24px;
+
+  // On large screens in sidebar
+  @media (min-width: 1024px) {
+    height: 100%;
+    min-height: 600px;
+  }
+
+  // Remove border on mobile
+  @media (max-width: 1023px) {
+    border-left: none;
+    border-top: 1px solid #e0e0e0;
+    padding-left: 0;
+    padding-top: 24px;
+    margin-top: 24px;
+  }
+}
+
+.commentsTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 20px 0;
+  flex-shrink: 0;
+}
+
+.commentsPlaceholder {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 16px;
+  color: #666;
+}
+
+.error {
+  text-align: center;
+  padding: 60px 20px;
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 12px 0;
+  }
+
+  p {
+    font-size: 15px;
+    color: #666;
+    margin: 0 0 24px 0;
+  }
+
+  .backButton {
+    margin: 0 auto;
+    display: inline-flex;
+  }
+}
+
+// Post Card Styles
+.postCard {
+  background: transparent;
+  margin-bottom: 24px;
+}
+
+.postHeader {
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  flex-shrink: 0;
+
+  .avatarImage {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .avatarPlaceholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+  }
+}
+
+.authorDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.authorName {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.timestamp {
+  font-size: 13px;
+  color: #666;
+}
+
+.postContent {
+  padding: 24px 0;
+  min-height: 200px;
+}
+
+.contentPlaceholder {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.engagementBar {
+  // border-top: 1px solid #e0e0e0;
+  // border-bottom: 1px solid #e0e0e0;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actionButton {
+  flex: 1;
+  padding: 6px 8px;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  &:hover {
+    background: #f5f5f5;
+    color: #333;
+  }
+
+  &:active {
+    background: #e0e0e0;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.count {
+  font-size: 12px;
+  color: #999;
+  margin-left: 2px;
+}

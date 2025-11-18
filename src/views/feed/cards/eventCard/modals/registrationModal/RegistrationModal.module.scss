@@ -1,0 +1,123 @@
+@import '@/styles/globals.scss';
+
+.modal {
+  // :global {
+  //   .ant-modal-header {
+  //     border-bottom: 1px solid #f0f0f0;
+  //     padding: 20px 24px;
+  //   }
+
+  //   .ant-modal-title {
+  //     font-size: 20px;
+  //     font-weight: 600;
+  //     color: #212121;
+  //   }
+
+  //   .ant-modal-body {
+  //     padding: 24px;
+  //   }
+
+  //   .ant-modal-close {
+  //     top: 16px;
+  //     right: 16px;
+  //   }
+  // }
+}
+
+.eventSummary {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  border: 1px solid #e0e0e0;
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #212121;
+    margin: 0 0 16px 0;
+  }
+}
+
+.eventDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+
+    strong {
+      color: #212121;
+      font-weight: 600;
+      margin-right: 8px;
+    }
+  }
+}
+
+.form {
+  // :global {
+  //   .ant-form-item-label > label {
+  //     font-weight: 600;
+  //     color: #212121;
+  //   }
+
+  //   .ant-input,
+  //   .ant-input-number,
+  //   .ant-input-number-input {
+  //     font-size: 14px;
+  //   }
+
+  //   .ant-input-number {
+  //     width: 100%;
+  //   }
+
+  //   .ant-checkbox-wrapper {
+  //     font-size: 14px;
+  //   }
+  // }
+}
+
+.select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #212121;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: #1976d2;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+  }
+}
+
+.actions {
+  margin-top: 32px;
+  margin-bottom: 0;
+
+  // :global {
+  //   .ant-form-item-control-input-content {
+  //     display: flex;
+  //     justify-content: flex-end;
+  //     gap: 12px;
+  //   }
+
+  //   .ant-btn {
+  //     min-width: 100px;
+  //     height: 40px;
+  //     font-size: 14px;
+  //     font-weight: 500;
+  //   }
+  // }
+}

@@ -1,0 +1,35 @@
+@import '@/styles/globals.scss';
+
+.container {
+  padding: 16px;
+}
+
+.content {
+  width: 100%;
+}
+
+.body {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.seeMoreButton {
+  margin-top: 8px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #333;
+    text-decoration: underline;
+  }
+}

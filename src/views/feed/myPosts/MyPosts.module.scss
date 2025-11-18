@@ -1,0 +1,165 @@
+@import '@/styles/globals.scss';
+
+.container {
+  width: 100%;
+  // max-width: 800px;
+  margin: 0 auto;
+  // padding: 24px 16px;
+
+  // @media (max-width: $breakpoint-tablet) {
+  //   padding: 16px 12px;
+  // }
+}
+
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  width: 100%;
+}
+
+.errorContainer {
+  padding: 24px;
+}
+
+.errorContent {
+  text-align: center;
+  max-width: 500px;
+
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ff4d4f;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.65);
+    margin: 0;
+  }
+}
+
+.header {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f0f0f0;
+
+  // @media (max-width: $breakpoint-tablet) {
+  //   margin-bottom: 24px;
+  //   padding-bottom: 16px;
+  // }
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.85);
+  margin: 0;
+
+  // @media (max-width: $breakpoint-tablet) {
+  //   font-size: 24px;
+  // }
+}
+
+.subtitle {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  margin: 0;
+}
+
+.createPostSection {
+  margin-bottom: 24px;
+}
+
+.emptyState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 48px 24px;
+
+  // @media (max-width: $breakpoint-tablet) {
+  //   min-height: 300px;
+  //   padding: 32px 16px;
+  // }
+}
+
+.emptyContent {
+  text-align: center;
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.65);
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.45);
+    margin: 0;
+  }
+}
+
+.postsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.masonryGrid {
+  display: flex;
+  margin-left: -16px; /* gutter size offset */
+  width: auto;
+}
+
+.masonryGridColumn {
+  padding-left: 16px; /* gutter size */
+  background-clip: padding-box;
+
+  > div {
+    margin-bottom: 16px;
+  }
+}
+
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.loadMoreButton {
+  min-width: 200px;
+  height: 40px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.loadingMore {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
