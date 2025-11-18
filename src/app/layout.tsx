@@ -6,7 +6,8 @@ import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@ant-design/v5-patch-for-react-19";
 import AppWrapper from "@/layout/appWrapper/AppWrapper";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { Suspense } from "react"; 
+import { Suspense } from "react";
+import { ControlNavProvider } from "@/providers/ControlNavProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,7 +56,9 @@ export default function RootLayout({
         <ReactQueryProvider>
           <Suspense fallback={<div>Loading...</div>}>
             <AppWrapper>
-              <AntdRegistry>{children}</AntdRegistry>
+              <ControlNavProvider>
+                <AntdRegistry>{children}</AntdRegistry>
+              </ControlNavProvider>
             </AppWrapper>
           </Suspense>
         </ReactQueryProvider>

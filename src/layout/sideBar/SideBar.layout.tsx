@@ -1,25 +1,25 @@
-import React from "react";
 import styles from "./SideBar.module.scss";
 import { navigation } from "@/data/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { useUser } from "@/state/auth";
 import { useLayoutStore } from "@/state/layout";
+import { Drawer, Button, Tooltip } from "antd";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
 import useApiHook from "@/hooks/useApi";
+import { useSelectedProfile } from "@/hooks/useSelectedProfile";
 
 //make a type with children as a prop
 type Props = {
   page: { title: string };
-  large?: boolean;
+  small?: boolean; // Changed from large to small
+  isMobileOpen?: boolean;
+  onMobileClose?: () => void;
 };
+
 const SideBar = (props: Props) => {
-  // Use reactive query instead of static queryClient.getQueryData
-  const { data: profileData } = useApiHook({
-    method: "GET",
-    key: ["profile", "admin"],
-    enabled: false, // Don't auto-fetch, assume it's being fetched elsewhere
-    staleTime: Infinity, // Use cached data if available
-  }) as any;
+  const { selectedProfile } = useSelectedProfile();
 
   const { data: claimsData } = useApiHook({
     url: "/auth/claim",
@@ -34,87 +34,123 @@ const SideBar = (props: Props) => {
     method: "GET",
     filter: `isDraft;false|isFinalized;false`, // only fetch reports that are ready for review
   }) as { data: { payload: any[]; metadata: any } };
+  const sidebarCollapsed = useLayoutStore((state) => state.sidebarCollapsed);
+  const toggleSidebarCollapsed = useLayoutStore((state) => state.toggleSidebarCollapsed);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const sideBarOpen = useLayoutStore((state) => state.sideBarOpen);
-  const toggleSideBar = useLayoutStore((state) => state.toggleSideBar);
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
-  // Extract profile from the query data
-  const profile = profileData as { payload: any } | undefined;
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
 
-  return (
-    <div className={`${styles.container} ${props.large ? "" : styles.small}`}>
-      <div className={styles.logoContainer}>
-        {sideBarOpen && (
-          <div
-            className={styles.hamburger}
-            onClick={() => {
-              toggleSideBar();
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const sidebarContent = (
+    <div className={`${styles.container} ${!isMobile && (props.small || sidebarCollapsed) ? styles.small : ""}`}>
+      {!isMobile && (
+        <Button
+          type="text"
+          icon={sidebarCollapsed ? <RightOutlined /> : <LeftOutlined />}
+          onClick={toggleSidebarCollapsed}
+          className={styles.collapseButton}
+        />
+      )}
+
+      {/* Fixed Header */}
+      <div className={styles.headerSection}>
+        <div className={styles.logoContainer}>
+          <Image
+            src="/images/logo.png"
+            width={sidebarCollapsed ? 50 : 100}
+            height={100}
+            className={styles.logo}
+            style={{
+              objectFit: "contain",
             }}
-          >
-            <RxHamburgerMenu />
+            alt="logo"
+          />
+
+          <div>
+            <p className={`${styles.productName}`}>FreeAgent — Admin Portal</p>
           </div>
-        )}
-        <Image
-          src={"/images/logo.png"}
-          width={30}
-          height={50}
-          className={styles.logo + " " + styles.saltLogo}
-          style={{
-            objectFit: "contain",
-          }}
-          alt="logo"
-        />
-
-        <Image
-          src={"/images/logo.png"}
-          width={75}
-          height={50}
-          className={styles.logo + " " + styles.largeLogo}
-          style={{
-            objectFit: "contain",
-          }}
-          alt="logo"
-        />
-
-        <p className={`${styles.productName}`}>{process.env.SERVICE_NAME || "FAP - Admin"}</p>
+        </div>
       </div>
 
-      {Object.values(
-        navigation({
-          user: profile?.payload,
-          claimsCount: claimsData?.metadata?.totalCount || 0,
-          scoutReportsCount: scoutReportData?.metadata?.totalCount || 0,
-        })
-      )
-        .filter((i: any) => !i.hidden)
-        .map((item: any) => {
-          return (
-            <div key={item.title} className={`${styles.group}`}>
-              <h2 className={styles.header}>{item.title}</h2>
-              <div className={styles.links}>
-                {item.links &&
-                  Object.values(item.links)
-                    .filter((i: any) => !i.hidden)
-                    .map((subItem: any, indx: number) => {
-                      return (
-                        <Link
-                          key={indx + subItem.title}
-                          href={subItem.link}
-                          className={`${styles.link} ${props.page.title === subItem.title && styles.active} ${
-                            subItem.pulse && styles.pulse
-                          }`}
-                          onClick={() => toggleSideBar()}
-                        >
-                          <span className={styles.icon}>{subItem.icon}</span>
-                          <span className={styles.text}>{subItem.title}</span>
-                        </Link>
-                      );
-                    })}
+      {/* Scrollable Main Content */}
+      <div className={styles.mainContent}>
+        {Object.values(
+          navigation({
+            user: selectedProfile,
+            claimsCount: claimsData?.metadata?.totalCount || 0,
+            scoutReportsCount: scoutReportData?.metadata?.totalCount || 0,
+          })
+        )
+          .filter((i: any) => !i.hidden)
+          .map((item: any) => {
+            return (
+              <div key={item.title} className={`${styles.group}`}>
+                <h2 className={styles.header}>{item.title}</h2>
+                <div className={styles.links}>
+                  {item.links &&
+                    Object.values(item.links)
+                      .filter((i: any) => !i.hidden)
+                      .map((subItem: any, indx: number) => {
+                        return (
+                          <Link
+                            key={indx + subItem.title}
+                            href={subItem.link}
+                            className={`${styles.link} ${props.page.title === subItem.title && styles.active} ${
+                              subItem.pulse && styles.pulse
+                            }`}
+                            onClick={() => {
+                              if (isMobile && props.onMobileClose) {
+                                props.onMobileClose();
+                              }
+                            }}
+                          >
+                            <span className={styles.icon}>{subItem.icon}</span>
+                            <span className={styles.text}>{subItem.title}</span>
+                          </Link>
+                        );
+                      })}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+      </div>
+
+      {/* Fixed Footer */}
+      <div className={styles.footerSection}>
+        <p className={styles.fapText}>FreeAgentPortal</p>
+        <p className={styles.versionText}>v{process.env.VERSION}</p>
+      </div>
     </div>
   );
+
+  // On mobile, render in Drawer
+  if (isMobile) {
+    return (
+      <Drawer
+        placement="left"
+        onClose={props.onMobileClose}
+        open={props.isMobileOpen}
+        width={265}
+        styles={{
+          body: { padding: 0 },
+          header: { display: "none" },
+        }}
+        className={styles.mobileDrawer}
+      >
+        {sidebarContent}
+      </Drawer>
+    );
+  }
+
+  // On desktop, render normally
+  return sidebarContent;
 };
 export default SideBar;

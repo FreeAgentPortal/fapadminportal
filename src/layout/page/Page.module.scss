@@ -2,81 +2,48 @@
 
 .container {
   display: grid;
-
   grid-template-columns: 265px auto;
   grid-template-rows: 70px auto;
-
   width: 100%;
   height: 100dvh;
   overflow: hidden;
-
-  //   padding: 0 1rem;
   background-color: #f5f5f5;
-  //   height: 100%;
 
   grid-template-areas:
     "sidebar header"
     "sidebar content";
 
-  transition: $animation;
-  -webkit-transition: $animation;
-  position: relative;
-
-  &::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.71);
-    z-index: 2;
-    transition: 0.2s ease-in-out all;
-    opacity: 0;
-    pointer-events: none;
-  }
-
+  // Mobile: Sidebar is hidden, drawer is used instead
   @include mobile {
     grid-template-columns: auto;
     grid-template-areas:
       "header"
       "content";
-    .sideBar {
-      position: fixed;
-      left: -100%;
-      z-index: 3;
-    }
-  }
-
-  &.sideBarActive {
-    @include mobile {
-      &::after {
-        opacity: 1;
-        pointer-events: all;
-      }
-    }
 
     .sideBar {
-      left: 0;
+      display: none; // Hidden on mobile, rendered in Drawer instead
     }
   }
 
   .sideBar {
     background: var(--color-bg-gradient);
     height: 100%;
-    z-index: 1000;
     grid-area: sidebar;
-    transition: $animation;
-    -webkit-transition: $animation;
-    width: auto;
     position: fixed;
     width: 265px;
+    left: 0;
+    top: 0;
+    z-index: 100;
+
+    @include mobile {
+      display: none;
+    }
   }
+
   .content {
     background-color: var(--quaternary-light);
     height: 100dvh;
     grid-area: content;
-
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;
@@ -86,17 +53,21 @@
       @include mobile {
         grid-template-columns: auto;
       }
+
+      &.controlBarCollapsed {
+        grid-template-columns: 60px 1fr;
+      }
     }
 
     .controlContainer {
       height: 100%;
       overflow-y: auto;
       padding-bottom: $header-height;
-
       transition: $animation;
       -webkit-transition: $animation;
       max-width: 100%;
     }
+
     .controlToggleBtn {
       position: fixed;
       bottom: 70px;
@@ -115,6 +86,7 @@
       cursor: pointer;
       display: none;
     }
+
     @include mobile {
       grid-template-columns: auto;
 
@@ -123,21 +95,32 @@
         left: -100%;
         z-index: 1;
       }
+
       .controlToggleBtn {
         display: flex;
       }
     }
 
     &.controlContainerActive {
-      @include mobile {
-        &::after {
-          opacity: 1;
-          pointer-events: all;
-        }
-      }
-
-      .controlContainer {
+      // darken background when control nav is active on mobile
+      &::after {
+        content: "";
+        position: fixed;
+        top: 0;
         left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 4;
+      }
+      @include mobile {
+        .controlContainer {
+          z-index: 5;
+          left: 0;
+        }
+        .controlToggleBtn {
+          z-index: 6;
+        }
       }
     }
 
@@ -148,43 +131,36 @@
       flex-direction: column;
       overflow-y: auto;
       padding-bottom: $header-height;
-      overflow-y: auto;
       position: relative;
 
       .childrenContainer {
         position: relative;
         height: 100%;
         padding: 20px;
-        max-width: 1500px;
         width: 100%;
         overflow: hidden;
         overflow-y: auto;
       }
     }
   }
-  @include desktop {
-    @include tablet {
+
+  // Small sidebar mode (collapsed on desktop)
+  &.small {
+    @include desktop {
       grid-template-columns: 70px auto;
 
       .sideBar {
         width: 70px;
-        &:hover {
-          width: fit-content;
-        }
+        transition: width 0.3s ease;
+
+        // &:hover {
+        //   width: 265px;
+        // }
       }
     }
-    &.small {
-      grid-template-columns: 70px auto;
-      @include mobile {
-        grid-template-columns: auto;
-      }
 
-      .sideBar {
-        width: 70px;
-        &:hover {
-          width: 265px;
-        }
-      }
+    @include mobile {
+      grid-template-columns: auto;
     }
   }
 }

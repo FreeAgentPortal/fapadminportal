@@ -1,212 +1,257 @@
 @use "@/styles/globals.scss" as *;
 
-@mixin smallSideBar {
-  &:hover {
-    width: 265px;
+// .mobileDrawer {
+//   :global {
+//     .ant-drawer-body {
+//       padding: 0 !important;
+//     }
+//     .ant-drawer-header {
+//       display: none !important;
+//     }
+//   }
+// }
+
+.container {
+  border-right: 5px solid var(--primary);
+  height: 100%;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 30px 0px inset;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  position: relative; 
+  // overflow-y: hidden; // Prevent vertical overflow on container
+
+  .collapseButton {
+    position: absolute;
+    top: 20px;
+    right: -15px;
+    z-index: 1000000;
+    color: white !important;
+    border: 2px solid var(--secondary) !important;
+    background: var(--bg-gradient) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    transition: all 0.3s ease;
+    font-size: 14px;
+
+    // Override Ant Design button styles
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &:hover {
+      color: white !important;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%) !important;
+      border-color: var(--primary) !important;
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &:focus {
+      color: white !important;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+      border-color: var(--secondary) !important;
+    }
   }
-  &:not(:hover) {
-    width: 70px;
-    gap: 0px;
+
+  // Fixed Header Section
+  .headerSection {
+    flex-shrink: 0; // Don't shrink
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
     .logoContainer {
-      // height: 90px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+
       .logo {
-        &.saltLogo {
-          display: block;
-        }
-        &.largeLogo {
-          display: none;
+        height: 100%;
+      }
+
+      .productName {
+        font-size: 14px;
+        font-weight: 600;
+        white-space: normal;
+      }
+    }
+  }
+
+  // Scrollable Main Content Section
+  .mainContent {
+    flex: 1; // Take up remaining space
+    overflow-y: auto; // Enable vertical scrolling
+    overflow-x: hidden; // Prevent horizontal scrolling
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    // Custom scrollbar styling
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+    }
+
+    .group {
+      .header {
+        font-size: 15px;
+        font-weight: 300;
+        padding: 10px 0;
+      }
+
+      .links {
+        display: flex;
+        flex-direction: column;
+
+        .link {
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          color: white;
+          gap: 10px;
+          transition: all 0.2s ease;
+          padding: 8px 0;
+          cursor: pointer;
+
+          &.active {
+            background-color: var(--primary);
+            padding: 10px 10px;
+            border-radius: 5px 0px 0px 5px;
+            position: relative;
+            // right: 10px;
+            // width: 110%;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+            font-weight: 700;
+            color: var(--font-secondary);
+
+            &:hover {
+              color: white;
+            }
+          }
+
+          &:hover {
+            color: var(--primary);
+          }
+
+          .icon {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            font-size: 18px;
+          }
+
+          .text {
+            margin: 0;
+            white-space: nowrap;
+          }
         }
       }
+    }
+  }
+
+  // Fixed Footer Section
+  .footerSection {
+    flex-shrink: 0; // Don't shrink
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    .fapText {
+      font-size: 15px;
+      font-weight: 300;
+      margin: 0;
+      padding: 0 3px;
+    }
+
+    .versionText {
+      font-size: 10px;
+      font-weight: 300;
+      margin: 0;
+      padding: 0 3px;
+    }
+  }
+
+  // Small sidebar mode (collapsed)
+  &.small {
+    padding-left: 10px;
+
+    .headerSection .logoContainer {
+      justify-content: center;
+
       .productName {
         display: none;
       }
-      .hamburger {
-        display: block;
-      }
     }
-    .group {
+
+    .mainContent .group {
       .header {
-        // display: none;
-        opacity: 0;
+        display: none;
       }
-      .links {
+
+      .links .link {
+        justify-content: center;
+        padding: 8px;
+
         .text {
           display: none;
         }
-        .link {
-          &.active {
-            width: 160%;
-          }
-        }
-        .icon {
-          font-size: 18px;
-          margin-left: 3px;
-        }
-      }
-    }
-  }
-}
 
-.container {
-  color: white;
-  border-right: 5px solid var(--primary);
-  // background-color: var(--primary);
-  height: 100%;
-  overflow: auto;
-
-  display: flex;
-  flex-direction: column;
-  padding-left: 20px;
-  gap: 20px;
-
-  transition: $animation;
-  -webkit-transition: $animation;
-
-  overflow-x: hidden;
-  padding-bottom: 15px;
-
-  .logoContainer {
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    transition: $animation;
-    -webkit-transition: $animation;
-
-    .logo {
-      // width: 100%;
-      height: 100%;
-      &.saltLogo {
-        display: none;
-      }
-    }
-
-    .hamburger {
-      display: none;
-      font-size: 20px;
-      margin-bottom: 2px;
-      align-items: center;
-      justify-content: center;
-      transition: $animation;
-      -webkit-transition: $animation;
-      @include mobile {
-        cursor: pointer;
-        display: flex;
-      }
-    }
-
-    .productName {
-      font-size: 16px;
-      // font-weight: 700;
-      transition: $animation;
-      -webkit-transition: $animation;
-      display: flex;
-
-      @include tablet {
-        display: none;
-      }
-    }
-  }
-
-  .group {
-    .header {
-      font-size: 15px;
-
-      font-weight: 300;
-      padding: 10px 0;
-      color: rgba(255, 255, 255, 0.7);
-    }
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      .link {
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-
-        gap: 10px;
-        color: white;
-        transition: $animation;
-        -webkit-transition: $animation;
         &.active {
-          background-color: var(--primary);
-          padding: 15px 10px;
-          border-radius: 5px;
-          position: relative;
-          right: 10px;
-          width: 110%;
-          box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-          font-weight: 700;
-          &:hover {
-            color: white;
-          }
-        }
-
-        &:hover {
-          color: var(--primary);
-        }
-
-        &.pulse {
-          box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-          transform: scale(1);
-          animation: pulse 2s infinite;
-          background-color: #be2528;
-          border-radius: 5px;
-
-          right: 10px;
-          padding: 15px 10px;
-          position: relative;
-
-          &:hover {
-            color: white;
-          }
-        }
-        .icon {
-          height: 100%;
-          display: flex;
-          align-items: center;
+          width: 100%;
+          right: 0;
           justify-content: center;
-          margin: 0;
-          svg{
-            width: 16px;
-            height: 16px;
-            color: white;
-          }
-        }
-        .title {
-          margin: 0;
         }
       }
     }
-  }
 
-  @include desktop {
-    @include tablet {
-      @include smallSideBar();
+    .footerSection {
+      .fapText,
+      .versionText {
+        display: none;
+      }
     }
-    &.small {
-      @include smallSideBar();
-    }
-  }
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.98);
-    box-shadow: 0 0 0 0 #8d2325b7;
-  }
-
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-  }
-
-  100% {
-    transform: scale(0.98);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
 }

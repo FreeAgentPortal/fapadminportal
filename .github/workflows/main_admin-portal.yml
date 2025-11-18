@@ -33,6 +33,7 @@ jobs:
           API_URL: "https://api.thefreeagentportal.com/api/v1"
           AUTH_URL: "https://auth.thefreeagentportal.com/auth/login"
           SERVICE_NAME: "FAP Admin Portal"
+          VERSION: "1.2.1"
           ENV: "production"
           ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
           TINYMCE_API_KEY: ${{ secrets.TINYMCE_API_KEY }}

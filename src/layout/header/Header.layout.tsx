@@ -1,103 +1,65 @@
 import styles from './Header.module.scss';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { Avatar, Breadcrumb, Tooltip, Dropdown } from 'antd';
+import { Avatar, Breadcrumb, Tooltip } from 'antd';
 import Link from 'next/link';
 import { useUser, logout } from '@/state/auth';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { ReactNode } from 'react';
 import Notifications from './components/Notifications.component';
-import { useLayoutStore } from '@/state/layout';
 
 type Props = {
   pages?: Array<{ title: string; link?: string; icon?: ReactNode }>;
+  onMobileMenuClick?: () => void;
 };
 
 const Header = (props: Props) => {
-  const toggleSideBar = useLayoutStore((state) => state.toggleSideBar);
   const { data: loggedInData } = useUser();
-  const profiles = Object.keys(loggedInData?.profileRefs || {});
 
-  const profileItems = profiles.map((p) => ({
-    key: p,
-    label: p.charAt(0).toUpperCase() + p.slice(1),
-    onClick: () => {
-      if (p === 'athlete') return;
-      const urls: Record<string, string | undefined> = {
-        team: process.env.TEAMS_APP_URL,
-        admin: process.env.ADMIN_APP_URL,
-        scout: process.env.SCOUT_APP_URL,
-      };
-      const url = urls[p];
-      if (url) window.open(`${url}/?token=${loggedInData?.token}`);
-    },
-  }));
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <div className={styles.headerLeft}>
-        <div
+        <button
           className={styles.hamburger}
-          onClick={() => {
-            toggleSideBar();
-          }}
+          onClick={props.onMobileMenuClick}
+          aria-label="Toggle menu"
         >
           <RxHamburgerMenu />
-        </div>
+        </button>
 
         <Breadcrumb
           className={styles.breadcrumb}
-          itemRender={(route, params, routes, paths) => {
-            const last = routes.indexOf(route) === routes.length - 1;
+          itemRender={(route, params, routes) => {
+            const isLast = routes.indexOf(route) === routes.length - 1;
 
-            return last ? (
-              <span>{route.title}</span>
+            return isLast ? (
+              <span className={styles.breadcrumbActive}>{route.title}</span>
             ) : (
-              <Link href={route.path as string} className={`${routes[routes.length - 1].title === route.title && styles.active}`}>
+              <Link href={route.path as string} className={styles.breadcrumbLink}>
                 {route.title}
               </Link>
             );
           }}
-          items={
-            props.pages?.map((page) => {
-              return {
-                title: page?.title,
-                path: page?.link || '',
-                element: <Link href={page?.link || ''}>{page?.title}</Link>,
-              };
-            }) as any[]
-          }
+          items={props.pages?.map((page) => ({
+            title: page.title,
+            path: page.link || '',
+          }))}
         />
       </div>
 
       <div className={styles.headerRight}>
-        <div className={styles.headerRight}>
-          <div className={styles.userContainer}>
-            <div className={styles.user}>
-              <div className={styles.userInfo}>
-                <p>{loggedInData?.fullName}</p>
-              </div>
-              <Avatar src={loggedInData?.profileImageUrl ?? '/images/no-photo.png'} className={styles.avatar} />
-            </div>
-            {profiles.length > 1 ? (
-              <Dropdown menu={{ items: profileItems }}>
-                <span className={styles.profileButton}>Profiles</span>
-              </Dropdown>
-            ) : profiles.length === 1 ? (
-              <span className={styles.profileButton}>{profileItems[0]?.label}</span>
-            ) : null}
-            <Notifications />
-            <Tooltip title="Logout">
-              <span
-                onClick={() => {
-                  logout(true);
-                }}
-              >
-                <BiLogOutCircle className={styles.logoutIcon} />
-              </span>
-            </Tooltip>
-          </div>
+        <Notifications />
+
+        <div className={styles.userContainer}>
+          <span className={styles.userName}>{loggedInData?.fullName}</span>
         </div>
+
+        <Tooltip title="Logout">
+          <button className={styles.logoutButton} onClick={() => logout()} aria-label="Logout">
+            <BiLogOutCircle />
+          </button>
+        </Tooltip>
       </div>
-    </div>
+    </header>
   );
 };
 
