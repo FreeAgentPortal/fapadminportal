@@ -4,7 +4,7 @@ import Dashboard from "@/views/dashboard/Dashboard.view";
 
 export default function Home() {
   return (
-    <PageLayout pages={[navigation().home.links.home]} largeSideBar>
+    <PageLayout pages={[navigation().home.links.home]}>
       <Dashboard />
     </PageLayout>
   );

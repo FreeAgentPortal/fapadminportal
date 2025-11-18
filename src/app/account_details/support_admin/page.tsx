@@ -4,7 +4,7 @@ import SupportDeskAdmin from "@/views/supportAdmin/SupportDeskAdmin.view";
 
 export default function Home() {
   return (
-    <PageLayout pages={[navigation().admin.links.support_admin]} largeSideBar>
+    <PageLayout pages={[navigation().admin.links.support_admin]}>
       <SupportDeskAdmin />
     </PageLayout>
   );

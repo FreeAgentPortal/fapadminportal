@@ -1,10 +1,10 @@
 import { navigation } from "@/data/navigation";
-import PageLayout from "@/layout/page/Page.layout"; 
+import PageLayout from "@/layout/page/Page.layout";
 import SupportDesk from "@/views/support/SupportDesk.view";
 
 export default function Home() {
   return (
-    <PageLayout pages={[navigation().account_details.links.support ]} largeSideBar>
+    <PageLayout pages={[navigation().account_details.links.support]}>
       <SupportDesk />
     </PageLayout>
   );

@@ -1,5 +1,5 @@
 "use client";
-import React, { JSX } from "react";
+import React, { JSX, useMemo } from "react";
 import styles from "./SupportDetails.module.scss";
 import { useParams } from "next/navigation";
 import Loader from "@/components/loader/Loader.component";
@@ -13,6 +13,10 @@ import { useMessages } from "@/hooks/useInfiniteMessages";
 import { useSocketStore } from "@/state/socket";
 import { useQueryClient } from "@tanstack/react-query";
 import useApiHook from "@/hooks/useApi";
+import { ControlNavItem } from "@/types/navigation";
+import SupportTicketOptions from "../support_ticket_options/SupportTicketOptions.component";
+import { BsGear } from "react-icons/bs";
+import { useSetControlNav } from "@/providers/ControlNavProvider";
 
 const SupportDetails = () => {
   const [form] = Form.useForm();
@@ -24,6 +28,18 @@ const SupportDetails = () => {
   // socket events
   const { socket } = useSocketStore((state) => state);
 
+  // Set up control navigation with user data - memoized to prevent infinite loops
+  const controlNav = useMemo<ControlNavItem[] | null>(() => {
+    return [
+      {
+        children: <SupportTicketOptions />,
+        icon: <BsGear />,
+        title: "Ticket Options",
+      },
+    ];
+  }, []);
+
+  useSetControlNav(controlNav);
   const { data, isLoading, isError, error } = useApiHook({
     url: `/support/ticket/${id}`,
     key: "ticket",
