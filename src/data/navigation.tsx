@@ -1,6 +1,6 @@
 import { RiHome2Fill } from "react-icons/ri";
 import { MdSportsHandball, MdSupportAgent } from "react-icons/md";
-import { FaClock, FaComments, FaReceipt, FaRegBell, FaStickyNote } from "react-icons/fa";
+import { FaClock, FaComments, FaFileSignature, FaReceipt, FaRegBell, FaStickyNote } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { GiAmericanFootballHelmet } from "react-icons/gi";
 import { BsBox, BsBroadcastPin } from "react-icons/bs";
@@ -131,6 +131,11 @@ export const navigation = (options?: any) => {
           title: "Plans & Billing",
           link: "/admin/plans",
           icon: <BsBox />,
+        },
+        signings: {
+          title: "Signings",
+          link: "/admin/signings",
+          icon: <FaFileSignature />,
         },
         support_admin: {
           title: `Support Admin`,

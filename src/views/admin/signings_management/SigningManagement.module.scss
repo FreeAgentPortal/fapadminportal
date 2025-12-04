@@ -1,0 +1,26 @@
+.athlete,
+.team,
+.date,
+.admin,
+.notes,
+.createdDate {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.athlete,
+.team {
+  font-weight: 500;
+}
+
+.notes {
+  color: #888;
+  font-size: 0.9em;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
