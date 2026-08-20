@@ -3,6 +3,8 @@ export const availableLeagues = [
   { name: "National Football League", abbreviation: "NFL" },
   { name: "UFL", abbreviation: "UFL" },
   { name: "Indoor Football League", abbreviation: "IFL" },
+  { name: "The Arena League", abbreviation: "TAL" },
+  { name: "Arena Football One", abbreviation: "AF1" },
   { name: "Canadian Football League", abbreviation: "CFL" },
   { name: "National Arena League", abbreviation: "NAL" },
   { name: "Arena Football League", abbreviation: "AFL" },
